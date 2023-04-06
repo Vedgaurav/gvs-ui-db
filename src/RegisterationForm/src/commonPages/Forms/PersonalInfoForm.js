@@ -83,7 +83,13 @@ const PersonalInfoForm = (props) => {
     // console.log(validateFname.test(firstName))
   }
   const genderChangeHandler=(e)=>{
-
+    let a=document.getElementsByName('gen');
+    for (let index = 0; index < a.length; index++) {
+      
+      if(!a[index].value==e.target.value){
+        a[index].checked=false;
+      }
+    }
   }
   const ashramaChangeHandle=(e)=>{
     document.getElementById('aspiringAshram').value=e.target.value;
@@ -163,7 +169,7 @@ const PersonalInfoForm = (props) => {
             {gender.map((e) => (
               <div className={`form-col col-md-${e.col}`} key={e.id} style={{marginRight:'30px'}}>
                 <label className="form-check-label">
-                  <input type="radio" className="form-check-input ashram" id={e.id} value={e.value} onChange={genderChangeHandler}/>
+                  <input type="radio" className="form-check-input ashram" id={e.id} name='gen' value={e.value} onChange={genderChangeHandler}/>
                   {e.value}
                 </label>
               </div>
