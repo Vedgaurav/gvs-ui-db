@@ -1,0 +1,125 @@
+
+.registration {
+    padding: 0rem;
+    scroll-behavior: smooth;
+    background-color: rgb(255, 255, 255);
+    margin-top: 2rem ;
+    margin-bottom: 2rem;
+    width: 50%;
+    max-width: 100%;
+    border-radius: 12px;
+    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.25);
+    min-width: 10px;
+    content: 'width=device-width, initial-scale=1.0';
+  }
+ 
+.mainpage {
+    background-color: #D3D3D3;  
+    position:-ms-page;
+    
+    margin:0;
+
+    top:0;
+    left:0;
+
+      width: 203.7vh;
+    height: 100vh;  
+    /* background:rgba(255,255,255,0.5); */
+}
+/* @media screen and (max-width: 700px) {
+  .mainpage {
+    width: 100%;
+  }
+}
+.imgfix{
+
+  height: 80vh;;
+
+}
+.column{
+  height:90vh;
+  float: left;
+}
+
+.left {
+  width: 25%;
+}
+
+.right {
+  width: 75%;
+}
+.crow:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+.customrow {
+  flex-shrink: 0;
+  width: 100%;
+  max-width: 100%;
+  padding-right: calc(var(--bs-gutter-x) * 0.5);
+  padding-left: calc(var(--bs-gutter-x) * 0.5);
+  margin-top: var(--bs-gutter-y)} */
+/* .new-registration__control {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-bottom: 1rem;
+    text-align: left;
+  }
+  
+  .new-registration__control label {
+    font-weight: bold;
+    margin-bottom: 0rem;
+    width: 25vh;
+    display: block;
+  }
+  
+  .inputs {
+    font: inherit;
+    padding: 0.3rem;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    width: 12rem;
+    height: 4vh;
+    max-width: 100%;
+  } */
+  /* input[type=radio]{
+    gap: 0.1rem;
+    width:3rem;
+    height: 2vh;
+    max-width: 10%;
+    
+  } */
+  .radio-button {
+    width: 1rem;
+    margin-bottom: 0.1rem;
+    padding-bottom: 1rem;
+    column-width: 1rem;
+    text-align: center;
+    display: flex;
+  }
+  .radio-label {
+    min-width: 150px;
+    display: flex;
+    flex-direction: column;
+  }
+  .new-upload__control input[type=file] {
+    font: inherit;
+    padding: 0.3rem;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    width: 25vh;
+    max-width: 100%;
+  }
+  .container{
+    font-family: Georgia, serif;
+    image-rendering: auto;
+    font-size: 16px;
+  }
+.img{
+  width:20px;
+  height: 40px;
+}  
+  
+  
