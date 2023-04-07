@@ -15,23 +15,18 @@ export default function GLogin() {
 
     const responseGoogle = async (response) => {
         let { email, name, googleId } = response.profileObj;
-        let personDetail = {
-            email,
-            name,
-            googleId,
-        };
 
         const res = await axiosDoesUserExist(email)
-        const doesUserExist = res.data
+        const userId = res.data.id
 
-        if(doesUserExist==false){
+        if(res.data==""){ 
             // to reg
-            navigate("/registration", { state: { personDetail: personDetail } })
+            navigate("/registration")
         }
         else{
+            sessionStorage.setItem("userId",userId)
             // to dashboard of dependents
-            navigate("/dashboard", { state: { personDetail: personDetail } })
-
+            navigate("/dashboard", { state: { userId: userId } })
         }
 
     }

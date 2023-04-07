@@ -1,28 +1,36 @@
 import { useEffect, useState } from "react"
-import { useLocation } from "react-router-dom"
+import { useLocation, useNavigate } from "react-router-dom"
 import axiosGetAllDependents from "../axios/axiosGetAllDependents"
 
 
 export default () => {
     const { state } = useLocation()
-    const { email } = state
-    const [dep, setDep] = useState()
+    const { userId } = state?state:""
+    const [dep, setDep] = useState([])
+    const navigate = useNavigate()
+
 
     useEffect(async () => {
-        const res = await axiosGetAllDependents(email)
+        const res = await axiosGetAllDependents(userId)
         setDep(res.data);
     }, [])
 
-    const addDep = (email)=>{
-        navigate("/registration", { state: { connectedEmail: email } })
+    useEffect(()=>{
+        if(sessionStorage.getItem("userId")==null)
+            navigate("/login")
+    })
+
+    const addDep = (userId) => {    
+        console.log("from dep",userId);
+        navigate("/registration", { state: { userId: userId } })
     }
 
     return <>
-        My Dependents
+        <h1 class="display-1">Manage Members</h1>
 
         <div class="container-md">
             <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                <button onClick={(email)=>addDep(email)} class="btn btn-success me-md-2" type="button">Add Dependents</button>
+                <button onClick={(userId) => addDep(userId)} class="btn btn-success me-md-2" type="button">Add Dependents</button>
             </div><br />
             <table class="table table-striped">
                 <thead>
@@ -30,7 +38,6 @@ export default () => {
                         <th scope="col">#</th>
                         <th scope="col">Name</th>
                         <th scope="col">Email</th>
-                        <th scope="col">connectedEmail</th>
                         <th scope="col"></th>
                         <th scope="col"></th>
                     </tr>
@@ -39,19 +46,16 @@ export default () => {
                     <tbody>
                         <tr>
                             <th scope="row">{index + 1}</th>
-                            <td>{d.fname}</td>
-                            <td>{d.email}</td>
-                            <td>{d.connectedEmail}</td>
+                            <td>{d.connectedTo}</td>
+                            <td>{d.id}</td>
                             <td> <button className="btn btn-warning" type="button">Edit</button></td>
                             <td> <button className="btn btn-danger" type="button">Delete</button></td>
                         </tr>
                     </tbody>
                 )) : <tbody>
                     <tr>
-                        <td>No members found.</td>
-                        <td>No members found.</td>
-                        <td>No members found.</td>
-                        <td>No members found.</td>
+                        <td colSpan="3">No members found.</td>
+                        
                     </tr>
                 </tbody>}
             </table>

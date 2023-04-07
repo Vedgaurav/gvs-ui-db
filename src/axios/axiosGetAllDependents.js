@@ -1,6 +1,6 @@
 import axios from "axios";
-import { GET_ALL_DEP } from "../constants/apiConstant";
+import {GET_ALL_DEP_BY_USER_ID } from "../constants/apiConstant";
 
-export default async (email) => {
-  return await axios.post(GET_ALL_DEP, {"email":email});
+export default async (id) => {
+  return await axios.post(GET_ALL_DEP_BY_USER_ID+"/"+id);
 };
