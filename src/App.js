@@ -12,11 +12,13 @@ import Oops from "./oops";
 import Dashboard from "./dashboard";
 import MyDependents from "./dashboard/MyDependents";
 import RegistrationForm from "./RegisterationForm/src/RegistrationForm";
+import NavBar from "./nav/NavBar";
 
 export default function App() {
   const template = () => (
     <>
       <BrowserRouter>
+      <NavBar/>
         <Routes>
           <Route
             index
