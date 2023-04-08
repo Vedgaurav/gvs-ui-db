@@ -12,10 +12,10 @@ function RegistrationForm() {
   const navigate = useNavigate()
 
 
-  useEffect(() => {
-    if (sessionStorage.getItem("userId") == null)
-      navigate("/login")
-  })
+  // useEffect(() => {
+  //   if (sessionStorage.getItem("userId") == null)
+  //     navigate("/login")
+  // })
 
   return (
     <div className="body mainpage">

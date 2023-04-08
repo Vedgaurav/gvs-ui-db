@@ -12,7 +12,7 @@ export const languages = [ "Hindi", "English", "Bengali", "Marathi", "Gujrati","
     { id: 6, value: "Widowed", col: 1 },
   ];
 
-  export const gender = [
+  export const Gender = [
     { id: 'g1', value: "Male", col: 1 },
     { id: 'g2', value: "Female", col: 2 },
     { id: 'g3', value: "others", col: 1 },

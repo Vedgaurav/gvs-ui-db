@@ -2,87 +2,44 @@ import "bootstrap/dist/css/bootstrap.css";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 import "./FormInput.css";
-import { validateFname } from "../../RegexExpsValidation/RegexExps";
-import { languages,bloodGroup,ashrama,gender } from "../../utilities/OptionalEntries";
-import { fnameError } from "../../utilities/ErrorMessages";
+import { languages,bloodGroup,ashrama,Gender } from "../../utilities/OptionalEntries";
+
 
 
 const PersonalInfoForm = (props) => {
   const dispatch = useDispatch();
-  const { fname, mname, lname, initiatedName } = useSelector(
+  const { fname, mname, lname, initiatedName, gender, caste,gotra,dob ,isValidFname,isValidCaste,isValidGotra} = useSelector(
     (state) => state
   );
-
-  useEffect(()=>{
-
-    return ()=>{
-
-    }
-  },[]);
+   
   const inputHandler = (e) => {
-    const { value, id } = e.target;
-    dispatch({ type: id, data: value });
+    const { value, id,name } = e.target;
+    if (name==undefined){
+      dispatch({ type: id, data: value ,valid:true});
+    }
+    
+    else if(value.match(name) !==null) {
+      document.getElementById(id+'Error').innerText='';
+    dispatch({ type: id, data: value,valid:true });
+    enableSaveAndProceed();
+    }
+    else {
+      document.getElementById(id+'Error').innerText='invalid input';
+      dispatch({ type: id, data: value,valid:false });
+      enableSaveAndProceed(false);
+    }
+
+    
   };
 
-  // const saveDataHandler = (e) => {
-  //   const { value, id } = e.target;
-  //   console.log("id: ", id, "data: ", value);
-  // };
-  
-  
-  let validations={vFname:false,vMname:false,vlname:false,vIname:false,vOdob:false,vCdob:false,caste:false,subcaste:false,gotra:false}
-  
-  
-  const validate=(e)=>{
-    const {id,value}=e.target;
-    console.log(id);
-    switch (id) {
-      case 'fname':
-        if(validateFname.test(value))
-       { validations={...validations,vFname:true};
-        props.onStageChange(false);}
-        else {validations.vFname=false;
-          props.onStageChange(true);
-         }
-        break;
-        case 'mname':
-        if(validateFname.test(value))
-        validations={...validations,vMname:true};
-        break;
-        case 'lname':
-        if(validateFname.test(value))
-        validations={...validations,vLname:true};
-        break;
-        case 'iname':
-        if(validateFname.test(value))
-        validations={...validations,vLname:true};
-        break;
-        case 'odob':
-        if(validateFname.test(value))
-        validations={...validations,oDob:true};
-        break;
-        case 'cdob':
-        if(validateFname.test(value))
-        validations={...validations,oCdob:true};
-        break;
-        case 'cast':
-        if(validateFname.test(value))
-        validations={...validations,caste:true};
-        break;
-        case 'subcast':
-        if(validateFname.test(value))
-        validations={...validations,subcaste:true};
-        break;
-        case 'gotra':
-        if(validateFname.test(value))
-        validations={...validations,gotra:true};
-        break;
-      default:
-        break;
+  const enableSaveAndProceed=()=>{
+    if(isValidCaste && isValidFname&& isValidGotra){
+      dispatch({ type: 'submitDisable', data: "",valid:false });
     }
-    // console.log(validateFname.test(firstName))
+    else dispatch({ type: 'submitDisable', data: "",valid:true });
   }
   const genderChangeHandler=(e)=>{
+    document.getElementById('gender').value=e.target.value;
     let a=document.getElementsByName('gen');
     for (let index = 0; index < a.length; index++) {
       
@@ -101,6 +58,7 @@ const PersonalInfoForm = (props) => {
     }
   }
   }
+
   return (
     <>
       <h3>Personal Information</h3>
@@ -116,28 +74,24 @@ const PersonalInfoForm = (props) => {
                 type="text"
                 className="form-control "
                 placeholder="first name"
-                defaultValue={fname}
-                onChange={validate}
-              //   onChange={(e) => {
-              //     inputHandler(e);
-              //     saveDataHandler(e);
-              //   }
-              // }
-              onBlur={inputHandler}
+                name="^[a-zA-Z][a-zA-Z .,'-]*$"
+                onChange={inputHandler}
+                value={fname}
               />
-            {/* { validations.vFname ? <alert >{fnameError}</alert>:<alert>firstName</alert>} */}
+            <p id='fnameError' style={{color:'red',fontSize:'10px'}}></p>
             </div>
             <div className="form-col col-md-3">
               <input
                 id="mname"
                 type="text"
-                
+                name="^[a-zA-Z][a-zA-Z .,'-]*$"
                 className="form-control "
                 placeholder="middle name"
                 value={mname}
-                onChange={validate}
-                onBlur={inputHandler}
+                onChange={inputHandler}
+                
               />
+              <p id='mnameError' style={{color:'red',fontSize:'8px'}}></p>
             </div>
             <div className="form-col col-md-3">
               <input
@@ -145,28 +99,31 @@ const PersonalInfoForm = (props) => {
                 type="text"
                 className="form-control"
                 placeholder="last name"
+                name="^[a-zA-Z][a-zA-Z .,'-]*$"
                 value={lname}
-                onChange={validate}
+                onChange={inputHandler}
               />
+              <p id='lnameError' style={{color:'red',fontSize:'8px'}}></p>
             </div>
             <div className="form-col col-md-3"></div>
             <div className="form-col col-md-3">
               <input
                 id="iname"
                 type="text"
+                name="^[a-zA-Z][a-zA-Z .,'-]*$"
                 className="form-control"
                 value={initiatedName}
                 placeholder="Initiated Name if any"
-                onChange={validate}
-                onBlur={initiatedName}
+                onChange={inputHandler}
               />
+              <p id='inameError' style={{color:'red',fontSize:'8px'}}></p>
             </div>
           </div>
           <div className="form-group row">
             <div className="form-col form-check col-md-3">
               <label>Gender<a style={{color:'red'}}>*</a></label>
             </div>
-            {gender.map((e) => (
+            {Gender.map((e) => (
               <div className={`form-col col-md-${e.col}`} key={e.id} style={{marginRight:'30px'}}>
                 <label className="form-check-label">
                   <input type="radio" className="form-check-input ashram" id={e.id} name='gen' value={e.value} onChange={genderChangeHandler}/>
@@ -174,7 +131,8 @@ const PersonalInfoForm = (props) => {
                 </label>
               </div>
             ))}
-            
+            <input type='hidden' id="gender" name="^[a-zA-Z][a-zA-Z .,'-]*$" onChange={inputHandler}/>
+            <p id='genderError' name='' style={{color:'red',fontSize:'10px'}}></p>
           </div>
           <div className="form-group row">
             <div className="form-col col-md-3 ">
@@ -188,7 +146,8 @@ const PersonalInfoForm = (props) => {
                 className="form-control"
                 min="2019-01-01 0HH:0MM:0SS"
                 max="2022-12-31 0HH:0MM:0SS"
-                onChange={validate}
+                onChange={inputHandler}
+                defaultValue={dob}
               />
             </div>
             <div className="form-col col-md-3">
@@ -199,7 +158,8 @@ const PersonalInfoForm = (props) => {
                 className="form-control"
                 min="2019-01-01"
                 max="2022-12-31"
-                onChange={validate}
+                onChange={inputHandler}
+                defaultValue={dob}
               />
             </div>
           </div>
@@ -209,11 +169,15 @@ const PersonalInfoForm = (props) => {
             </div>
             <div className="form-col col-md-3">
               <input
-              id='cast'
+              id='caste'
                 type="text"
                 className="form-control"
+                name="^[a-zA-Z][a-zA-Z .,'-]*$"
                 placeholder="caste"
+                onChange={inputHandler}
+                value={caste}
               />
+              <p id='casteError' style={{color:'red',fontSize:'8px'}}></p>
             </div>
             <div className="form-col col-md-3">
               <input
@@ -221,15 +185,20 @@ const PersonalInfoForm = (props) => {
                 type="text"
                 className="form-control"
                 placeholder="sub caste"
+                // onChange={inputHandler}
               />
             </div>
             <div className="form-col col-md-3">
               <input
               id='gotra'
+              name="^[a-zA-Z][a-zA-Z .,'-]*$"
                 type="text"
                 className="form-control"
                 placeholder="gotra"
+                value={gotra}
+                onChange={inputHandler}
               />
+              <p id='gotraError' style={{color:'red',fontSize:'8px'}}></p>
             </div>
           </div>
           <div className="form-group row">
@@ -244,14 +213,14 @@ const PersonalInfoForm = (props) => {
                 </label>
               </div>
             ))}
-            <input type="text" id='aspiringAshram' onChangeCapture={inputHandler} hidden/>
+            <input type="text" id='aspiringAshram' onChange={inputHandler} hidden/>
           </div>
           <div className="form-group row">
-            <div className="form-col col-md-3" onChange={validate}>
+            <div className="form-col col-md-3" >
               <label>Blood Group<a style={{color:'red'}}>*</a></label>
             </div>
             <div className="form-col col-md-3">
-              <select className="form-select" onChange={validate}>
+              <select className="form-select" id='bloodGroup'onChange={inputHandler}>
                 {bloodGroup.map((e) => (
                   <option value={e} label={e} key={e} />
                 ))}
@@ -263,7 +232,7 @@ const PersonalInfoForm = (props) => {
               <label>languages Known<a style={{color:'red'}}>*</a></label>
             </div>
             <div className="form-col col-md-3">
-              <select className="form-select">
+              <select className="form-select" id='language' onChange={inputHandler}>
                 {languages.map((e) => (
                   <option value={e} label={e} key={e} />
                 ))}

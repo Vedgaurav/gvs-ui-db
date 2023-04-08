@@ -1,6 +1,7 @@
 import PersonalInfoForm from "./PersonalInfoForm";
 import ContactInfoForm from "./ContactInfoForm";
 import { useState,useEffect } from "react";
+import { useSelector,useDispatch } from "react-redux";
 import RegistrationProgressBar from "../RegProgBar/RegistrationProgressBar";
 import "./FormInput.css";
 import DevotionalInfoForm from "./DevotionalInfoForm";
@@ -11,7 +12,11 @@ import image from "../../images/lordWithDevs.png";
 import SubmitSuccess from "../../SuccessHandler/SubmitSuccess";
 import ErrorMessage from "../../SuccessHandler/ErrorMessage";
 import { requiredDataAllFields } from "../../utilities/AllFieldsData";
-const FormsContainer = () => {
+const FormsContainer = () =>{
+const dispatch = useDispatch();
+const {isSubmitDisabled} = useSelector(
+    (state) => state
+  );
   const [stage, setStage] = useState(1);
   const [back, setBack] = useState(true);
   const [forward, setForward] = useState(false);
@@ -43,8 +48,8 @@ const requestData = {
   const moveForward=(e)=>{
     console.log(e);
    if(e===true)
-   setValidMandatoryFields(true);
-   else    setValidMandatoryFields(false);
+   setValidMandatoryFields(isSubmitEnabled);
+   else    setValidMandatoryFields(isSubmitEnabled);
    
   }
   let forms={};
@@ -118,7 +123,7 @@ const requestData = {
   }
   const [jsxFormStage, setFormStage] = useState(
     <>
-      <PersonalInfoForm satge={stage} onStageChange={formStageHandler} />
+      <PersonalInfoForm satge={stage} onStageChange={moveForward} />
     </>
   );
 
@@ -150,7 +155,7 @@ const requestData = {
           type="button"
           className="btn btn-success col-sm-3 ms-5"
           onClick={() => formStageHandler(stage + 1)}
-          disabled={validMandatoryFields}
+          disabled={isSubmitDisabled}
         >
           {submit}
         </button>

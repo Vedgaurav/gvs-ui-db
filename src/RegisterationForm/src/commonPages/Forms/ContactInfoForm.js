@@ -5,40 +5,40 @@ import { validatePhoneNo,validateEmail } from "../../RegexExpsValidation/RegexEx
 
 const ContactInfoForm = (props) => {
   const dispatch = useDispatch();
-  // const { firstName, middleName, lastName, initiatedName } = useSelector(
-  //   (state) => state
-  // );
+   const { primaryPhone,whatsappPhone,email, } = useSelector(
+     (state) => state
+   );
 
   const inputHandler = (e) => {
-    const { value, id } = e.target;
-    dispatch({ type: id, data: value });
+    const { value, id,name } = e.target;
+    if (name==undefined){
+      dispatch({ type: id, data: value ,valid:true});
+    }
+    
+    else if(value.match(name) !==null) {
+      document.getElementById(id+'Error').innerText='';
+    dispatch({ type: id, data: value,valid:true });
+    enableSaveAndProceed();
+    }
+    else {
+      document.getElementById(id+'Error').innerText='invalid input';
+      dispatch({ type: id, data: value,valid:false });
+      enableSaveAndProceed(false);
+    }
+
+    
   };
 
-  const validate=(e)=>{
-    const {id,value}=e.target;
-    console.log(id);
-    switch (id) {
-      case 'pno':
-        if(validatePhoneNo.test(value)){
-            console.log(validatePhoneNo.test(value));
-        }
-        else console.log(validatePhoneNo.test(value));
-        break;
-        case 'Altno':
-        if(validatePhoneNo.test(value)){
-            console.log(validatePhoneNo.test(value));
-        }
-        else console.log(validatePhoneNo.test(value));
-        break;
-        case 'email':
-        if(validateEmail.test(value)){
-            console.log(validateEmail.test(value));
-        }
-        else console.log(validateEmail.test(value));
-        break;
-        default:
-        break;
-    }}
+  const enableSaveAndProceed=()=>{
+    if(isValidCaste && isValidFname&& isValidGotra){
+      dispatch({ type: 'submitDisable', data: "",valid:false });
+    }
+    else dispatch({ type: 'submitDisable', data: "",valid:true });
+  }
+
+const permanentAddHandler=()=>{
+       
+}
   return (
     <>
       <h3>Contact Details</h3>
@@ -52,24 +52,27 @@ const ContactInfoForm = (props) => {
               <input
                 
                 type="number"
-                id="pno"
+                id="primaryPhone"
                 className="form-control"
                 placeholder="Always Reachable"
                 maxLength={10}
-                onChange={validate}
-                onBlur={inputHandler}
+                value={primaryPhone}
+                onChange={inputHandler}
+                name="^\\d{10}$"
               />
+              <p id='primaryPhoneError' style={{color:'red',fontSize:'8px'}}></p>
             </div>
             <div className="form-col col-md-4">
               <input
-                id="Altno"
+                id="whatsappPhone"
                 className="form-control"
                 type="number"
                 placeholder="Alternate/whatsapp No."
                 maxLength={10}
-                onChange={validate}
-                onBlur={inputHandler}
+                onChange={inputHandler}
+                name="^\\d{10}$"
               />
+              <p id='whatsappError' style={{color:'red',fontSize:'8px'}}></p>
             </div>
             <div className="form-group row">
               <div className="form-col col-md-3">
@@ -80,11 +83,12 @@ const ContactInfoForm = (props) => {
                 id='email'
                   className="form-control"
                   type="email"
+                  name='[a-z0-9]+@[a-z]+\.[a-z]{2,3}'
                   placeholder="xyz@gmail.com"
-                  onChange={validate}
-                  onBlur={inputHandler}
+                  onChange={inputHandler}
+                  
                 />
-                
+                <p id='emailError' style={{color:'red',fontSize:'8px'}}></p>
               </div>
             </div>
             <div className="form-group row">
@@ -101,9 +105,10 @@ const ContactInfoForm = (props) => {
                   type="text"
                   className="form-control"
                   style={{ width: "400px" }}
-                  
-                  onBlur={inputHandler}
+                  placeholder="Address Line 1"
+                  onChange={inputHandler}
                 />
+                <p id='currentError' style={{color:'red',fontSize:'8px'}}></p>
               </div>
             </div>
             <div className="form-group row">
@@ -114,6 +119,7 @@ const ContactInfoForm = (props) => {
                   className="form-control"
                   style={{ width: "400px" }}
                   id='currAddLine2'
+                  placeholder="Address Line 2"
                   onBlur={inputHandler}
                 />
               </div>
@@ -126,8 +132,7 @@ const ContactInfoForm = (props) => {
                   className="form-control"
                   id="currAddCity"
                   placeholder="city"
-                  onChange={validate}
-                  onBlur={inputHandler}
+                  onChange={inputHandler}
                 />
               </div>
 
@@ -158,6 +163,8 @@ const ContactInfoForm = (props) => {
                   id="currAddCountry"
                   placeholder="Country"
                 />
+                <input type="hidden" id="currentAddress" />
+                <p id='currentAddress' style={{color:'red',fontSize:'8px'}}></p>
               </div>
             </div>
             <div className="form-group row">
@@ -170,8 +177,8 @@ const ContactInfoForm = (props) => {
 
               <div className="form-col col-md-3">
               <div className="form-check">
-  <input className="form-check-input" type="checkbox" value="" id="flexCheckChecked" />
-  <label className="form-check-label" for="flexCheckChecked">
+  <input className="form-check-input" type="checkbox" value="" id="flexCheckChecked"  onClick={permanentAddHandler} />
+  <label className="form-check-label" htmlFor="flexCheckChecked">
     Same as current
   </label>
 </div>

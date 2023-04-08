@@ -2,18 +2,20 @@ import { legacy_createStore as createStore } from "redux";
 import { requiredDataAllFields } from "../utilities/AllFieldsData";
 
 const form1Reducer = (state = requiredDataAllFields, action) => {
-  // console.log("actions==>", action)
   switch (action.type) {
     case "fname":
+      console.log(action.type,action.data,action.valid)
       return {
         ...state,
         fname: action.data,
+        isValidFname:action.valid,
       };
 
     case "mname":
       return {
         ...state,
         mname: action.data,
+        
       };
     case "lname":
       return {
@@ -26,9 +28,11 @@ const form1Reducer = (state = requiredDataAllFields, action) => {
         initiatedName: action.data,
       };
     case "gender":
+      console.log(action.type,action.data,action.valid)
       return {
         ...state,
         gender: action.data,
+        isValidGender: action.valid
       };
     case "odob":
       return {
@@ -45,6 +49,20 @@ const form1Reducer = (state = requiredDataAllFields, action) => {
         ...state,
         bloodGroup: action.data,
       };
+    case 'caste':
+      console.log(action.type,action.data,action.valid)
+      return {
+        ...state,
+        caste:action.data,
+        isValidCaste: action.valid,
+      }
+      case 'gotra':
+        console.log(action.type,action.data,action.valid)
+      return {
+        ...state,
+        gotra:action.data,
+        isValidGotra: action.valid,
+      }
     case "language":
       return {
         ...state,
@@ -231,6 +249,12 @@ const form1Reducer = (state = requiredDataAllFields, action) => {
         ...state,
         stayingInHaldiaVoice: action.data,
       };
+    case "submitDisable":
+      console.log("submitDisable",action.valid)
+      return{
+        ...state,
+        isSubmitDisabled: action.valid,
+      }
     default:
       return state;
   }
