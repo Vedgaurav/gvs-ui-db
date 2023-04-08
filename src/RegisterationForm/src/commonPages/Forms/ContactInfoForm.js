@@ -1,11 +1,12 @@
 import { useSelector, useDispatch } from "react-redux";
+import { useState } from "react";
 import "bootstrap/dist/css/bootstrap.css";
 import "./FormInput.css";
 import { validatePhoneNo,validateEmail } from "../../RegexExpsValidation/RegexExps";
 
 const ContactInfoForm = (props) => {
   const dispatch = useDispatch();
-   const { primaryPhone,whatsappPhone,email, } = useSelector(
+   const { primaryPhone,whatsappPhone,email,isValidPrimaryNo,isValidEmail } = useSelector(
      (state) => state
    );
 
@@ -16,6 +17,7 @@ const ContactInfoForm = (props) => {
     }
     
     else if(value.match(name) !==null) {
+      console.log('matched with regex');
       document.getElementById(id+'Error').innerText='';
     dispatch({ type: id, data: value,valid:true });
     enableSaveAndProceed();
@@ -23,21 +25,37 @@ const ContactInfoForm = (props) => {
     else {
       document.getElementById(id+'Error').innerText='invalid input';
       dispatch({ type: id, data: value,valid:false });
-      enableSaveAndProceed(false);
+      enableSaveAndProceed();
     }
 
     
   };
-
+   const [sameAsCurrent,setSameAsCurrent]=useState(false);
   const enableSaveAndProceed=()=>{
-    if(isValidCaste && isValidFname&& isValidGotra){
+    if(isValidPrimaryNo&&isValidEmail){
       dispatch({ type: 'submitDisable', data: "",valid:false });
     }
     else dispatch({ type: 'submitDisable', data: "",valid:true });
   }
 
-const permanentAddHandler=()=>{
-       
+  const currentAddressFiller=(e)=>{
+    const addline1=document.getElementById('currAddLine1').value;
+    const addLine2=document.getElementById('currAddLine2').value;
+    const city=document.getElementById('currAddCity').value;
+    const State=document.getElementById('currAddState').value;
+    const zip=document.getElementById('currAddZip').value;
+    const country=document.getElementById('currAddCountry').value;
+    document.getElementById('currentAddress').value=addline1+','+addLine2+","+city+","+State+","+zip+","+country;
+  }
+const permanentAddHandler=(e)=>{
+       if(e.target.checked===true){
+       setSameAsCurrent(true);
+      document.getElementById('permanentAddress').value=  document.getElementById('currentAddress').value;
+       }
+       else {
+        setSameAsCurrent(false);
+        document.getElementById('permanentAddress').value=  "";
+       }
 }
   return (
     <>
@@ -58,7 +76,7 @@ const permanentAddHandler=()=>{
                 maxLength={10}
                 value={primaryPhone}
                 onChange={inputHandler}
-                name="^\\d{10}$"
+                name="^[0-9]{10}$"
               />
               <p id='primaryPhoneError' style={{color:'red',fontSize:'8px'}}></p>
             </div>
@@ -106,9 +124,8 @@ const permanentAddHandler=()=>{
                   className="form-control"
                   style={{ width: "400px" }}
                   placeholder="Address Line 1"
-                  onChange={inputHandler}
+                  onChange={currentAddressFiller}
                 />
-                <p id='currentError' style={{color:'red',fontSize:'8px'}}></p>
               </div>
             </div>
             <div className="form-group row">
@@ -120,7 +137,7 @@ const permanentAddHandler=()=>{
                   style={{ width: "400px" }}
                   id='currAddLine2'
                   placeholder="Address Line 2"
-                  onBlur={inputHandler}
+                  onChange={currentAddressFiller}
                 />
               </div>
             </div>
@@ -132,7 +149,7 @@ const permanentAddHandler=()=>{
                   className="form-control"
                   id="currAddCity"
                   placeholder="city"
-                  onChange={inputHandler}
+                  onChange={currentAddressFiller}
                 />
               </div>
 
@@ -142,6 +159,7 @@ const permanentAddHandler=()=>{
                   className="form-control"
                   id="currAddState"
                   placeholder="State"
+                  onChange={currentAddressFiller}
                 />
               </div>
             </div>
@@ -149,10 +167,12 @@ const permanentAddHandler=()=>{
               <div className="form-col col-md-3"></div>
               <div className="form-col col-md-3">
                 <input
-                  type="text"
+                  type="number"
                   className="form-control"
                   id="currAddZip"
                   placeholder="ZipCode"
+                  
+                  onChange={currentAddressFiller}
                 />
               </div>
 
@@ -162,9 +182,10 @@ const permanentAddHandler=()=>{
                   type="text"
                   id="currAddCountry"
                   placeholder="Country"
+                  onChange={currentAddressFiller}
                 />
-                <input type="hidden" id="currentAddress" />
-                <p id='currentAddress' style={{color:'red',fontSize:'8px'}}></p>
+                <input type="hidden" id="currentAddress" onChange={inputHandler}/>
+                <p id='currentAddressError' style={{color:'red',fontSize:'8px'}}></p>
               </div>
             </div>
             <div className="form-group row">
@@ -181,10 +202,11 @@ const permanentAddHandler=()=>{
   <label className="form-check-label" htmlFor="flexCheckChecked">
     Same as current
   </label>
+  <input type='hidden' id='permanentAddress'/>
 </div>
 </div>
 </div>
-<div className="form-group row">
+<div className="form-group row" hidden={sameAsCurrent}>
 <div className="form-col col-md-3"/>
 <div className="form-col col-md-3">
                 <input
@@ -195,7 +217,7 @@ const permanentAddHandler=()=>{
                 />
               </div>
             </div>
-            <div className="form-group row">
+            <div className="form-group row" hidden={sameAsCurrent}>
               <div className="form-col col-md-3"></div>
               <div className="form-col col-md-3">
                 <input
@@ -206,7 +228,7 @@ const permanentAddHandler=()=>{
                 />
               </div>
             </div>
-            <div className="form-group row">
+            <div className="form-group row" hidden={sameAsCurrent}>
               <div className="form-col col-md-3"></div>
               <div className="form-col col-md-3">
                 <input
@@ -217,7 +239,7 @@ const permanentAddHandler=()=>{
                 />
               </div>
 
-              <div className="form-col col-md-3">
+              <div className="form-col col-md-3" hidden={sameAsCurrent}>
                 <input
                   type="text"
                   className="form-control"
@@ -226,7 +248,7 @@ const permanentAddHandler=()=>{
                 />
               </div>
             </div>
-            <div className="form-group row">
+            <div className="form-group row" hidden={sameAsCurrent}>
               <div className="form-col col-md-3"></div>
               <div className="form-col col-md-3">
                 <input
@@ -237,13 +259,14 @@ const permanentAddHandler=()=>{
                 />
               </div>
 
-              <div className="form-col col-md-3">
+              <div className="form-col col-md-3" hidden={sameAsCurrent}>
                 <input
                   className="form-control"
                   type="text"
                   id=""
                   placeholder="Country"
                 />
+                
               </div>
             </div>
           </div>

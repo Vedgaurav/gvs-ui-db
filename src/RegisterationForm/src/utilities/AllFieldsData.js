@@ -13,11 +13,11 @@ export const requiredDataAllFields={
     bloodGroup: null,
     language: null,
     profileImgUrl: null,
-    primaryPhone: null,
-    whatsappPhone: null,
-    email: null,
-    currentAddress: null,
-    permanentAddress: null,
+    primaryPhone: '',
+    whatsappPhone: '',
+    email: '',
+    currentAddress: '',
+    permanentAddress: "",
     centerConnectedTo: null,
     facilitator: null,
     counselor: null,
@@ -55,5 +55,7 @@ export const requiredDataAllFields={
     isValidGotra:false,
     isValidImageURL:false,
     isSubmitDisabled:true,
+    isValidPrimaryNo :false,
+    isValidEmail:false
   }
   

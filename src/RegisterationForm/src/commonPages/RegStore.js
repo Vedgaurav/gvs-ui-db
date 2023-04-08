@@ -77,6 +77,7 @@ const form1Reducer = (state = requiredDataAllFields, action) => {
       return {
         ...state,
         primaryPhone: action.data,
+        isValidPrimaryNo: action.valid
       };
     case "whatsAppPhone":
       return {
@@ -87,6 +88,7 @@ const form1Reducer = (state = requiredDataAllFields, action) => {
       return {
         ...state,
         email: action.data,
+        isValidEmail: action.valid
       };
     case "currentAddress":
       return {
