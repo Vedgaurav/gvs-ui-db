@@ -1,20 +1,49 @@
 import { facilitators } from "../../utilities/OptionalEntries";
 import { useSelector,useDispatch } from "react-redux";
-import { useState } from "react";
+import { useState,useEffect } from "react";
 const DevotionalInfoForm = () => {
   const dispatch=useDispatch();
+  const { centerConnectedTo,isValidCenterConnectedTo} = useSelector(
+    (state) => state
+  );
+  useEffect(()=>{
+  enableSaveAndProceed();
+  },[])
   const inputHandler = (e) => {
-    const { value, id } = e.target;
-    dispatch({ type: id, data: value });
+    
+    const { value, id,name } = e.target;
+    console.log(id,name,value)
+    if (name==undefined || name==''){
+      dispatch({ type: id, data: value ,valid:true});
+    }
+    
+    else if(value.match(name) !==null) {
+      document.getElementById(id+'Error').innerText='';
+    dispatch({ type: id, data: value,valid:true });
+    enableSaveAndProceed();
+    }
+    else {
+      document.getElementById(id+'Error').innerText='invalid input';
+      dispatch({ type: id, data: value,valid:false });
+      enableSaveAndProceed(false);
+    }
+
+    
   };
+
+  const enableSaveAndProceed=()=>{
+    if(isValidCenterConnectedTo){
+      dispatch({ type: 'submitDisable', data: "",valid:false });
+    }
+    else dispatch({ type: 'submitDisable', data: "",valid:true });
+  }
   const [center,setCenter]=useState(true);
   const [counselor,setCounselor]=useState(true);
   const centerHandler=(e)=>{
-  document.getElementById('centerConnectedTo').value=e.target.value;
-  let a=document.getElementsByName('temple');
+  
+  let a=document.getElementsByClassName('temple');
   for (let index = 0; index < a.length; index++) {
-    
-    if(!a[index].value==e.target.value){
+    if(a[index].value!==e.target.value){
       a[index].checked=false;
     }
   }
@@ -39,18 +68,19 @@ const DevotionalInfoForm = () => {
           </div>
           <div className={`form-col col-md-3`}>
             <label className="form-check-label">
-              <input type="radio" className="form-check-input" name='temple'value='ISKCON Haldia'onClick={centerHandler} onClickCapture={()=>setCenter(true)}/>
+              <input type="radio" className="form-check-input temple"  id='centerConnectedTo'value='ISKCON Haldia' onClickCapture={(e)=>{centerHandler(e),inputHandler(e),setCenter(true)}}/>
               ISKCON HALDIA
             </label>
           </div>
           <div className={`form-col col-md-2`}>
             <label className="form-check-label">
-              <input type="radio" className="form-check-input" name='temple' value='' onClick={centerHandler} onClickCapture={()=>setCenter(false)}/>
+              <input type="radio" className="form-check-input temple"  value='others' onClick={centerHandler} onClickCapture={()=>setCenter(false)}/>
               OTHERS
             </label>
           </div>
           <div className={`form-col col-md-3`}>
-            <input type="text" id='centerConnectedTo' className="form-control" hidden={center} onChangeCapture={inputHandler}/>
+            <input type="text" id='connectedTemple' className="form-control" name="^[a-zA-Z][a-zA-Z .,'-]*$" hidden={center} value={centerConnectedTo}  onChange={inputHandler} onBlur={enableSaveAndProceed}/>
+            <p id='centerConnectedToError' style={{color:'red',fontSize:'10px'}}/>
           </div>
         </div>
         <div className="form-group row">
@@ -63,6 +93,11 @@ const DevotionalInfoForm = () => {
                 <option value={e} label={e} />
               ))}
             </select>
+            <div className={`form-col col-md-3`}>
+            
+              <input type="text" name='selectCounselor' className="form-check-input" value='HG Kumar Lila Das'onClick={counselorHandler} onClickCapture={()=>setCounselor(true)}/>
+              
+          </div>
           </div>
         </div>
         <div className="form-group row">
@@ -90,8 +125,10 @@ const DevotionalInfoForm = () => {
             <label>Spiritual Master<a style={{color:'red'}}>*</a></label>
           </div>
           <div className={`form-col col-md-5`}>
-            <input id='spiritualMaster' type="text" className="form-control" onBlur={inputHandler}/>
+            <input id='spiritualMaster' type="text" name="^[a-zA-Z][a-zA-Z .,'-]*$" className="form-control" onBlur={inputHandler}/>
+            <p id='spiritualMasterError' style={{color:'red',fontSize:'10px'}}/>
           </div>
+          
         </div>
       </div>
     </>

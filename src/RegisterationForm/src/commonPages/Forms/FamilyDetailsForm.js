@@ -1,6 +1,42 @@
 import { motherTongue,religion } from "../../utilities/OptionalEntries";
 import { useSelector,useDispatch } from "react-redux";
+import { useEffect } from "react";
 const FamilyDetails = () => {
+  const dispatch = useDispatch();
+   const { primaryPhone,whatsappPhone,email,isValidPrimaryNo,isValidEmail } = useSelector(
+     (state) => state
+   );
+useEffect(()=>{
+enableSaveAndProceed();
+},[])
+  const inputHandler = (e) => {
+    const { value, id,name } = e.target;
+    console.log(name,id,value)
+    if (name==undefined || name==''){
+      dispatch({ type: id, data: value ,valid:true});
+    }
+    
+    else if(value.match(name) !==null) {
+      console.log('matched with regex');
+      document.getElementById(id+'Error').innerText='';
+    dispatch({ type: id, data: value,valid:true });
+    enableSaveAndProceed();
+    }
+    else {
+      document.getElementById(id+'Error').innerText='invalid input';
+      dispatch({ type: id, data: value,valid:false });
+      enableSaveAndProceed();
+    }
+
+    
+  };
+   
+  const enableSaveAndProceed=()=>{
+    if(isValidPrimaryNo&&isValidEmail){
+      dispatch({ type: 'submitDisable', data: "",valid:false });
+    }
+    else dispatch({ type: 'submitDisable', data: "",valid:true });
+  }
 
   return (
     <>

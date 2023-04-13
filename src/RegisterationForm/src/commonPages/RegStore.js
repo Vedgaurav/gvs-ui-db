@@ -95,6 +95,26 @@ const form1Reducer = (state = requiredDataAllFields, action) => {
         ...state,
         currentAddress: action.data,
       };
+      case "currAddCountry":
+        return{
+          ...state,
+          currAddCountry: action.data
+        }
+        case "currAddState":
+        return{
+          ...state,
+          currAddState: action.data
+        }
+        case "currAddCity":
+          return{
+            ...state,
+            currAddCity:action.data
+          }
+          case "currAddZip":
+            return{
+              ...state,
+              currAddZip:action.data
+            }
     case "permanentAddress":
       return {
         ...state,
@@ -104,6 +124,7 @@ const form1Reducer = (state = requiredDataAllFields, action) => {
       return {
         ...state,
         centerConnectedTo: action.data,
+        isValidCenterConnectedTo:action.valid
       };
     case "facilitator":
       return {

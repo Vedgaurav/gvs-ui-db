@@ -36,7 +36,7 @@ export const requiredDataAllFields={
     yearChanting16Rounds: "",
     introducedBy: "",
     yearOfIntroduction: "",
-    previousCounselor: null,
+    previousCounselor: "",
     preferredServices: null,
     servicesRendered: null,
     education: null,

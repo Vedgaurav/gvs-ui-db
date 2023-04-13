@@ -129,7 +129,7 @@ const requestData = {
 
   return (
     <>
-      <div className="registration container ">
+      
         {/* <img 
             src={image}
             alt=''
@@ -159,7 +159,7 @@ const requestData = {
         >
           {submit}
         </button>
-      </div>
+      
     </>
   );
 };

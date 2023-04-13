@@ -1,5 +1,5 @@
 
-.registration {
+/* .registration {
     padding: 0rem;
     scroll-behavior: smooth;
     background-color: rgb(255, 255, 255);
@@ -11,9 +11,9 @@
     box-shadow: 0 1px 8px rgba(0, 0, 0, 0.25);
     min-width: 10px;
     content: 'width=device-width, initial-scale=1.0';
-  }
+  } */
  
-.mainpage {
+/* .mainpage {
     background-color: #D3D3D3;  
     position:-ms-page;
     
@@ -23,9 +23,9 @@
     left:0;
 
       width: 203.7vh;
-    height: 100vh;  
+    height: 100vh;   */
     /* background:rgba(255,255,255,0.5); */
-}
+/* } */
 /* @media screen and (max-width: 700px) {
   .mainpage {
     width: 100%;

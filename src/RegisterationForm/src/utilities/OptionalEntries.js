@@ -18,6 +18,7 @@ export const languages = [ "Hindi", "English", "Bengali", "Marathi", "Gujrati","
     { id: 'g3', value: "others", col: 1 },
     
   ];
+  export const countries=['India','Nepal']
 
   export const facilitators = [
     "No Facilitator",

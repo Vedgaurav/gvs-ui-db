@@ -13,8 +13,10 @@ const PersonalInfoForm = (props) => {
   );
    
   const inputHandler = (e) => {
+    
     const { value, id,name } = e.target;
-    if (name==undefined){
+    console.log(id,name,value)
+    if (name==undefined || name==''){
       dispatch({ type: id, data: value ,valid:true});
     }
     
@@ -39,25 +41,28 @@ const PersonalInfoForm = (props) => {
     else dispatch({ type: 'submitDisable', data: "",valid:true });
   }
   const genderChangeHandler=(e)=>{
-    document.getElementById('gender').value=e.target.value;
-    let a=document.getElementsByName('gen');
+    let a=document.getElementsByClassName('gender');
     for (let index = 0; index < a.length; index++) {
       
-      if(!a[index].value==e.target.value){
+      if(a[index].value!==e.target.value){
         a[index].checked=false;
       }
     }
   }
   const ashramaChangeHandle=(e)=>{
-    document.getElementById('aspiringAshram').value=e.target.value;
-  let a=document.getElementsByName('ashramaHandle');
+    
+  let a=document.getElementsByClassName('ashramahandle');
   for (let index = 0; index < a.length; index++) {
     
-    if(!a[index].value==e.target.value){
+    if(a[index].value!==e.target.value){
       a[index].checked=false;
     }
   }
   }
+
+  useEffect(()=>{
+  enableSaveAndProceed();
+  },[])
 
   return (
     <>
@@ -77,6 +82,7 @@ const PersonalInfoForm = (props) => {
                 name="^[a-zA-Z][a-zA-Z .,'-]*$"
                 onChange={inputHandler}
                 value={fname}
+                onBlur={enableSaveAndProceed}
               />
             <p id='fnameError' style={{color:'red',fontSize:'10px'}}></p>
             </div>
@@ -126,12 +132,11 @@ const PersonalInfoForm = (props) => {
             {Gender.map((e) => (
               <div className={`form-col col-md-${e.col}`} key={e.id} style={{marginRight:'30px'}}>
                 <label className="form-check-label">
-                  <input type="radio" className="form-check-input ashram" id={e.id} name='gen' value={e.value} onChange={genderChangeHandler}/>
+                  <input type="radio" className="form-check-input gender" id="gender"  value={e.value} onChange={(e)=>{genderChangeHandler(e),inputHandler(e)}}/>
                   {e.value}
                 </label>
               </div>
             ))}
-            <input type='hidden' id="gender" name="^[a-zA-Z][a-zA-Z .,'-]*$" onChange={inputHandler}/>
             <p id='genderError' name='' style={{color:'red',fontSize:'10px'}}></p>
           </div>
           <div className="form-group row">
@@ -142,7 +147,7 @@ const PersonalInfoForm = (props) => {
               <label>Original<a style={{color:'red'}}>*</a></label>
               <input
                 id='odob'
-                type="datetime-local"
+                type="date"
                 className="form-control"
                 min="2019-01-01 0HH:0MM:0SS"
                 max="2022-12-31 0HH:0MM:0SS"
@@ -154,7 +159,7 @@ const PersonalInfoForm = (props) => {
               <label>Certificate<a style={{color:'red'}}>*</a></label>
               <input
                 id='cdob'
-                type="datetime-local"
+                type="date"
                 className="form-control"
                 min="2019-01-01"
                 max="2022-12-31"
@@ -176,6 +181,7 @@ const PersonalInfoForm = (props) => {
                 placeholder="caste"
                 onChange={inputHandler}
                 value={caste}
+                onBlur={enableSaveAndProceed}
               />
               <p id='casteError' style={{color:'red',fontSize:'8px'}}></p>
             </div>
@@ -196,7 +202,9 @@ const PersonalInfoForm = (props) => {
                 className="form-control"
                 placeholder="gotra"
                 value={gotra}
-                onChange={inputHandler}
+                onInput={inputHandler}
+                
+                onBlur={enableSaveAndProceed}
               />
               <p id='gotraError' style={{color:'red',fontSize:'8px'}}></p>
             </div>
@@ -208,12 +216,12 @@ const PersonalInfoForm = (props) => {
             {ashrama.map((e) => (
               <div className={`form-col col-md-${e.col}`} key={e.id} style={{marginRight:'30px'}}>
                 <label className="form-check-label">
-                  <input type="radio" className="form-check-input" name='ashramaHandle'id={e.id} value={e.value} onClick={ashramaChangeHandle}/>
+                  <input type="radio" className="form-check-input ashramahandle" name=''id="aspiringAshram" value={e.value} onClick={(e)=>{inputHandler(e),ashramaChangeHandle(e)}}/>
                   {e.value}
                 </label>
               </div>
             ))}
-            <input type="text" id='aspiringAshram' onChange={inputHandler} hidden/>
+            
           </div>
           <div className="form-group row">
             <div className="form-col col-md-3" >
