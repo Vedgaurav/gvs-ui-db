@@ -49,15 +49,6 @@ const PersonalInfoForm = (props) => {
       }
     }
   }
-  const maritalStatusHandle=(e)=>{
-    let a=document.getElementsByClassName('maritalstatushandle');
-    for (let index = 0; index < a.length; index++) {
-      
-      if(a[index].value!==e.target.value){
-        a[index].checked=false;
-      }
-    }
-  }
   const ashramaChangeHandle=(e)=>{
     
   let a=document.getElementsByClassName('ashramahandle');
@@ -217,20 +208,6 @@ const PersonalInfoForm = (props) => {
               />
               <p id='gotraError' style={{color:'red',fontSize:'8px'}}></p>
             </div>
-          </div>
-          <div className="form-group row">
-            <div className="form-col form-check col-md-3">
-              <label>Marital Status<a style={{color:'red'}}>*</a></label>
-            </div>
-            {maritalStatus.map((e) => (
-              <div className={`form-col col-md-1`} key={e} style={{marginRight:'30px'}}>
-                <label className="form-check-label">
-                  <input type="radio" className="form-check-input maritalstatushandle" name=''id="maritalStatus" value={e} onClick={(e)=>{inputHandler(e),maritalStatusHandle(e)}}/>
-                  {e}
-                </label>
-              </div>
-            ))}
-            
           </div>
           <div className="form-group row">
             <div className="form-col form-check col-md-3">

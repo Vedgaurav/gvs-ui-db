@@ -44,14 +44,6 @@ const requestData = {
     console.log(submitResponse);
     console.log(error);
   }
-  const [validMandatoryFields,setValidMandatoryFields]=useState(true);
-  const moveForward=(e)=>{
-    console.log(e);
-   if(e===true)
-   setValidMandatoryFields(isSubmitEnabled);
-   else    setValidMandatoryFields(isSubmitEnabled);
-   
-  }
   let forms={};
   const formStageHandler = (stage) => {
     switch (stage) {

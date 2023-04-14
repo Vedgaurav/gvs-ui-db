@@ -1,11 +1,12 @@
-import { motherTongue } from "../../utilities/OptionalEntries";
+import { motherTongue,maritalStatus } from "../../utilities/OptionalEntries";
 import { useSelector,useDispatch } from "react-redux";
-import { useEffect } from "react";
+import { useEffect,useState } from "react";
 const FamilyDetails = () => {
   const dispatch = useDispatch();
    const {  } = useSelector(
      (state) => state
    );
+  const[hidden,setHidden]= useState(true);
 useEffect(()=>{
 enableSaveAndProceed();
 },[])
@@ -37,7 +38,18 @@ enableSaveAndProceed();
     }
     else dispatch({ type: 'submitDisable', data: "",valid:true });
   }
-
+  const maritalStatusHandle=(e)=>{
+    let a=document.getElementsByClassName('maritalstatushandle');
+    if(e.target.value==='MARRIED')
+     setHidden(false);
+     else setHidden(true);
+    for (let index = 0; index < a.length; index++) {
+      
+      if(a[index].value!==e.target.value){
+        a[index].checked=false;
+      }
+    }
+  }
   return (
     <>
       <h2>Family Details</h2>
@@ -50,33 +62,13 @@ enableSaveAndProceed();
           </div>
           <div className="form-col col-md-3">
             <input
-              id="fname"
+              id="fathersName"
               type="text"
               className="form-control "
-              placeholder="first name"
+              placeholder="Enter full name"
               
             />
           </div>
-          <div className="form-col col-md-3">
-            <input
-              id="mname"
-              type="text"
-              className="form-control "
-              placeholder="middle name"
-              
-            />
-          </div>
-          <div className="form-col col-md-3">
-            <input
-              id="lname"
-              type="text"
-              className="form-control"
-              placeholder="last name"
-              
-            />
-          </div>
-        </div>
-        <div className="form-group row">
           <div className="form-col col-md-3">
             <label>
               Mother's Name<a style={{ color: "red" }}>*</a>
@@ -84,78 +76,16 @@ enableSaveAndProceed();
           </div>
           <div className="form-col col-md-3">
             <input
-              id="fname"
+              id="mothersName"
               type="text"
               className="form-control "
-              placeholder="first name"
-              
-            />
-          </div>
-          <div className="form-col col-md-3">
-            <input
-              id="mname"
-              type="text"
-              className="form-control "
-              placeholder="middle name"
-              
-            />
-          </div>
-          <div className="form-col col-md-3">
-            <input
-              id="lname"
-              type="text"
-              className="form-control"
-              placeholder="last name"
+              placeholder="Enter full name"
               
             />
           </div>
         </div>
-        <div className="form-group row">
-          <div className="form-col col-md-3">
-            <label>
-              Spouse Name<a style={{ color: "red" }}>*</a>
-            </label>
-          </div>
-          <div className="form-col col-md-3">
-            <input
-              id="fname"
-              type="text"
-              className="form-control"
-              placeholder="first name"
-              
-            />
-          </div>
-          <div className="form-col col-md-3">
-            <input
-              id="mname"
-              type="text"
-              className="form-control "
-              placeholder="middle name"
-              
-            />
-          </div>
-          <div className="form-col col-md-3">
-            <input
-              id="lname"
-              type="text"
-              className="form-control"
-              placeholder="last name"
-              
-            />
-          </div>
-        </div>
-        <div className="form-group row">
-          <div className="form-col col-md-3 ">
-            <label>
-              {" "}
-              Date of Marriage<a style={{ color: "red" }}>*</a>
-            </label>
-          </div>
-          <div className="form-col col-md-3 ">
-            <input type="date" className="form-control" onChange={() => {}} />
-          </div>
-        </div>
-        <div className="form-group row">
+        
+          <div className="form-group row">
           <div className="form-col col-md-3">
             <label>
               Mother Tongue<a style={{ color: "red" }}>*</a>
@@ -168,19 +98,57 @@ enableSaveAndProceed();
               ))}
             </select>
           </div>
+          </div>
+          <div className="form-group row">
+            <div className="form-col form-check col-md-3">
+              <label>Marital Status<a style={{color:'red'}}>*</a></label>
+            </div>
+            {maritalStatus.map((e) => (
+              <div className={`form-col col-md-1`} key={e} style={{marginRight:'30px'}}>
+                <label className="form-check-label">
+                  <input type="radio" className="form-check-input maritalstatushandle" id="maritalStatus" value={e} onClick={(e)=>{inputHandler(e),maritalStatusHandle(e)}}/>
+                  {e}
+                </label>
+              </div>
+            ))}
+            
+          </div>
+        <div className="form-group row" hidden={hidden}>
+          <div className="form-col col-md-3">
+            <label>
+              Spouse Name<a style={{ color: "red" }}>*</a>
+            </label>
+          </div>
+          <div className="form-col col-md-3">
+            <input
+              id="spouseName"
+              type="text"
+              className="form-control"
+              placeholder="Enter full name"
+              
+            />
+          </div>
+          <div className="form-col col-md-3 ">
+            <label>
+              {" "}
+              Date of Marriage<a style={{ color: "red" }}>*</a>
+            </label>
+          </div>
+          <div className="form-col col-md-3 ">
+            <input type="date" className="form-control" onChange={() => {}} />
+          </div>
         </div>
-        <div className="form-group row">
+        <div className="form-group row" hidden={hidden}>
           <div className="form-col form-check col-md-3">
             <label>Children</label>
           </div>
           <div className={`form-col col-md-3`}>
-            <label className="sm" style={{ fontSize: "10px", color: "green" }}>
               <textarea
                 className="form-control"
+                
                 placeholder={"1.\n2.\n3.\n4."}
               />
-              * leave empty if not applicable
-            </label>
+              <p style={{ fontSize: "10px", color: "green" }}>* leave empty if not applicable</p>
           </div>
         </div>
       </div>
