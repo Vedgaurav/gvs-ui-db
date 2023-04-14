@@ -1,9 +1,9 @@
-import { motherTongue,religion } from "../../utilities/OptionalEntries";
+import { motherTongue } from "../../utilities/OptionalEntries";
 import { useSelector,useDispatch } from "react-redux";
 import { useEffect } from "react";
 const FamilyDetails = () => {
   const dispatch = useDispatch();
-   const { primaryPhone,whatsappPhone,email,isValidPrimaryNo,isValidEmail } = useSelector(
+   const {  } = useSelector(
      (state) => state
    );
 useEffect(()=>{
@@ -32,7 +32,7 @@ enableSaveAndProceed();
   };
    
   const enableSaveAndProceed=()=>{
-    if(isValidPrimaryNo&&isValidEmail){
+    if(true){
       dispatch({ type: 'submitDisable', data: "",valid:false });
     }
     else dispatch({ type: 'submitDisable', data: "",valid:true });
@@ -45,20 +45,6 @@ enableSaveAndProceed();
         <div className="form-group row">
           <div className="form-col col-md-3">
             <label>
-              Religion<a style={{ color: "red" }}>*</a>
-            </label>
-          </div>
-          <div className="form-col col-md-3">
-            <select className="form-select">
-              {religion.map((e) => (
-                <option value={e} label={e} />
-              ))}
-            </select>
-          </div>
-        </div>
-        <div className="form-group row">
-          <div className="form-col col-md-3">
-            <label>
               Father's Name<a style={{ color: "red" }}>*</a>
             </label>
           </div>
@@ -68,7 +54,7 @@ enableSaveAndProceed();
               type="text"
               className="form-control "
               placeholder="first name"
-              value={""}
+              
             />
           </div>
           <div className="form-col col-md-3">
@@ -77,7 +63,7 @@ enableSaveAndProceed();
               type="text"
               className="form-control "
               placeholder="middle name"
-              value={""}
+              
             />
           </div>
           <div className="form-col col-md-3">
@@ -86,7 +72,7 @@ enableSaveAndProceed();
               type="text"
               className="form-control"
               placeholder="last name"
-              value={""}
+              
             />
           </div>
         </div>
@@ -102,7 +88,7 @@ enableSaveAndProceed();
               type="text"
               className="form-control "
               placeholder="first name"
-              value={""}
+              
             />
           </div>
           <div className="form-col col-md-3">
@@ -111,7 +97,7 @@ enableSaveAndProceed();
               type="text"
               className="form-control "
               placeholder="middle name"
-              value={""}
+              
             />
           </div>
           <div className="form-col col-md-3">
@@ -120,7 +106,7 @@ enableSaveAndProceed();
               type="text"
               className="form-control"
               placeholder="last name"
-              value={""}
+              
             />
           </div>
         </div>
@@ -136,7 +122,7 @@ enableSaveAndProceed();
               type="text"
               className="form-control"
               placeholder="first name"
-              value={""}
+              
             />
           </div>
           <div className="form-col col-md-3">
@@ -145,7 +131,7 @@ enableSaveAndProceed();
               type="text"
               className="form-control "
               placeholder="middle name"
-              value={""}
+              
             />
           </div>
           <div className="form-col col-md-3">
@@ -154,7 +140,7 @@ enableSaveAndProceed();
               type="text"
               className="form-control"
               placeholder="last name"
-              value={""}
+              
             />
           </div>
         </div>
@@ -178,7 +164,7 @@ enableSaveAndProceed();
           <div className="form-col col-md-3">
             <select className="form-select">
               {motherTongue.map((e) => (
-                <option value={e} label={e} />
+                <option value={e} label={e} key={e}/>
               ))}
             </select>
           </div>

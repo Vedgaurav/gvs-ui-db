@@ -1,8 +1,8 @@
 import "bootstrap/dist/css/bootstrap.css";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
-import "./FormInput.css";
-import { languages,bloodGroup,ashrama,Gender } from "../../utilities/OptionalEntries";
+import "./FormInput.css"; 
+import { languages,bloodGroup,ashrama,Gender,maritalStatus } from "../../utilities/OptionalEntries";
 
 
 
@@ -42,6 +42,15 @@ const PersonalInfoForm = (props) => {
   }
   const genderChangeHandler=(e)=>{
     let a=document.getElementsByClassName('gender');
+    for (let index = 0; index < a.length; index++) {
+      
+      if(a[index].value!==e.target.value){
+        a[index].checked=false;
+      }
+    }
+  }
+  const maritalStatusHandle=(e)=>{
+    let a=document.getElementsByClassName('maritalstatushandle');
     for (let index = 0; index < a.length; index++) {
       
       if(a[index].value!==e.target.value){
@@ -149,8 +158,8 @@ const PersonalInfoForm = (props) => {
                 id='odob'
                 type="date"
                 className="form-control"
-                min="2019-01-01 0HH:0MM:0SS"
-                max="2022-12-31 0HH:0MM:0SS"
+                min="1900-01-01 0HH:0MM:0SS"
+                max="2023-12-31 0HH:0MM:0SS"
                 onChange={inputHandler}
                 defaultValue={dob}
               />
@@ -161,8 +170,8 @@ const PersonalInfoForm = (props) => {
                 id='cdob'
                 type="date"
                 className="form-control"
-                min="2019-01-01"
-                max="2022-12-31"
+                min="1900-01-01"
+                max="2023-12-31"
                 onChange={inputHandler}
                 defaultValue={dob}
               />
@@ -211,7 +220,21 @@ const PersonalInfoForm = (props) => {
           </div>
           <div className="form-group row">
             <div className="form-col form-check col-md-3">
-              <label>Ashrama<a style={{color:'red'}}>*</a></label>
+              <label>Marital Status<a style={{color:'red'}}>*</a></label>
+            </div>
+            {maritalStatus.map((e) => (
+              <div className={`form-col col-md-1`} key={e} style={{marginRight:'30px'}}>
+                <label className="form-check-label">
+                  <input type="radio" className="form-check-input maritalstatushandle" name=''id="maritalStatus" value={e} onClick={(e)=>{inputHandler(e),maritalStatusHandle(e)}}/>
+                  {e}
+                </label>
+              </div>
+            ))}
+            
+          </div>
+          <div className="form-group row">
+            <div className="form-col form-check col-md-3">
+              <label>Aspiring Ashrama<a style={{color:'red'}}>*</a></label>
             </div>
             {ashrama.map((e) => (
               <div className={`form-col col-md-${e.col}`} key={e.id} style={{marginRight:'30px'}}>

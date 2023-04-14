@@ -1,9 +1,12 @@
 import { facilitators } from "../../utilities/OptionalEntries";
 import { useSelector,useDispatch } from "react-redux";
+import DatePicker, { CalendarContainer } from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 import { useState,useEffect } from "react";
 const DevotionalInfoForm = () => {
   const dispatch=useDispatch();
-  const { centerConnectedTo,isValidCenterConnectedTo} = useSelector(
+  const { centerConnectedTo,isValidCenterConnectedTo,chantingRounds,yearChantingSince,yearChanting16Rounds,introducedBy,yearOfIntroduction,placeIntroducedIn,previousCounselor,
+    preferredServices, servicesRendered} = useSelector(
     (state) => state
   );
   useEffect(()=>{
@@ -58,6 +61,7 @@ const DevotionalInfoForm = () => {
       }
     }
     }
+    const [startDate, setStartDate] = useState(new Date());
   return (
     <>
       <div className="container">
@@ -90,7 +94,7 @@ const DevotionalInfoForm = () => {
           <div className={`form-col col-md-3`}>
             <select type="select" id='facilitator' className="form-select"  onBlur={inputHandler}>
               {facilitators.map((e) => (
-                <option value={e} label={e} />
+                <option value={e} label={e} key={e}/>
               ))}
             </select>
             <div className={`form-col col-md-3`}>
@@ -129,6 +133,93 @@ const DevotionalInfoForm = () => {
             <p id='spiritualMasterError' style={{color:'red',fontSize:'10px'}}/>
           </div>
           
+        </div>
+        <div className="form-group row">
+          <div className="form-col col-md-3">
+            <label>No. Of Rounds Chanting<a style={{color:'red'}}>*</a></label>
+          </div>
+          <div className={`form-col col-md-3`}>
+            <input type="text" id='chantingRounds'className="form-control" onChange={inputHandler}/>
+          </div>
+        </div>
+        <div className="form-group row">
+          <div className="form-col col-md-3">
+            <label>Chanting Since<a style={{color:'red'}}>*</a></label>
+          </div>
+          <div className={`form-col col-md-3`}>
+            <input type="month" id='yearChantingSince' className="form-control" onChange={inputHandler}/>
+          </div>
+          <div className="form-col col-md-3">
+            <label>Chanting 16 Rounds Since</label>
+          </div>
+          <div className={`form-col col-md-3`}>
+            <input
+              type="month"
+              className="form-control"
+              id='yearChanting16Rounds'
+              onChange={inputHandler}
+            />
+          </div>
+        </div>
+        <div className="form-group row">
+          <div className="form-col form-check col-md-3">
+            <label>Introduced By<a style={{color:'red'}}>*</a></label>
+          </div>
+          <div className={`form-col col-md-3`}>
+            <input type="text" id='introducedBy'className="form-control" onChange={inputHandler}/>
+          </div>
+        </div>
+        <div className="form-group row">
+          <div className="form-col form-check col-md-3">
+            <label>Year of Introduction<a style={{color:'red'}}>*</a></label>
+          </div>
+          <div className={`form-date col-md-3`}>
+            <DatePicker
+            id="yearChantingSince"
+              className="form-control"
+              selected={startDate}
+              onChange={(date) => {setStartDate(date),inputHandler({target:{id:'yearOfIntroduction',value:date.getFullYear().toString()}})}}
+              showYearPicker
+              dateFormat="yyyy"
+              yearItemNumber={9}
+              
+            />
+          </div>
+        </div>
+        <div className="form-group row">
+          <div className="form-col col-md-3">
+            <label>Introduced through<a style={{color:'red'}}>*</a></label>
+          </div>
+          <div className="form-col col-md-5">
+            
+              <input type="text" id='placeIntroducedIn' className="form-control col-md-5" />
+             <p style={{ fontSize: "10px", color: "green" }}> Temple/online/devotee visit/yatra etc.</p>
+            
+          </div>
+        </div>
+        <div className="form-group row">
+          <div className="form-col col-md-3">
+            <label>Previous Counselor</label>
+          </div>
+          <div className={`form-col col-md-3`}>
+            <input type="text" className="form-control" />
+          </div>
+        </div>
+        <div className="form-group row">
+          <div className="form-col form-check col-md-3">
+            <label>Preferred Services</label>
+          </div>
+          <div className={`form-col col-md-3`}>
+            <textarea className="form-control" placeholder={"1.\n2.\n3.\n4."} />
+          </div>
+        </div>
+        <div className="form-group row">
+          <div className="form-col form-check col-md-3">
+            <label>Rendered Services</label>
+          </div>
+          <div className={`form-col col-md-3`}>
+            <textarea id='servicesRendered' className="form-control" placeholder={"1.\n2.\n3.\n4."} onChange={inputHandler}/>
+          </div>
         </div>
       </div>
     </>

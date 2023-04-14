@@ -89,19 +89,12 @@ const requestData = {
         setStage(5);
         break;
       case 6:
-        setFormStage(
-          forms.sage6
-        );
         setStage(6);
-        
-        setSubmit('Save & Proceed');
-        break;
-      case 7:
-        setStage(7);
         
         setSubmit('Submit');
         break;
-      case 8:
+      
+      case 7:
          submitHandler();
       break;
       default:
@@ -115,16 +108,13 @@ const requestData = {
     }
     
   };
-  forms={stage1: 
-    <PersonalInfoForm satge={stage} onStageChange={moveForward} />,stage2:<ContactInfoForm satge={stage} onStageChange={formStageHandler} />,
-    stage3:<DevotionalInfoForm satge={stage}onStageChange={formStageHandler}/>,stage4:<AddDevotionalInfoForm
-    satge={stage} onStageChange={formStageHandler}/>,stage5:<ProfessionalInfoForm satge={stage} onStageChange={formStageHandler}/>,
-    sage6:<FamilyDetails satge={stage} onStageChange={formStageHandler} />
+  forms={stage1: <PersonalInfoForm />,stage2:<FamilyDetails/>,
+    stage3:<DevotionalInfoForm />,
+    stage4:<ProfessionalInfoForm />,
+    stage5:<ContactInfoForm />
   }
   const [jsxFormStage, setFormStage] = useState(
-    <>
-      <PersonalInfoForm satge={stage} onStageChange={moveForward} />
-    </>
+      <PersonalInfoForm/>
   );
 
   return (

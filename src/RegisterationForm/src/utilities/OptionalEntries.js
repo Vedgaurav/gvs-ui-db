@@ -63,3 +63,5 @@ export const languages = [ "Hindi", "English", "Bengali", "Marathi", "Gujrati","
   ];
 
   export const religion = ["Hindu", "Jain", "Sikh", "Cristian", "Muslim", "Buddhist"];
+
+  export const maritalStatus=["UNMARRIED", "MARRIED", "DIVORCED", "BRAHMACHARI","SANNYASI"];
