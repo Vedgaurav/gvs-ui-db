@@ -10,9 +10,12 @@ export default () => {
     const navigate = useNavigate()
 
 
-    useEffect(async () => {
-        const res = await axiosGetAllDependents(userId)
-        setDep(res.data);
+    useEffect(() => {
+        const fun=async (setDep)=>{
+            const res = await axiosGetAllDependents(userId)
+            setDep(res.data);
+        }
+        fun(setDep)
     }, [])
 
     useEffect(()=>{
@@ -36,8 +39,11 @@ export default () => {
                 <thead>
                     <tr>
                         <th scope="col">#</th>
+                        <th scope="col">ID</th>
                         <th scope="col">Name</th>
-                        <th scope="col">Email</th>
+                        <th scope="col">Gender</th>
+                        <th scope="col">PhoneNo.</th>
+                        <th scope="col">Facilitator</th>
                         <th scope="col"></th>
                         <th scope="col"></th>
                     </tr>
@@ -46,8 +52,11 @@ export default () => {
                     <tbody>
                         <tr>
                             <th scope="row">{index + 1}</th>
-                            <td>{d.connectedTo}</td>
                             <td>{d.id}</td>
+                            <td>{d.fname}</td>
+                            <td>{d.gender}</td>
+                            <td>{d.primaryPhone}</td>
+                            <td>{d.facilitator}</td>
                             <td> <button className="btn btn-warning" type="button">Edit</button></td>
                             <td> <button className="btn btn-danger" type="button">Delete</button></td>
                         </tr>

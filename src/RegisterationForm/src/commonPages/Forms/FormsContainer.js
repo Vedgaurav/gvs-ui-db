@@ -32,7 +32,7 @@ const requestData = {
   const [submitResponse,setSubmitResponse]=useState('');
   const [error,setError]=useState('');
    const submitHandler=()=>{
-    fetch('https://hlz-global-reg-boot.herokuapp.com/v1/hlzGlobalReg/saveInput/', requestData)
+    fetch('http://localhost:8080/v1/hlzGlobalReg/saveInput/', requestData)
     .then(response => response.json())
     .then(data => {setSubmitResponse(data.fname);
     setFormStage(<><SubmitSuccess/></>)
