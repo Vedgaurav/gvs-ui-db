@@ -8,7 +8,7 @@ import { countries } from "../../utilities/OptionalEntries";
 import { StateWithDistCityPincodes } from "../../utilities/StateWithDistCityPincode";
 const ContactInfoForm = (props) => {
   const dispatch = useDispatch();
-   const { primaryPhone,whatsappPhone,email,isValidPrimaryNo,isValidEmail,currentAddress,permanentAddress } = useSelector(
+   const { primaryPhone,whatsappPhone,email,validations,currentAddress,permanentAddress } = useSelector(
      (state) => state
    );
    
@@ -62,7 +62,7 @@ setPerAddPincode(StateWithDistCityPincodes.filter(e=>e.City==permanentAddress.ci
   };
    const [sameAsCurrent,setSameAsCurrent]=useState(false);
   const enableSaveAndProceed=()=>{
-    if(isValidPrimaryNo&&isValidEmail){
+    if(validations.isValidPrimaryNo&&validations.isValidEmail&&validations.isValidCurrentAddress&&validations.isValidPermanentAddress){
       dispatch({ type: 'submitDisable', data: "",valid:false });
     }
     else dispatch({ type: 'submitDisable', data: "",valid:true });
@@ -153,11 +153,13 @@ const permanentAddHandler=(e)=>{
                 <input
                   id='currentAddressLine1'
                   type="text"
+                  name="^[#.0-9a-zA-Z\s,-]+$"
                   className="form-control"
                   value={currentAddress.line1}
                   placeholder="Address Line 1"
                   onChange={inputHandler}
                 />
+                <p id='currentAddressLine1Error' style={{color:'red',fontSize:'10px'}}></p>
               </div>
             </div>
             <div className="form-group row">
@@ -167,10 +169,12 @@ const permanentAddHandler=(e)=>{
                   type="text"
                   className="form-control"
                   id='currentAddressLine2'
+                  name="^[#.0-9a-zA-Z\s,-]+$"
                   placeholder="Address Line 2"
                   value={currentAddress.line2}
                   onChange={inputHandler}
                 />
+                <p id='currentAddressLine2Error' style={{color:'red',fontSize:'10px'}}></p>
               </div>
             </div>
             <div className="form-group row">
@@ -234,12 +238,14 @@ const permanentAddHandler=(e)=>{
 <div className="form-col col-md-5">
                 <input
                   id='permanentAddressLine1'
+                  name="^[#.0-9a-zA-Z\s,-]+$"
                   type="text"
                   className="form-control"
                   value={permanentAddress.line1}
                   placeholder="Address Line 1"
                   onChange={inputHandler}
                 />
+                <p id='permanentAddressLine1Error' style={{color:'red',fontSize:'10px'}}></p>
               </div>
             </div>
             <div className="form-group row" hidden={sameAsCurrent}>
@@ -248,11 +254,13 @@ const permanentAddHandler=(e)=>{
               <input
                   id='permanentAddressLine2'
                   type="text"
+                  name="^[#.0-9a-zA-Z\s,-]+$"
                   className="form-control"
                   value={permanentAddress.line2}
                   placeholder="Address Line 2"
                   onChange={inputHandler}
                 />
+                <p id='permanentAddressLine2Error' style={{color:'red',fontSize:'10px'}}></p>
               </div>
             </div>
             <div className="form-group row" hidden={sameAsCurrent}>

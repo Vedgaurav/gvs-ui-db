@@ -94,7 +94,11 @@ const form1Reducer = (state = requiredDataAllFields, action) => {
       return {
         ...state,
         currentAddress:{ ...state.currentAddress,
-          line1:action.data,}
+          line1:action.data,},
+        validations:{
+          ...state.validations,
+          isValidCurrentAddress:action.valid,
+        }
       };
       case "currentAddressLine2":
       return {
@@ -126,11 +130,15 @@ const form1Reducer = (state = requiredDataAllFields, action) => {
               currentAddress:{...state.currentAddress,
                 pincode:action.data}
             }
-            case "permanenentAddressLine1":
+            case "permanentAddressLine1":
               return {
                 ...state,
                 permanentAddress:{ ...state.permanentAddress,
-                  line1:action.data,}
+                  line1:action.data,},
+                  validations:{
+          ...state.validations,
+          isValidPermanentAddress:action.valid,
+        }
               };
               case "permanentAddressLine2":
               return {
