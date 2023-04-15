@@ -42,7 +42,7 @@ const DevotionalInfoForm = () => {
     else dispatch({ type: 'submitDisable', data: "",valid:true });
   }
   const [center,setCenter]=useState(true);
-  const [counselor,setCounselor]=useState(true);
+  const [yourCounselor,setyourCounselor]=useState(true);
   const centerHandler=(e)=>{
   
   let a=document.getElementsByClassName('temple');
@@ -113,12 +113,12 @@ const DevotionalInfoForm = () => {
           </div>
           <div className={`form-col col-md-2`}>
             <label className="form-check-label">
-              <input type="radio"  className="form-check-input selectcounselor" value='' onClick={counselorHandler} onClickCapture={()=>setCounselor(false)}/>
+              <input type="radio"  className="form-check-input selectcounselor" value='' onClick={counselorHandler} onClickCapture={()=>setyourCounselor(false)}/>
               OTHERS
             </label>
           </div>
           <div className={`form-col col-md-3`}>
-            <input type="text" id='counselor'className="form-control" value={counselor} hidden={counselor} onChange={inputHandler}/>
+            <input type="text" id='counselor'className="form-control" value={counselor} hidden={yourCounselor} onChange={inputHandler}/>
           </div>
         </div>
         <div className="form-group row">
