@@ -7,7 +7,7 @@ import { useState,useEffect } from "react";
 const DevotionalInfoForm = () => {
   const dispatch=useDispatch();
   const { centerConnectedTo,isValidCenterConnectedTo,spiritualMaster,chantingRounds,yearChantingSince,yearChanting16Rounds,introducedBy,yearOfIntroduction,placeIntroducedIn,previousCounselor,
-    preferredServices, servicesRendered,facilitator} = useSelector(
+    preferredServices, servicesRendered,facilitator,counselor} = useSelector(
     (state) => state
   );
   useEffect(()=>{
