@@ -1,24 +1,51 @@
-export const languages = [ "Hindi", "English", "Bengali", "Marathi", "Gujrati","Oriya", "Tamil","Telgu","Marwari","Punjabi","Nepali","Bhojpuri",
-  ];
-
+export const languages = [ 
+    "BENGALI",
+    "ENGLISH",
+    "HINDI",
+    "GUJARATI",
+    "KANNADA",
+    "MARATHI",
+    "MAITHILI",
+    "ORIYA",
+    "NEPALI",
+    "PUNJABI"
+]
   export const bloodGroup = ["A +ve","A -ve","B +ve","B -ve","AB +ve","AB -ve","O +ve","O -ve",];
 
   export const ashrama = [
-    { id: 1, value: "Brahmachari", col: 1 },
-    { id: 2, value: "Grihasta", col: 1 },
-    { id: 3, value: "Vanprastha", col: 1 },
-    { id: 4, value: "Sannyasi", col: 1 },
-    { id: 5, value: "Divorced", col: 1 },
-    { id: 6, value: "Widowed", col: 1 },
+    { id: 1, value: "BRAHMACHARI", col: 1 },
+    { id: 2, value: "GRIHASTHA", col: 1 },
+    { id: 3, value: "SANAYASI", col: 1 },
+    { id: 4, value: "NOT_DECIDED", col: 1 },
   ];
+ export const occupations=[ 'EMPLOYEED_FULL_TIME',
+      'EMPLOYEED_PART_TIME',
+      'SELF_EMPLOYED',
+      'UNEMPLOYED',
+      'HOMEMAKER',
+      'RETIRED',
+      'STUDENT']
 
+  export const educations=[
+      "NO_EDUCATION",
+      "PRE_PRIMARY_SCHOOL",
+      "PRIMARY_SCHOOL",
+      "MIDDLE_SCHOOL",
+      "SECONDARY_SCHOOL",
+      "HIGHER_SECONDARY_SCHOOL",
+      "DIPLOMA",
+      "UG",
+      "PG",
+      "DOCTORATE",
+      "POST_DOCTORATE"]
+  
   export const Gender = [
     { id: 'g1', value: "Male", col: 1 },
     { id: 'g2', value: "Female", col: 2 },
-    { id: 'g3', value: "others", col: 1 },
+    { id: 'g3', value: "Others", col: 1 },
     
   ];
-  export const countries=['India','Nepal']
+  export const countries=['India']
 
   export const facilitators = [
     "No Facilitator",

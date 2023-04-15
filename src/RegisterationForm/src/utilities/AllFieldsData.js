@@ -37,19 +37,20 @@ export const requiredDataAllFields={
     introducedBy: "",
     yearOfIntroduction: "",
     previousCounselor: "",
-    preferredServices: null,
-    servicesRendered: null,
-    education: null,
-    occupation: null,
-    presentDesignation: null,
-    skills: null,
-    currentCompany: null,
-    officeLocation: null,
-    birthCity: null,
-    birthState: null,
-    motherTongue: null,
-    fathersName: null,
-    mothersName: null,
+    preferredServices: "",
+    servicesRendered: "",
+    education: "",
+    occupation: "",
+    presentDesignation: "",
+    skills: "",
+    currentCompany: "",
+    officeLocation: "",
+    birthCity: "",
+    birthState: "",
+    motherTongue: "",
+    fathersName: "",
+    mothersName: "",
+    spouseName:"",
     modified: false,
     priviledge:"",
     isValidFname: false,
@@ -63,49 +64,10 @@ export const requiredDataAllFields={
     isValidEmail:false,
     isValidCenterConnectedTo:false
   }
-  //      UNMARRIED,
-//      MARRIED,
-//      DIVORCED,
-//      BRAHMACHARI,
-//      SANYASI
-//ashrama
-//  BRAHMACHARI,
-//      GRIHASTHA,
-//      NOT_DECIDED
 
 //language: send an array
-// BENGALI,
-//     ENGLISH,
-//     HINDI,
-//     GUJARATI,
-//     KANNADA,
-//     MARATHI,
-//     MAITHILI,
-//     ORIYA,
-//     NEPALI,
-//     PUNJABI
 
-//Education
-// NO_EDUCATION,
-//     PRE_PRIMARY_SCHOOL,
-//     PRIMARY_SCHOOL,
-//     MIDDLE_SCHOOL,
-//     SECONDARY_SCHOOL,
-//     HIGHER_SECONDARY_SCHOOL,
-//     DIPLOMA,
-//     UG,
-//     PG,
-//     DOCTORATE,
-//     POST_DOCTORATE
 
-//Occupation
-// EMPLOYEED_FULL_TIME,
-//     EMPLOYEED_PART_TIME,
-//     SELF_EMPLOYED,
-//     UNEMPLOYED,
-//     HOMEMAKER,
-//     RETIRED,
-//     STUDENT
 
 //priviledge
 // SUPER_ADMIN,
@@ -113,9 +75,3 @@ export const requiredDataAllFields={
 //     GUARDIAN, 
 //     VOLUNTEER,
 //     USER
-
-// Personal 
-// Family
-// Devotional
-// Professional
-// Contact

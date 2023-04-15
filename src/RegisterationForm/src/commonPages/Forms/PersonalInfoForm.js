@@ -28,7 +28,7 @@ const PersonalInfoForm = (props) => {
     else {
       document.getElementById(id+'Error').innerText='invalid input';
       dispatch({ type: id, data: value,valid:false });
-      enableSaveAndProceed(false);
+      enableSaveAndProceed();
     }
 
     

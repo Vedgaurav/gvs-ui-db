@@ -2,11 +2,12 @@ import { facilitators } from "../../utilities/OptionalEntries";
 import { useSelector,useDispatch } from "react-redux";
 import DatePicker, { CalendarContainer } from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { validateName } from "../../RegexExpsValidation/RegexExps";
 import { useState,useEffect } from "react";
 const DevotionalInfoForm = () => {
   const dispatch=useDispatch();
-  const { centerConnectedTo,isValidCenterConnectedTo,chantingRounds,yearChantingSince,yearChanting16Rounds,introducedBy,yearOfIntroduction,placeIntroducedIn,previousCounselor,
-    preferredServices, servicesRendered} = useSelector(
+  const { centerConnectedTo,isValidCenterConnectedTo,spiritualMaster,chantingRounds,yearChantingSince,yearChanting16Rounds,introducedBy,yearOfIntroduction,placeIntroducedIn,previousCounselor,
+    preferredServices, servicesRendered,facilitator} = useSelector(
     (state) => state
   );
   useEffect(()=>{
@@ -28,7 +29,7 @@ const DevotionalInfoForm = () => {
     else {
       document.getElementById(id+'Error').innerText='invalid input';
       dispatch({ type: id, data: value,valid:false });
-      enableSaveAndProceed(false);
+      enableSaveAndProceed();
     }
 
     
@@ -72,13 +73,13 @@ const DevotionalInfoForm = () => {
           </div>
           <div className={`form-col col-md-3`}>
             <label className="form-check-label">
-              <input type="radio" className="form-check-input temple"  id='centerConnectedTo'value='ISKCON Haldia' onClickCapture={(e)=>{centerHandler(e),inputHandler(e),setCenter(true)}}/>
+              <input type="radio" className="form-check-input temple"  id='connectedTemple'value='ISKCON Haldia' onClickCapture={(e)=>{centerHandler(e),inputHandler(e),setCenter(true)}}/>
               ISKCON HALDIA
             </label>
           </div>
           <div className={`form-col col-md-2`}>
             <label className="form-check-label">
-              <input type="radio" className="form-check-input temple"  value='others' onClick={centerHandler} onClickCapture={()=>setCenter(false)}/>
+              <input type="radio" className="form-check-input temple" value='others' onClick={centerHandler} onClickCapture={()=>setCenter(false)}/>
               OTHERS
             </label>
           </div>
@@ -88,18 +89,20 @@ const DevotionalInfoForm = () => {
           </div>
         </div>
         <div className="form-group row">
-          <div className="form-col form-check col-md-3">
+          <div className="form-col col-md-3">
             <label>Facilitator<a style={{color:'red'}}>*</a></label>
           </div>
-          <div className={`form-col col-md-3`}>
+          <div className='form-col col-md-3'>
             <select type="select" id='facilitator' className="form-select"  onBlur={inputHandler}>
-              {facilitators.map((e) => (
-                <option value={e} label={e} key={e}/>
-              ))}
+              {facilitators.map((e) => {
+                if(e===facilitator)
+                <option value={e} label={e} key={e} selected/>
+                else <option value={e} label={e} key={e} />
+              })}
             </select>
             <div className={`form-col col-md-3`}>
             
-              <input type="text" name='selectCounselor' className="form-check-input" value='HG Kumar Lila Das'onClick={counselorHandler} onClickCapture={()=>setCounselor(true)}/>
+              <input type="text" name='selectCounselor' className="form-input" value='HG Kumar Lila Das'onClick={counselorHandler} onClickCapture={()=>setCounselor(true)}/>
               
           </div>
           </div>
@@ -121,7 +124,7 @@ const DevotionalInfoForm = () => {
             </label>
           </div>
           <div className={`form-col col-md-3`}>
-            <input type="text" id='counselor'className="form-control" hidden={counselor} onBlur={inputHandler}/>
+            <input type="text" id='counselor'className="form-control" value={counselor} hidden={counselor} onBlur={inputHandler}/>
           </div>
         </div>
         <div className="form-group row">
@@ -129,7 +132,7 @@ const DevotionalInfoForm = () => {
             <label>Spiritual Master<a style={{color:'red'}}>*</a></label>
           </div>
           <div className={`form-col col-md-5`}>
-            <input id='spiritualMaster' type="text" name="^[a-zA-Z][a-zA-Z .,'-]*$" className="form-control" onBlur={inputHandler}/>
+            <input id='spiritualMaster' type="text" name="^[a-zA-Z][a-zA-Z .,'-]*$" value={spiritualMaster}className="form-control" onBlur={inputHandler}/>
             <p id='spiritualMasterError' style={{color:'red',fontSize:'10px'}}/>
           </div>
           
@@ -139,7 +142,7 @@ const DevotionalInfoForm = () => {
             <label>No. Of Rounds Chanting<a style={{color:'red'}}>*</a></label>
           </div>
           <div className={`form-col col-md-3`}>
-            <input type="text" id='chantingRounds'className="form-control" onChange={inputHandler}/>
+            <input type="text" id='chantingRounds' value={chantingRounds}className="form-control" onChange={inputHandler}/>
           </div>
         </div>
         <div className="form-group row">
@@ -166,7 +169,7 @@ const DevotionalInfoForm = () => {
             <label>Introduced By<a style={{color:'red'}}>*</a></label>
           </div>
           <div className={`form-col col-md-3`}>
-            <input type="text" id='introducedBy'className="form-control" onChange={inputHandler}/>
+            <input type="text" id='introducedBy' value={introducedBy}className="form-control" onChange={inputHandler}/>
           </div>
         </div>
         <div className="form-group row">

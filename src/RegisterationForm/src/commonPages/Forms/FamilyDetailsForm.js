@@ -3,7 +3,7 @@ import { useSelector,useDispatch } from "react-redux";
 import { useEffect,useState } from "react";
 const FamilyDetails = () => {
   const dispatch = useDispatch();
-   const {  } = useSelector(
+   const { fathersName,mothersName,motherTongue,spouseName,maritalStatus } = useSelector(
      (state) => state
    );
   const[hidden,setHidden]= useState(true);
@@ -28,8 +28,6 @@ enableSaveAndProceed();
       dispatch({ type: id, data: value,valid:false });
       enableSaveAndProceed();
     }
-
-    
   };
    
   const enableSaveAndProceed=()=>{
@@ -66,7 +64,8 @@ enableSaveAndProceed();
               type="text"
               className="form-control "
               placeholder="Enter full name"
-              
+              value={fathersName}
+              onChange={inputHandler}
             />
           </div>
           <div className="form-col col-md-3">
@@ -80,7 +79,8 @@ enableSaveAndProceed();
               type="text"
               className="form-control "
               placeholder="Enter full name"
-              
+              value={mothersName}
+              onChange={inputHandler}
             />
           </div>
         </div>
@@ -92,10 +92,13 @@ enableSaveAndProceed();
             </label>
           </div>
           <div className="form-col col-md-3">
-            <select className="form-select">
-              {motherTongue.map((e) => (
-                <option value={e} label={e} key={e}/>
-              ))}
+            <select className="form-select" onChange={inputHandler}>
+              {motherTongue.map((e) => {
+                if(e===motherTongue)
+                <option value={e} label={e} key={e} selected/>
+                else 
+                <option value={e} label={e} key={e} selected/>
+              })}
             </select>
           </div>
           </div>
@@ -103,14 +106,22 @@ enableSaveAndProceed();
             <div className="form-col form-check col-md-3">
               <label>Marital Status<a style={{color:'red'}}>*</a></label>
             </div>
-            {maritalStatus.map((e) => (
+            {maritalStatus.map((e) => {
+              if(e===maritalStatus)
+              <div className={`form-col col-md-1`} key={e} style={{marginRight:'30px'}}>
+                <label className="form-check-label">
+                  <input type="radio" className="form-check-input maritalstatushandle" id="maritalStatus" value={e} checked onClick={(e)=>{inputHandler(e),maritalStatusHandle(e)}}/>
+                  {e}
+                </label>
+              </div>
+              else
               <div className={`form-col col-md-1`} key={e} style={{marginRight:'30px'}}>
                 <label className="form-check-label">
                   <input type="radio" className="form-check-input maritalstatushandle" id="maritalStatus" value={e} onClick={(e)=>{inputHandler(e),maritalStatusHandle(e)}}/>
                   {e}
                 </label>
               </div>
-            ))}
+              })}
             
           </div>
         <div className="form-group row" hidden={hidden}>
@@ -125,7 +136,8 @@ enableSaveAndProceed();
               type="text"
               className="form-control"
               placeholder="Enter full name"
-              
+              value={spouseName}
+              onChange={inputHandler}
             />
           </div>
           <div className="form-col col-md-3 ">
@@ -135,7 +147,7 @@ enableSaveAndProceed();
             </label>
           </div>
           <div className="form-col col-md-3 ">
-            <input type="date" className="form-control" onChange={() => {}} />
+            <input type="date" className="form-control" value={spouseName}onChange={inputHandler} />
           </div>
         </div>
         <div className="form-group row" hidden={hidden}>
