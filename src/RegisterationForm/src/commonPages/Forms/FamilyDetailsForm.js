@@ -1,4 +1,4 @@
-import { motherTongue,maritalStatus } from "../../utilities/OptionalEntries";
+import { mothersTongue,marritalStatus } from "../../utilities/OptionalEntries";
 import { useSelector,useDispatch } from "react-redux";
 import { useEffect,useState } from "react";
 const FamilyDetails = () => {
@@ -93,11 +93,11 @@ enableSaveAndProceed();
           </div>
           <div className="form-col col-md-3">
             <select className="form-select" onChange={inputHandler}>
-              {motherTongue.map((e) => {
+              {mothersTongue.map((e) => {
                 if(e===motherTongue)
-                <option value={e} label={e} key={e} selected/>
+               return <option value={e} label={e} key={e} selected/>
                 else 
-                <option value={e} label={e} key={e} selected/>
+               return <option value={e} label={e} key={e} selected/>
               })}
             </select>
           </div>
@@ -106,21 +106,21 @@ enableSaveAndProceed();
             <div className="form-col form-check col-md-3">
               <label>Marital Status<a style={{color:'red'}}>*</a></label>
             </div>
-            {maritalStatus.map((e) => {
+            {marritalStatus.map((e) => {
               if(e===maritalStatus)
-              <div className={`form-col col-md-1`} key={e} style={{marginRight:'30px'}}>
+             return( <div className={`form-col col-md-1`} key={e} style={{marginRight:'30px'}}>
                 <label className="form-check-label">
-                  <input type="radio" className="form-check-input maritalstatushandle" id="maritalStatus" value={e} checked onClick={(e)=>{inputHandler(e),maritalStatusHandle(e)}}/>
+                  <input type="radio" className="form-check-input maritalstatushandle" id="maritalStatus" value={e} checked={true} onClick={(e)=>{inputHandler(e),maritalStatusHandle(e)}}/>
                   {e}
                 </label>
-              </div>
+              </div>)
               else
-              <div className={`form-col col-md-1`} key={e} style={{marginRight:'30px'}}>
+              return(<div className={`form-col col-md-1`} key={e} style={{marginRight:'30px'}}>
                 <label className="form-check-label">
                   <input type="radio" className="form-check-input maritalstatushandle" id="maritalStatus" value={e} onClick={(e)=>{inputHandler(e),maritalStatusHandle(e)}}/>
                   {e}
                 </label>
-              </div>
+              </div>)
               })}
             
           </div>

@@ -68,7 +68,7 @@ export const languages = [
     "Bh. Sonu Vishwakarma 18 Batch",
   ];
 
-  export   const motherTongue = [
+  export   const mothersTongue = [
     "Hindi",
     "Bhojpuri",
     "Bengali",
@@ -91,4 +91,4 @@ export const languages = [
 
   export const religion = ["Hindu", "Jain", "Sikh", "Cristian", "Muslim", "Buddhist"];
 
-  export const maritalStatus=["UNMARRIED", "MARRIED", "DIVORCED", "BRAHMACHARI","SANNYASI"];
+  export const marritalStatus=["UNMARRIED", "MARRIED", "DIVORCED", "BRAHMACHARI"];

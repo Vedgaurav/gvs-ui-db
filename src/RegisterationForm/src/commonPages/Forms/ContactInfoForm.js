@@ -162,13 +162,7 @@ const permanentAddHandler=(e)=>{
                     <option value={e.city}>{e.city}</option>
                   )}
                 </select>
-                {/* <input
-                  type="text"
-                  className="form-control"
-                  id="currAddCity"
-                  placeholder="city"
-                  onChange={currentAddressFiller}
-                /> */}
+
               </div>
 
               <div className="form-col col-md-3">
@@ -177,13 +171,6 @@ const permanentAddHandler=(e)=>{
                     <option value={state}>{state}</option>
                   )}
                 </select>
-                {/* <input
-                  type="text"
-                  className="form-control"
-                  id="currAddState"
-                  placeholder="State"
-                  onChange={currentAddressFiller}
-                /> */}
               </div>
             </div>
 
@@ -196,15 +183,6 @@ const permanentAddHandler=(e)=>{
                     <option value={state}>{state}</option>
                   )}
                 </select>
-                {/* <input
-                  type="tel"
-                  className="form-control"
-                  id="currAddZip"
-                  maxLength='6'
-                  placeholder="ZipCode"
-                  
-                  onChange={currentAddressFiller}
-                /> */}
               </div>
 
               <div className="form-col col-md-3">
@@ -213,15 +191,6 @@ const permanentAddHandler=(e)=>{
                     <option value={e}>{e}</option>
                   )}
                 </select>
-                {/* <input
-                  className="form-control"
-                  type="text"
-                  id="currAddCountry"
-                  placeholder="Country"
-                  onChange={currentAddressFiller}
-                /> */}
-                <input type="hidden" id="currentAddress" value={currAdd} name='[a-z0-9]+\,[a-z]+\,[a-z]+\,[a-z]+\,[a-z]{6}+\,[a-z]' onChange={inputHandler}/>
-                <p id='currentAddressError' style={{color:'red',fontSize:'10px'}}></p>
               </div>
             </div>
             <div className="form-group row">
