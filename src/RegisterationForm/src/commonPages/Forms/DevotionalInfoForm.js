@@ -53,7 +53,7 @@ const DevotionalInfoForm = () => {
   }
   }
   const counselorHandler=(e)=>{
-    let a=document.getElementsByName('selectCounselor');
+    let a=document.getElementsByClassName('selectCounselor');
     for (let index = 0; index < a.length; index++) {
       
       if(a[index].value!==e.target.value){
@@ -107,13 +107,13 @@ const DevotionalInfoForm = () => {
           </div>
           <div className={`form-col col-md-3`}>
             <label className="form-check-label">
-              <input type="radio" name='selectCounselor' id='counselor'className="form-check-input" value='HG Kumar Lila Das'onClick={(e)=>{counselorHandler(e),inputHandler(e)}} onClickCapture={()=>setCounselor(true)}/>
+              <input type="radio"  id='counselor'className="form-check-input selectCounselor" value='HG Kumar Lila Das'onClick={(e)=>{counselorHandler(e),inputHandler(e)}} onClickCapture={()=>setCounselor(true)}/>
               HG Kumar Lila Das
             </label>
           </div>
           <div className={`form-col col-md-2`}>
             <label className="form-check-label">
-              <input type="radio" name='selectCounselor' className="form-check-input" value='' onClick={counselorHandler} onClickCapture={()=>setCounselor(false)}/>
+              <input type="radio"  className="form-check-input selectcounselor" value='' onClick={counselorHandler} onClickCapture={()=>setCounselor(false)}/>
               OTHERS
             </label>
           </div>
