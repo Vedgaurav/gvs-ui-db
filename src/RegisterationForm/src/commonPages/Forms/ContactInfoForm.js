@@ -166,7 +166,7 @@ const permanentAddHandler=(e)=>{
                 <input
                   type="text"
                   className="form-control"
-                  id='currAddLine2'
+                  id='currentAddressLine2'
                   placeholder="Address Line 2"
                   value={currentAddress.line2}
                   onChange={inputHandler}
