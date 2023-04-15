@@ -5,7 +5,6 @@ import { useSelector,useDispatch } from "react-redux";
 import RegistrationProgressBar from "../RegProgBar/RegistrationProgressBar";
 import "./FormInput.css";
 import DevotionalInfoForm from "./DevotionalInfoForm";
-import AddDevotionalInfoForm from "./AddDevotionalInfoForm";
 import ProfessionalInfoForm from "./ProfessionalInfoForm";
 import FamilyDetails from "./FamilyDetailsForm";
 import image from "../../images/lordWithDevs.png";

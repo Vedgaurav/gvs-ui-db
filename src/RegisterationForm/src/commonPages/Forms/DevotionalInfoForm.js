@@ -53,11 +53,10 @@ const DevotionalInfoForm = () => {
   }
   }
   const counselorHandler=(e)=>{
-    document.getElementById('counselor').value=e.target.value;
     let a=document.getElementsByName('selectCounselor');
     for (let index = 0; index < a.length; index++) {
       
-      if(!a[index].value==e.target.value){
+      if(a[index].value!==e.target.value){
         a[index].checked=false;
       }
     }
@@ -96,15 +95,10 @@ const DevotionalInfoForm = () => {
             <select type="select" id='facilitator' className="form-select"  onBlur={inputHandler}>
               {facilitators.map((e) => {
                 if(e===facilitator)
-                <option value={e} label={e} key={e} selected/>
-                else <option value={e} label={e} key={e} />
+                return <option value={e} label={e} key={e} selected/>
+                else return <option value={e} label={e} key={e} />
               })}
             </select>
-            <div className={`form-col col-md-3`}>
-            
-              <input type="text" name='selectCounselor' className="form-input" value='HG Kumar Lila Das'onClick={counselorHandler} onClickCapture={()=>setCounselor(true)}/>
-              
-          </div>
           </div>
         </div>
         <div className="form-group row">
@@ -113,18 +107,18 @@ const DevotionalInfoForm = () => {
           </div>
           <div className={`form-col col-md-3`}>
             <label className="form-check-label">
-              <input type="radio" name='selectCounselor' className="form-check-input" value='HG Kumar Lila Das'onClick={counselorHandler} onClickCapture={()=>setCounselor(true)}/>
+              <input type="radio" name='selectCounselor' id='counselor'className="form-check-input" value='HG Kumar Lila Das'onClick={(e)=>{counselorHandler(e),inputHandler(e)}} onClickCapture={()=>setCounselor(true)}/>
               HG Kumar Lila Das
             </label>
           </div>
           <div className={`form-col col-md-2`}>
             <label className="form-check-label">
-              <input type="radio" name='selectCounselor' className="form-check-input" value=''onClick={counselorHandler} onClickCapture={()=>setCounselor(false)}/>
+              <input type="radio" name='selectCounselor' className="form-check-input" value='' onClick={counselorHandler} onClickCapture={()=>setCounselor(false)}/>
               OTHERS
             </label>
           </div>
           <div className={`form-col col-md-3`}>
-            <input type="text" id='counselor'className="form-control" value={counselor} hidden={counselor} onBlur={inputHandler}/>
+            <input type="text" id='counselor'className="form-control" value={counselor} hidden={counselor} onChange={inputHandler}/>
           </div>
         </div>
         <div className="form-group row">
