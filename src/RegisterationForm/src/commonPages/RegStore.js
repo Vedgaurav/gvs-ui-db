@@ -8,7 +8,9 @@ const form1Reducer = (state = requiredDataAllFields, action) => {
       return {
         ...state,
         fname: action.data,
-        isValidFname:action.valid,
+        validations:{
+          ...state.validations,
+          isValidFname:action.valid,}
       };
 
     case "mname":
@@ -32,7 +34,9 @@ const form1Reducer = (state = requiredDataAllFields, action) => {
       return {
         ...state,
         gender: action.data,
-        isValidGender: action.valid
+        validations:{
+          ...state.validations,
+          isValidGender:action.valid,}
       };
     case "odob":
       return {
@@ -54,14 +58,18 @@ const form1Reducer = (state = requiredDataAllFields, action) => {
       return {
         ...state,
         caste:action.data,
-        isValidCaste: action.valid,
+        validations:{
+          ...state.validations,
+          isValidCaste:action.valid,}
       }
       case 'gotra':
         console.log(action.type,action.data,action.valid)
       return {
         ...state,
         gotra:action.data,
-        isValidGotra: action.valid,
+        validations:{
+          ...state.validations,
+          isValidGotra:action.valid,}
       }
     case "language":
       return {
@@ -77,7 +85,9 @@ const form1Reducer = (state = requiredDataAllFields, action) => {
       return {
         ...state,
         primaryPhone: action.data,
-        isValidPrimaryNo: action.valid
+        validations:{
+          ...state.validations,
+          isValidPrimaryNo:action.valid,}
       };
     case "whatsAppPhone":
       return {
@@ -88,7 +98,9 @@ const form1Reducer = (state = requiredDataAllFields, action) => {
       return {
         ...state,
         email: action.data,
-        isValidEmail: action.valid
+        validations:{
+          ...state.validations,
+          isValidEmail:action.valid,}
       };
       case "currentAddressLine1":
       return {
@@ -174,7 +186,9 @@ const form1Reducer = (state = requiredDataAllFields, action) => {
       return {
         ...state,
         centerConnectedTo: action.data,
-        isValidCenterConnectedTo:action.valid
+        validations:{
+          ...state.validations,
+          isValidCenterConnectedTo:action.valid,}
       };
     case "facilitator":
       return {
@@ -195,11 +209,17 @@ const form1Reducer = (state = requiredDataAllFields, action) => {
       return {
         ...state,
         chantingRounds: action.data,
+        validations:{
+          ...state.validations,
+          isValidChantingRounds:action.valid,}
       };
     case "yearChantingSince":
       return {
         ...state,
         yearChantingSince: action.data,
+        validations:{
+          ...state.validations,
+          isValidYearChantingSince:action.valid,}
       };
     case "yearChanting16Rounds":
       return {
@@ -241,11 +261,17 @@ const form1Reducer = (state = requiredDataAllFields, action) => {
       return {
         ...state,
         education: action.data,
+        validations:{
+          ...state.validations,
+          isValidEducation:action.valid,}
       };
     case "occupation":
       return {
         ...state,
         occupation: action.data,
+        validations:{
+          ...state.validations,
+          isValidOccupation:action.valid,}
       };
 
     case "presentDesignation":
@@ -272,26 +298,41 @@ const form1Reducer = (state = requiredDataAllFields, action) => {
       return {
         ...state,
         birthCity: action.data,
+        validations:{
+          ...state.validations,
+          isValidBirthCity:action.valid,}
       };
     case "birthState":
       return {
         ...state,
         birthState: action.data,
+        validations:{
+          ...state.validations,
+          isValidBirthState:action.valid,}
       };
     case "motherTongue":
       return {
         ...state,
         motherTongue: action.data,
+        validations:{
+          ...state.validations,
+          isValidMotherTongue:action.valid,}
       };
     case "fathersName":
       return {
         ...state,
         fathersName: action.data,
+        validations:{
+          ...state.validations,
+          isValidFathersName:action.valid,}
       };
     case "mothersName":
       return {
         ...state,
         mothersName: action.data,
+        validations:{
+          ...state.validations,
+          isValidMothersName:action.valid,}
       };
     case "parent":
       return {
@@ -303,16 +344,13 @@ const form1Reducer = (state = requiredDataAllFields, action) => {
         ...state,
         modified: action.data,
       };
-    case "stayingInHaldiaVoice":
-      return {
-        ...state,
-        stayingInHaldiaVoice: action.data,
-      };
     case "submitDisable":
       console.log("submitDisable",action.valid)
       return{
         ...state,
-        isSubmitDisabled: action.valid,
+        validations:{
+          ...state.validations,
+          isSubmitDisabled:action.valid,}
       }
     default:
       return state;

@@ -2,13 +2,13 @@ import "bootstrap/dist/css/bootstrap.css";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 import "./FormInput.css"; 
-import { languages,bloodGroup,ashrama,Gender,maritalStatus } from "../../utilities/OptionalEntries";
+import { languages,bloodGroup,ashrama,Gender } from "../../utilities/OptionalEntries";
 
 
 
 const PersonalInfoForm = (props) => {
   const dispatch = useDispatch();
-  const { fname, mname, lname, initiatedName, gender, caste,gotra,dob ,isValidFname,isValidCaste,isValidGotra} = useSelector(
+  const { fname, mname, lname, initiatedName, gender, caste,gotra,dob ,validations} = useSelector(
     (state) => state
   );
    
@@ -35,7 +35,7 @@ const PersonalInfoForm = (props) => {
   };
 
   const enableSaveAndProceed=()=>{
-    if(isValidCaste && isValidFname&& isValidGotra){
+    if(validations.isValidCaste && validations.isValidFname&& validations.isValidGotra){
       dispatch({ type: 'submitDisable', data: "",valid:false });
     }
     else dispatch({ type: 'submitDisable', data: "",valid:true });
@@ -131,7 +131,7 @@ const PersonalInfoForm = (props) => {
             </div>
            
             {Gender.map((e) => (
-              <div className={`form-col col-md`}  style={{marginRight:'30px'}}>
+              <div className={`form-col col-md`} key={e.value}  style={{marginRight:'30px'}}>
                 <label className="form-check-label">
                   <input type="radio" className="form-check-input gender" id="gender"  value={e.value} onChange={(e)=>{genderChangeHandler(e),inputHandler(e)}}/>
                   {e.value}
@@ -254,7 +254,7 @@ const PersonalInfoForm = (props) => {
               <label className="form-label">Upload Profile Picture<a style={{color:'red'}}>*</a></label>
             </div>
             <div className="form-col col-md-3">
-              <input type="file" className="form-file" accept="image/*" />
+              <input type="file" className="form-file" id="profileImageUrl" accept="image/*" onChange={inputHandler}/>
             </div>
           </div>
         </div>

@@ -73,6 +73,8 @@ export const requiredDataAllFields={
     isValidFathersName:false,
     isValidMothersName:false,
     isValidMothersTongue:true,
+    isValidEducation:true,
+    isValidOccupation:true,
   }
   }
 

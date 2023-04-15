@@ -3,7 +3,7 @@ import { useDispatch,useSelector } from "react-redux";
 import { occupations,educations } from "../../utilities/OptionalEntries";
 
 const ProfessionalInfoForm = () => {
-  const { officeLocation, education ,occupation, currentCompany,skills,isValidEducation,isValidOccupation} = useSelector(
+  const { officeLocation, education ,occupation, currentCompany,skills,validations} = useSelector(
     (state) => state
   );
   const dispatch=useDispatch();
@@ -12,6 +12,7 @@ const ProfessionalInfoForm = () => {
     console.log(id,name,value)
     if (name==undefined || name==''){
       dispatch({ type: id, data: value ,valid:true});
+      enableSaveAndProceed();
     }
     
     else if(value.match(name) !==null) {
@@ -54,8 +55,8 @@ const ProfessionalInfoForm = () => {
             <select className="form-select" id="education" onChange={inputHandler}>
               {educations.map((e) => {
                 if(e===education)
-                return (<option value={e} label={e} selected={true} />)
-                else return (<option value={e} label={e}  />)
+                return (<option value={e} label={e} key={e}selected={true} />)
+                else return (<option value={e} key={e}label={e}  />)
                })}
             </select>
           </div>
@@ -106,11 +107,10 @@ const ProfessionalInfoForm = () => {
             </label>
           </div>
 
-          <div className={`form-col col-md-3 ${collapse}`}>
+          <div className={`form-col col-md-5 ${collapse}`}>
             <input
               type="text"
               className="form-control"
-              style={{ width: "400px" }}
               id="officeLocation"
               value={officeLocation}
               onChange={inputHandler}

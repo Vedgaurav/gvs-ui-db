@@ -2,25 +2,26 @@ import { facilitators } from "../../utilities/OptionalEntries";
 import { useSelector,useDispatch } from "react-redux";
 import DatePicker, { CalendarContainer } from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { validateName } from "../../RegexExpsValidation/RegexExps";
 import { useState,useEffect } from "react";
 const DevotionalInfoForm = () => {
   const dispatch=useDispatch();
-  const { centerConnectedTo,isValidCenterConnectedTo,spiritualMaster,chantingRounds,yearChantingSince,yearChanting16Rounds,
+  const { centerConnectedTo,spiritualMaster,chantingRounds,yearChantingSince,yearChanting16Rounds,
     introducedBy,yearOfIntroduction,placeIntroducedIn,previousCounselor,
     preferredServices, servicesRendered,facilitator,counselor,validations} = useSelector(
     (state) => state
   );
   useEffect(()=>{
-    
+
   enableSaveAndProceed();
   },[])
+  
   const inputHandler = (e) => {
     
     const { value, id,name } = e.target;
     console.log(id,name,value)
     if (name==undefined || name==''){
       dispatch({ type: id, data: value ,valid:true});
+      enableSaveAndProceed();
     }
     
     else if(value.match(name) !==null) {
@@ -38,7 +39,7 @@ const DevotionalInfoForm = () => {
   };
 
   const enableSaveAndProceed=()=>{
-    if(true){
+    if(validations.isValidChantingRounds){
       dispatch({ type: 'submitDisable', data: "",valid:false });
     }
     else dispatch({ type: 'submitDisable', data: "",valid:true });

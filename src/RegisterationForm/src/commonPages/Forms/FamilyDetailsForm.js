@@ -3,13 +3,14 @@ import { useSelector,useDispatch } from "react-redux";
 import { useEffect,useState } from "react";
 const FamilyDetails = () => {
   const dispatch = useDispatch();
-   const { fathersName,mothersName,motherTongue,spouseName,maritalStatus } = useSelector(
+   const { fathersName,mothersName,motherTongue,maritalStatus,validations } = useSelector(
      (state) => state
    );
   const[hidden,setHidden]= useState(true);
 useEffect(()=>{
 enableSaveAndProceed();
 },[])
+
   const inputHandler = (e) => {
     const { value, id,name } = e.target;
     console.log(name,id,value)
@@ -31,7 +32,7 @@ enableSaveAndProceed();
   };
    
   const enableSaveAndProceed=()=>{
-    if(true){
+    if(validations.isValidFathersName&&validations.isValidMothersName){
       dispatch({ type: 'submitDisable', data: "",valid:false });
     }
     else dispatch({ type: 'submitDisable', data: "",valid:true });
@@ -62,11 +63,13 @@ enableSaveAndProceed();
             <input
               id="fathersName"
               type="text"
+              name="^[a-zA-Z][a-zA-Z .,'-]*$"
               className="form-control "
               placeholder="Enter full name"
               value={fathersName}
               onChange={inputHandler}
             />
+            <p id="fathersNameError" style={{color:'red',fontSize:'10px'}}></p>
           </div>
           <div className="form-col col-md-3">
             <label>
@@ -77,11 +80,13 @@ enableSaveAndProceed();
             <input
               id="mothersName"
               type="text"
+              name="^[a-zA-Z][a-zA-Z .,'-]*$"
               className="form-control "
               placeholder="Enter full name"
               value={mothersName}
               onChange={inputHandler}
             />
+            <p id="mothersNameError" style={{color:'red',fontSize:'10px'}}></p>
           </div>
         </div>
         
@@ -136,8 +141,7 @@ enableSaveAndProceed();
               type="text"
               className="form-control"
               placeholder="Enter full name"
-              value={spouseName}
-              onChange={inputHandler}
+              
             />
           </div>
           <div className="form-col col-md-3 ">
@@ -147,7 +151,7 @@ enableSaveAndProceed();
             </label>
           </div>
           <div className="form-col col-md-3 ">
-            <input type="date" className="form-control" value={spouseName}onChange={inputHandler} />
+            <input type="date" className="form-control"  />
           </div>
         </div>
         <div className="form-group row" hidden={hidden}>

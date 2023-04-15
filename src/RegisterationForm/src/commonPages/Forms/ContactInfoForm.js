@@ -44,6 +44,7 @@ setPerAddPincode(StateWithDistCityPincodes.filter(e=>e.City==permanentAddress.ci
     console.log(name,id,value)
     if (name==undefined || name==''){
       dispatch({ type: id, data: value ,valid:true});
+      enableSaveAndProceed();
     }
     
     else if(value.match(name) !==null) {
@@ -62,7 +63,7 @@ setPerAddPincode(StateWithDistCityPincodes.filter(e=>e.City==permanentAddress.ci
   };
    const [sameAsCurrent,setSameAsCurrent]=useState(false);
   const enableSaveAndProceed=()=>{
-    if(validations.isValidPrimaryNo&&validations.isValidEmail&&validations.isValidCurrentAddress&&validations.isValidPermanentAddress){
+    if(validations.isValidPrimaryNo&&validations.isValidEmail&&validations.isValidCurrentAddress){
       dispatch({ type: 'submitDisable', data: "",valid:false });
     }
     else dispatch({ type: 'submitDisable', data: "",valid:true });

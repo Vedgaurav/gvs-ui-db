@@ -10,30 +10,32 @@ import FamilyDetails from "./FamilyDetailsForm";
 import image from "../../images/lordWithDevs.png";
 import SubmitSuccess from "../../SuccessHandler/SubmitSuccess";
 import ErrorMessage from "../../SuccessHandler/ErrorMessage";
+import {ADD_DEVOTEE_DATA} from "../../../../constants/apiConstant";
 import { requiredDataAllFields } from "../../utilities/AllFieldsData";
 const FormsContainer = () =>{
 const dispatch = useDispatch();
-const {isSubmitDisabled} = useSelector(
+const {validations} = useSelector(
     (state) => state
   );
+  const data=useSelector((state)=>state)
   const [stage, setStage] = useState(1);
   const [back, setBack] = useState(true);
   const [forward, setForward] = useState(false);
   const [submit,setSubmit] = useState('Save & Proceed');
  
-
+  
 const requestData = {
   method: 'POST',
   headers: { 'Content-Type': 'application/json' },
-  body: JSON.stringify(requiredDataAllFields)
+  body: JSON.stringify(data)
 };
   
   const [submitResponse,setSubmitResponse]=useState('');
   const [error,setError]=useState('');
    const submitHandler=()=>{
-    fetch('http://localhost:8080/v1/hlzGlobalReg/saveInput/', requestData)
+    fetch(ADD_DEVOTEE_DATA, requestData)
     .then(response => response.json())
-    .then(data => {setSubmitResponse(data.fname);
+    .then(data => {setSubmitResponse(response.status);
     setFormStage(<><SubmitSuccess/></>)
     }).catch(e=>{setError('there is error in submitting the response',e);
   setFormStage(<>
@@ -136,7 +138,7 @@ const requestData = {
           type="button"
           className="btn btn-success col-sm-3 ms-5"
           onClick={() => formStageHandler(stage + 1)}
-          disabled={isSubmitDisabled}
+          disabled={validations.isSubmitDisabled}
         >
           {submit}
         </button>
