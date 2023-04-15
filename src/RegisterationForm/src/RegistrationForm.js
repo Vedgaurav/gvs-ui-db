@@ -20,7 +20,6 @@ function RegistrationForm() {
   return (
     <div className="body mainpage">
       <NavBar />
-
       <FormsContainer />
 
     </div>

@@ -129,14 +129,16 @@ const PersonalInfoForm = (props) => {
             <div className="form-col form-check col-md-3">
               <label>Gender<a style={{color:'red'}}>*</a></label>
             </div>
+           
             {Gender.map((e) => (
-              <div className={`form-col col-md-${e.col}`} key={e.id} style={{marginRight:'30px'}}>
+              <div className={`form-col col-md`}  style={{marginRight:'30px'}}>
                 <label className="form-check-label">
                   <input type="radio" className="form-check-input gender" id="gender"  value={e.value} onChange={(e)=>{genderChangeHandler(e),inputHandler(e)}}/>
                   {e.value}
                 </label>
-              </div>
+                </div>
             ))}
+           
             <p id='genderError' name='' style={{color:'red',fontSize:'10px'}}></p>
           </div>
           <div className="form-group row">
