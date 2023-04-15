@@ -3,7 +3,7 @@ import { useDispatch,useSelector } from "react-redux";
 import { occupations,educations } from "../../utilities/OptionalEntries";
 
 const ProfessionalInfoForm = () => {
-  const { officeLocation, education ,occupation, currentCompany,isValidEducation,isValidOccupation} = useSelector(
+  const { officeLocation, education ,occupation, currentCompany,skills,isValidEducation,isValidOccupation} = useSelector(
     (state) => state
   );
   const dispatch=useDispatch();
@@ -11,18 +11,18 @@ const ProfessionalInfoForm = () => {
     const { value, id,name } = e.target;
     console.log(id,name,value)
     if (name==undefined || name==''){
-      useDispatch({ type: id, data: value ,valid:true});
+      dispatch({ type: id, data: value ,valid:true});
     }
     
     else if(value.match(name) !==null) {
       document.getElementById(id+'Error').innerText='';
-    useDispatch({ type: id, data: value,valid:true });
+    dispatch({ type: id, data: value,valid:true });
     enableSaveAndProceed();
     }
     else {
       document.getElementById(id+'Error').innerText='invalid input';
-      useDispatch({ type: id, data: value,valid:false });
-      enableSaveAndProceed(false);
+      dispatch({ type: id, data: value,valid:false });
+      enableSaveAndProceed();
     }}
   const [collapse, setCollapse] = useState("");
   const collapseHandler = (e) => {
@@ -35,6 +35,12 @@ const ProfessionalInfoForm = () => {
     } else setCollapse("");
 
   };
+  const enableSaveAndProceed=()=>{
+    if(true){
+      dispatch({ type: 'submitDisable', data: "",valid:false });
+    }
+    else dispatch({ type: 'submitDisable', data: "",valid:true });
+  }
   
   return (
     <>
@@ -48,8 +54,8 @@ const ProfessionalInfoForm = () => {
             <select className="form-select" id="education" onChange={inputHandler}>
               {educations.map((e) => {
                 if(e===education)
-                <option value={e} label={e} selected />
-                else <option value={e} label={e}  />
+                return (<option value={e} label={e} selected={true} />)
+                else return (<option value={e} label={e}  />)
                })}
             </select>
           </div>
@@ -61,11 +67,11 @@ const ProfessionalInfoForm = () => {
           <div className="form-col col-md-3">
             <select className="form-select"  onChange={(e)=>{inputHandler(e),collapseHandler(e)}} id='occupation' >
               {occupations.map((e) => {
-                if (e.val===occupation) {
-                 <option value={e.val} key={e.id} id={e.id} label={e.val} selected/>
+                if (e===occupation) {
+                return (<option value={e} key={e} id={e} label={e} selected={true}/>)
                 }
                 else{
-                 <option value={e.val} key={e.id} id={e.id} label={e.val} />
+                return (<option value={e} key={e} id={e} label={e} />)
                 }
                   })}
             </select>
@@ -76,10 +82,10 @@ const ProfessionalInfoForm = () => {
             <label>Skills/Job Experience</label>
           </div>
           <div className={`form-col col-md-8`}>
-            <textarea className="form-control" id="skills" value={skills} />
+            <textarea className="form-control" id="skills" value={skills} onChange={inputHandler}/>
           </div>
         </div>
-        <div className="form-group row">
+        <div className={`form-group row ${collapse}`}>
           <div className="form-col col-md-3">
             <label>Current Company/Business Name</label>
           </div>
@@ -89,6 +95,7 @@ const ProfessionalInfoForm = () => {
               className="form-control"
               id="currentCompany"
               value={currentCompany}
+              onChange={inputHandler}
             />
           </div>
         </div>
@@ -106,6 +113,7 @@ const ProfessionalInfoForm = () => {
               style={{ width: "400px" }}
               id="officeLocation"
               value={officeLocation}
+              onChange={inputHandler}
             />
           </div>
         </div>

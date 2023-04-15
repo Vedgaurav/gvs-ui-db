@@ -90,36 +90,78 @@ const form1Reducer = (state = requiredDataAllFields, action) => {
         email: action.data,
         isValidEmail: action.valid
       };
-    case "currentAddress":
+      case "currentAddressLine1":
       return {
         ...state,
-        currentAddress: action.data,
+        currentAddress:{ ...state.currentAddress,
+          line1:action.data,}
       };
-      case "currAddCountry":
+      case "currentAddressLine2":
+      return {
+        ...state,
+        currentAddress:{ ...state.currentAddress,
+          line2:action.data,}
+      };
+    case "currentAddressState":
+      return {
+        ...state,
+        currentAddress:{ ...state.currentAddress,
+          state:action.data,}
+      };
+      case "currentAddressCountry":
         return{
           ...state,
-          currAddCountry: action.data
+          currentAddress:{...state.currentAddress,
+            country: action.data}
         }
-        case "currAddState":
-        return{
-          ...state,
-          currAddState: action.data
-        }
-        case "currAddCity":
+        case "currentAddressCity":
           return{
             ...state,
-            currAddCity:action.data
+            currentAddress:{...state.currentAddress,
+              city:action.data}
           }
-          case "currAddZip":
+          case "currentAddressPincode":
             return{
               ...state,
-              currAddZip:action.data
+              currentAddress:{...state.currentAddress,
+                pincode:action.data}
             }
-    case "permanentAddress":
-      return {
-        ...state,
-        permanentAddress: action.data,
-      };
+            case "permanenentAddressLine1":
+              return {
+                ...state,
+                permanentAddress:{ ...state.permanentAddress,
+                  line1:action.data,}
+              };
+              case "permanentAddressLine2":
+              return {
+                ...state,
+                permanentAddress:{ ...state.permanentAddress,
+                  line2:action.data,}
+              };
+            case "permanentAddressState":
+              return {
+                ...state,
+                permanentAddress:{ ...state.permanentAddress,
+                  state:action.data,}
+              };
+              case "permanentAddressCountry":
+                return{
+                  ...state,
+                  permanentAddress:{...state.permanentAddress,
+                    country: action.data}
+                }
+                case "permanentAddressCity":
+                  return{
+                    ...state,
+                    permanentAddress:{...state.permanentAddress,
+                      city:action.data}
+                  }
+                  case "permanentAddressPincode":
+                    return{
+                      ...state,
+                      permanentAddress:{...state.permanentAddress,
+                        pincode:action.data}
+                    }
     case "centerConnectedTo":
       return {
         ...state,
@@ -186,11 +228,7 @@ const form1Reducer = (state = requiredDataAllFields, action) => {
         ...state,
         servicesRendered: action.data,
       };
-    case "remarks":
-      return {
-        ...state,
-        remarks: action.data,
-      };
+    
     case "education":
       return {
         ...state,
@@ -207,11 +245,6 @@ const form1Reducer = (state = requiredDataAllFields, action) => {
         ...state,
         presentDesignation: action.data,
       };
-    case "awards":
-      return {
-        ...state,
-        awards: action.data,
-      };
     case "skills":
       return {
         ...state,
@@ -222,15 +255,10 @@ const form1Reducer = (state = requiredDataAllFields, action) => {
         ...state,
         currentCompany: action.data,
       };
-    case "officeAddress":
+    case "officeLocation":
       return {
         ...state,
-        officeAddress: action.data,
-      };
-    case "previousReligion":
-      return {
-        ...state,
-        previousReligion: action.data,
+        officeLocation: action.data,
       };
     case "birthCity":
       return {

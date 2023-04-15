@@ -36,13 +36,13 @@ const DevotionalInfoForm = () => {
   };
 
   const enableSaveAndProceed=()=>{
-    if(isValidCenterConnectedTo){
+    if(true){
       dispatch({ type: 'submitDisable', data: "",valid:false });
     }
     else dispatch({ type: 'submitDisable', data: "",valid:true });
   }
   const [center,setCenter]=useState(true);
-  const [yourCounselor,setyourCounselor]=useState(true);
+  const [yourCounselor,setYourCounselor]=useState(true);
   const centerHandler=(e)=>{
   
   let a=document.getElementsByClassName('temple');
@@ -107,13 +107,13 @@ const DevotionalInfoForm = () => {
           </div>
           <div className={`form-col col-md-3`}>
             <label className="form-check-label">
-              <input type="radio"  id='counselor'className="form-check-input selectCounselor" value='HG Kumar Lila Das'onClick={(e)=>{counselorHandler(e),inputHandler(e)}} onClickCapture={()=>setCounselor(true)}/>
+              <input type="radio"  id='counselor'className="form-check-input selectCounselor" value='HG Kumar Lila Das'onClick={(e)=>{counselorHandler(e),inputHandler(e)}} onClickCapture={()=>setYourCounselor(true)}/>
               HG Kumar Lila Das
             </label>
           </div>
           <div className={`form-col col-md-2`}>
             <label className="form-check-label">
-              <input type="radio"  className="form-check-input selectcounselor" value='' onClick={counselorHandler} onClickCapture={()=>setyourCounselor(false)}/>
+              <input type="radio"  className="form-check-input selectcounselor" value='' onClick={counselorHandler} onClickCapture={()=>setYourCounselor(false)}/>
               OTHERS
             </label>
           </div>
@@ -126,7 +126,7 @@ const DevotionalInfoForm = () => {
             <label>Spiritual Master<a style={{color:'red'}}>*</a></label>
           </div>
           <div className={`form-col col-md-5`}>
-            <input id='spiritualMaster' type="text" name="^[a-zA-Z][a-zA-Z .,'-]*$" value={spiritualMaster}className="form-control" onBlur={inputHandler}/>
+            <input id='spiritualMaster' type="text" name="^[a-zA-Z][a-zA-Z .,'-]*$" value={spiritualMaster}className="form-control" onChange={inputHandler}/>
             <p id='spiritualMasterError' style={{color:'red',fontSize:'10px'}}/>
           </div>
           
