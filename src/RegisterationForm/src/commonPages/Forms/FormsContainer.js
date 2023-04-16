@@ -9,6 +9,7 @@ import ProfessionalInfoForm from "./ProfessionalInfoForm";
 import FamilyDetails from "./FamilyDetailsForm";
 import image from "../../images/lordWithDevs.png";
 import SubmitSuccess from "../../SuccessHandler/SubmitSuccess";
+import LoadingSpinner from "../../utilities/loadingSpinner/LoadingSpinner";
 import ErrorMessage from "../../SuccessHandler/ErrorMessage";
 import {ADD_DEVOTEE_DATA} from "../../../../constants/apiConstant";
 import { requiredDataAllFields } from "../../utilities/AllFieldsData";
@@ -22,26 +23,34 @@ const {validations} = useSelector(
   const [back, setBack] = useState(true);
   const [forward, setForward] = useState(false);
   const [submit,setSubmit] = useState('Save & Proceed');
- 
+  const [isLoading, setIsLoading] = useState(false);
   
-const requestData = {
-  method: 'POST',
-  headers: { 'Content-Type': 'application/json' },
-  body: JSON.stringify(data)
-};
+
   
   const [submitResponse,setSubmitResponse]=useState('');
   const [error,setError]=useState('');
    const submitHandler=()=>{
+    setIsLoading(true);
+    const saveData = JSON.parse(JSON.stringify(data));
+    delete saveData.validations
+    const requestData = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(saveData),
+    };
+    console.log(saveData);
     fetch(ADD_DEVOTEE_DATA, requestData)
     .then(response => response.json())
     .then(data => {setSubmitResponse(response.status);
     setFormStage(<><SubmitSuccess/></>)
-    }).catch(e=>{setError('there is error in submitting the response',e);
+    setIsLoading(false);
+    }).catch(e=>{
+      setIsLoading(false);
+      setError('there is error in submitting the response',e);
   setFormStage(<>
   <ErrorMessage/>
   </>)});
-
+  
     console.log(submitResponse);
     console.log(error);
   }
@@ -119,7 +128,7 @@ const requestData = {
             className="imgfix rounded float-left"
           />
           </div> */}
-
+         {isLoading ? <LoadingSpinner/>:<>
         <RegistrationProgressBar stage={stage} />
 
         {jsxFormStage}
@@ -142,6 +151,9 @@ const requestData = {
         >
           {submit}
         </button>
+        </>
+        
+         }
       
     </>
   );

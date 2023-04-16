@@ -157,7 +157,7 @@ const permanentAddHandler=(e)=>{
                   name="^[#.0-9a-zA-Z\s,-]+$"
                   className="form-control"
                   value={currentAddress.line1}
-                  placeholder="Address Line 1"
+                  placeholder="House No./Care of"
                   onChange={inputHandler}
                 />
                 <p id='currentAddressLine1Error' style={{color:'red',fontSize:'10px'}}></p>
@@ -171,7 +171,7 @@ const permanentAddHandler=(e)=>{
                   className="form-control"
                   id='currentAddressLine2'
                   name="^[#.0-9a-zA-Z\s,-]+$"
-                  placeholder="Address Line 2"
+                  placeholder="street/village"
                   value={currentAddress.line2}
                   onChange={inputHandler}
                 />

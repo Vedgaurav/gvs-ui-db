@@ -49,7 +49,7 @@ const ProfessionalInfoForm = () => {
       <div className="container">
         <div className="form-group row">
           <div className="form-col col-md-3">
-            <label>Education<a style={{color:'red'}}>*</a></label>
+            <label>Highest Education<a style={{color:'red'}}>*</a></label>
           </div>
           <div className="form-col col-md-3">
             <select className="form-select" id="education" onChange={inputHandler}>
@@ -103,7 +103,7 @@ const ProfessionalInfoForm = () => {
         <div className={`form-group row ${collapse}`}>
           <div className="form-col col-md-3">
             <label>
-              Office location<a style={{ color: "red" }}>*</a>
+              Office/Business location<a style={{ color: "red" }}>*</a>
             </label>
           </div>
 

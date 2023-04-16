@@ -8,7 +8,7 @@ import { languages,bloodGroup,ashrama,Gender } from "../../utilities/OptionalEnt
 
 const PersonalInfoForm = (props) => {
   const dispatch = useDispatch();
-  const { fname, mname, lname, initiatedName, gender, caste,gotra,dob ,validations} = useSelector(
+  const { fname, mname, lname, initiatedName, gender, caste,gotra,odob ,validations} = useSelector(
     (state) => state
   );
    
@@ -35,7 +35,7 @@ const PersonalInfoForm = (props) => {
   };
 
   const enableSaveAndProceed=()=>{
-    if(validations.isValidCaste && validations.isValidFname&& validations.isValidGotra){
+    if(validations.isValidFname){
       dispatch({ type: 'submitDisable', data: "",valid:false });
     }
     else dispatch({ type: 'submitDisable', data: "",valid:true });
@@ -71,7 +71,7 @@ const PersonalInfoForm = (props) => {
         <div className="container">
           <div className="form-group row">
             <div className="form-col col-md-3">
-              <label>Name<a style={{color:'red'}}>*</a></label>
+              <label>Legal Name<a style={{color:'red'}}>*</a></label>
             </div>
             <div className="form-col col-md-3">
               <input
@@ -146,7 +146,6 @@ const PersonalInfoForm = (props) => {
               <label> Date of Birth<a style={{color:'red'}}>*</a></label>
             </div>
             <div className="form-col col-md-3 ">
-              <label>Original<a style={{color:'red'}}>*</a></label>
               <input
                 id='odob'
                 type="date"
@@ -154,23 +153,11 @@ const PersonalInfoForm = (props) => {
                 min="1900-01-01 0HH:0MM:0SS"
                 max="2023-12-31 0HH:0MM:0SS"
                 onChange={inputHandler}
-                defaultValue={dob}
-              />
-            </div>
-            <div className="form-col col-md-3">
-              <label>Certificate<a style={{color:'red'}}>*</a></label>
-              <input
-                id='cdob'
-                type="date"
-                className="form-control"
-                min="1900-01-01"
-                max="2023-12-31"
-                onChange={inputHandler}
-                defaultValue={dob}
+                defaultValue={odob}
               />
             </div>
           </div>
-          <div className="form-group row">
+          {/* <div className="form-group row">
             <div className="form-col col-md-3">
               <label>Ancestors Info.<a style={{color:'red'}}>*</a></label>
             </div>
@@ -210,8 +197,8 @@ const PersonalInfoForm = (props) => {
               />
               <p id='gotraError' style={{color:'red',fontSize:'8px'}}></p>
             </div>
-          </div>
-          <div className="form-group row">
+          </div> */}
+          {/* <div className="form-group row">
             <div className="form-col form-check col-md-3">
               <label>Aspiring Ashrama<a style={{color:'red'}}>*</a></label>
             </div>
@@ -224,10 +211,10 @@ const PersonalInfoForm = (props) => {
               </div>
             ))}
             
-          </div>
+          </div> */}
           <div className="form-group row">
             <div className="form-col col-md-3" >
-              <label>Blood Group<a style={{color:'red'}}>*</a></label>
+              <label>Blood Group</label>
             </div>
             <div className="form-col col-md-3">
               <select className="form-select" id='bloodGroup'onChange={inputHandler}>
@@ -237,7 +224,7 @@ const PersonalInfoForm = (props) => {
               </select>
             </div>
           </div>
-          <div className="form-group row">
+          {/* <div className="form-group row">
             <div className="form-col col-md-3">
               <label>languages Known<a style={{color:'red'}}>*</a></label>
             </div>
@@ -248,10 +235,10 @@ const PersonalInfoForm = (props) => {
                 ))}
               </select>
             </div>
-          </div>
+          </div> */}
           <div className="form-group row">
             <div className="form-col col-md-3">
-              <label className="form-label">Upload Profile Picture<a style={{color:'red'}}>*</a></label>
+              <label className="form-label">Upload Self Photo<a style={{color:'red'}}>*</a></label>
             </div>
             <div className="form-col col-md-3">
               <input type="file" className="form-file" id="profileImageUrl" accept="image/*" onChange={inputHandler}/>

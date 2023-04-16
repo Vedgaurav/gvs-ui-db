@@ -69,7 +69,7 @@ const DevotionalInfoForm = () => {
     <>
       <div className="container">
         <h2> Devotional Information</h2>
-        <div className="form-group row" >
+        {/* <div className="form-group row" >
           <div className="form-col form-check col-md-3">
             <label>Connected Temple<a style={{color:'red'}}>*</a></label>
           </div>
@@ -89,10 +89,10 @@ const DevotionalInfoForm = () => {
             <input type="text" id='connectedTemple' className="form-control" name="^[a-zA-Z][a-zA-Z .,'-]*$" hidden={center} value={centerConnectedTo}  onChange={inputHandler} onBlur={enableSaveAndProceed}/>
             <p id='centerConnectedToError' style={{color:'red',fontSize:'10px'}}/>
           </div>
-        </div>
+        </div> */}
         <div className="form-group row">
           <div className="form-col col-md-3">
-            <label>Facilitator<a style={{color:'red'}}>*</a></label>
+            <label>Facilitator/counselor<a style={{color:'red'}}>*</a></label>
           </div>
           <div className='form-col col-md-3'>
             <select type="select" id='facilitator' className="form-select"  onBlur={inputHandler}>
@@ -104,7 +104,7 @@ const DevotionalInfoForm = () => {
             </select>
           </div>
         </div>
-        <div className="form-group row">
+        {/* <div className="form-group row">
           <div className="form-col form-check col-md-3">
             <label>Spiritual Councelor<a style={{color:'red'}}>*</a></label>
           </div>
@@ -123,10 +123,10 @@ const DevotionalInfoForm = () => {
           <div className={`form-col col-md-3`}>
             <input type="text" id='counselor'className="form-control" value={counselor} hidden={yourCounselor} onChange={inputHandler}/>
           </div>
-        </div>
+        </div> */}
         <div className="form-group row">
           <div className="form-col form-check col-md-3">
-            <label>Spiritual Master<a style={{color:'red'}}>*</a></label>
+            <label>Spiritual Master</label>
           </div>
           <div className={`form-col col-md-5`}>
             <input id='spiritualMaster' type="text" name="^[a-zA-Z][a-zA-Z .,'-]*$" value={spiritualMaster}className="form-control" onChange={inputHandler}/>
@@ -144,7 +144,7 @@ const DevotionalInfoForm = () => {
         </div>
         <div className="form-group row">
           <div className="form-col col-md-3">
-            <label>Chanting Since<a style={{color:'red'}}>*</a></label>
+            <label>Chanting Since</label>
           </div>
           <div className={`form-col col-md-3`}>
             <input type="month" id='yearChantingSince' className="form-control" onChange={inputHandler}/>
@@ -166,10 +166,10 @@ const DevotionalInfoForm = () => {
             <label>Introduced By<a style={{color:'red'}}>*</a></label>
           </div>
           <div className={`form-col col-md-3`}>
-            <input type="text" id='introducedBy' value={introducedBy}className="form-control" onChange={inputHandler}/>
+            <input type="text" id='introducedBy' placeholder="name of person" value={introducedBy}className="form-control" onChange={inputHandler}/>
           </div>
         </div>
-        <div className="form-group row">
+        {/* <div className="form-group row">
           <div className="form-col form-check col-md-3">
             <label>Year of Introduction<a style={{color:'red'}}>*</a></label>
           </div>
@@ -185,10 +185,10 @@ const DevotionalInfoForm = () => {
               
             />
           </div>
-        </div>
+        </div> */}
         <div className="form-group row">
           <div className="form-col col-md-3">
-            <label>Introduced through<a style={{color:'red'}}>*</a></label>
+            <label>Placed Introduced <a style={{color:'red'}}>*</a></label>
           </div>
           <div className="form-col col-md-5">
             
@@ -197,12 +197,20 @@ const DevotionalInfoForm = () => {
             
           </div>
         </div>
-        <div className="form-group row">
+        {/* <div className="form-group row">
           <div className="form-col col-md-3">
             <label>Previous Counselor</label>
           </div>
           <div className={`form-col col-md-3`}>
             <input type="text" className="form-control" />
+          </div>
+        </div> */}
+        <div className="form-group row">
+          <div className="form-col form-check col-md-3">
+            <label>Rendered Services</label>
+          </div>
+          <div className={`form-col col-md-3`}>
+            <textarea id='servicesRendered' className="form-control" placeholder={"1.\n2.\n3.\n4."} onChange={inputHandler}/>
           </div>
         </div>
         <div className="form-group row">
@@ -213,14 +221,7 @@ const DevotionalInfoForm = () => {
             <textarea className="form-control" placeholder={"1.\n2.\n3.\n4."} />
           </div>
         </div>
-        <div className="form-group row">
-          <div className="form-col form-check col-md-3">
-            <label>Rendered Services</label>
-          </div>
-          <div className={`form-col col-md-3`}>
-            <textarea id='servicesRendered' className="form-control" placeholder={"1.\n2.\n3.\n4."} onChange={inputHandler}/>
-          </div>
-        </div>
+        
       </div>
     </>
   );
