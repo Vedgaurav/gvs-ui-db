@@ -38,39 +38,19 @@ const form1Reducer = (state = requiredDataAllFields, action) => {
           ...state.validations,
           isValidGender:action.valid,}
       };
-    case "odob":
+    case "dateOfBirth":
       return {
         ...state,
-        dob: action.data,
-      };
-    case "aspiringAshram":
-      return {
-        ...state,
-        aspiringAshram: action.data,
+        dateOfBirth: action.data,
+        validations:{
+          ...state.validations,
+          isValidDateOfBirth:action.valid,}
       };
     case "bloodGroup":
       return {
         ...state,
         bloodGroup: action.data,
       };
-    case 'caste':
-      console.log(action.type,action.data,action.valid)
-      return {
-        ...state,
-        caste:action.data,
-        validations:{
-          ...state.validations,
-          isValidCaste:action.valid,}
-      }
-      case 'gotra':
-        console.log(action.type,action.data,action.valid)
-      return {
-        ...state,
-        gotra:action.data,
-        validations:{
-          ...state.validations,
-          isValidGotra:action.valid,}
-      }
     case "language":
       return {
         ...state,
@@ -136,6 +116,12 @@ const form1Reducer = (state = requiredDataAllFields, action) => {
             currentAddress:{...state.currentAddress,
               city:action.data}
           }
+          case "currentAddressDistrict":
+          return{
+            ...state,
+            currentAddress:{...state.currentAddress,
+              district:action.data}
+          }
           case "currentAddressPincode":
             return{
               ...state,
@@ -176,6 +162,12 @@ const form1Reducer = (state = requiredDataAllFields, action) => {
                     permanentAddress:{...state.permanentAddress,
                       city:action.data}
                   }
+                  case "permanentAddressDistrict":
+                  return{
+                    ...state,
+                    permanentAddress:{...state.permanentAddress,
+                      district:action.data}
+                  }
                   case "permanentAddressPincode":
                     return{
                       ...state,
@@ -194,11 +186,6 @@ const form1Reducer = (state = requiredDataAllFields, action) => {
       return {
         ...state,
         facilitator: action.data,
-      };
-    case "counselor":
-      return {
-        ...state,
-        counselor: action.data,
       };
     case "spiritualMaster":
       return {
@@ -231,20 +218,10 @@ const form1Reducer = (state = requiredDataAllFields, action) => {
         ...state,
         introducedBy: action.data,
       };
-    case "yearOfIntroduction":
-      return {
-        ...state,
-        yearOfIntroduction: action.data,
-      };
     case "placeIntroducedIn":
       return {
         ...state,
         placeIntroducedIn: action.data,
-      };
-    case "previousCounselor":
-      return {
-        ...state,
-        previousCounselor: action.data,
       };
     case "preferredServices":
       return {
@@ -265,6 +242,14 @@ const form1Reducer = (state = requiredDataAllFields, action) => {
           ...state.validations,
           isValidEducation:action.valid,}
       };
+      case "educationSpecification":
+      return {
+        ...state,
+        degreeSpecification: action.data,
+        validations:{
+          ...state.validations,
+          isValidEducation:action.valid,}
+      };
     case "occupation":
       return {
         ...state,
@@ -273,7 +258,6 @@ const form1Reducer = (state = requiredDataAllFields, action) => {
           ...state.validations,
           isValidOccupation:action.valid,}
       };
-
     case "presentDesignation":
       return {
         ...state,
@@ -334,10 +318,23 @@ const form1Reducer = (state = requiredDataAllFields, action) => {
           ...state.validations,
           isValidMothersName:action.valid,}
       };
-    case "parent":
+      case "spouseName":
       return {
         ...state,
-        parent: action.data,
+        spouseName: action.data,
+        validations:{
+          ...state.validations,
+          isValidSpouseName:action.valid,}
+      };
+      case "dateOfMarriage":
+      return {
+        ...state,
+        dateOfMarriage: action.data,
+      };
+      case "maritalStatus":
+      return {
+        ...state,
+        maritalStatus: action.data,
       };
     case "modified":
       return {

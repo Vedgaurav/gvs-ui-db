@@ -1,6 +1,7 @@
 import PersonalInfoForm from "./PersonalInfoForm";
 import ContactInfoForm from "./ContactInfoForm";
 import { useState,useEffect } from "react";
+
 import { useSelector,useDispatch } from "react-redux";
 import RegistrationProgressBar from "../RegProgBar/RegistrationProgressBar";
 import "./FormInput.css";
@@ -8,12 +9,10 @@ import DevotionalInfoForm from "./DevotionalInfoForm";
 import ProfessionalInfoForm from "./ProfessionalInfoForm";
 import FamilyDetails from "./FamilyDetailsForm";
 import image from "../../images/lordWithDevs.png";
-import SubmitSuccess from "../../SuccessHandler/SubmitSuccess";
 import LoadingSpinner from "../../utilities/loadingSpinner/LoadingSpinner";
-import ErrorMessage from "../../SuccessHandler/ErrorMessage";
 import {ADD_DEVOTEE_DATA} from "../../../../constants/apiConstant";
-import { requiredDataAllFields } from "../../utilities/AllFieldsData";
-const FormsContainer = () =>{
+import Modal from '../../utilities/modal/Modal';
+const FormsContainer = (props) =>{
 const dispatch = useDispatch();
 const {validations} = useSelector(
     (state) => state
@@ -24,14 +23,16 @@ const {validations} = useSelector(
   const [forward, setForward] = useState(false);
   const [submit,setSubmit] = useState('Save & Proceed');
   const [isLoading, setIsLoading] = useState(false);
-  
 
   
   const [submitResponse,setSubmitResponse]=useState('');
   const [error,setError]=useState('');
+
+  
    const submitHandler=()=>{
     setIsLoading(true);
     const saveData = JSON.parse(JSON.stringify(data));
+    
     delete saveData.validations
     const requestData = {
       method: 'POST',
@@ -40,19 +41,39 @@ const {validations} = useSelector(
     };
     console.log(saveData);
     fetch(ADD_DEVOTEE_DATA, requestData)
-    .then(response => response.json())
-    .then(data => {setSubmitResponse(response.status);
-    setFormStage(<><SubmitSuccess/></>)
-    setIsLoading(false);
+    .then(response =>{ if(response.status === 200){
+      console.log("SUCCESSS")
+      props.onHeaderReceive("Success");
+     props.onMessageReceive("Data Successfully Saved");
+      return response.json();     
+  }else if(response.status === 408){
+      console.log("SOMETHING WENT WRONG")
+      props.onHeaderReceive("API ERROR")
+      props.onMessageReceive('There is error in submitting the response. Kindly try again later');
+      return response.json();
+  }
+  else if(response.status === 400){
+    console.log("SOMETHING WENT WRONG")
+    props.onHeaderReceive("API ERROR")
+    props.onMessageReceive('There is error in submitting the response. Kindly try again later');
+    return response.json();
+}
+     })
+    .then(data => {
+    
+    console.log(data);
     }).catch(e=>{
-      setIsLoading(false);
-      setError('there is error in submitting the response',e);
-  setFormStage(<>
-  <ErrorMessage/>
-  </>)});
-  
-    console.log(submitResponse);
+      
+      props.onHeaderReceive("API ERROR")
+      props.onMessageReceive('There is error in submitting the response. Kindly try again later');
+      
+     } )
+    
+     
     console.log(error);
+    console.log(submitResponse);
+    setIsLoading(false);
+    props.onShowModal(true);
   }
   let forms={};
   const formStageHandler = (stage) => {
@@ -121,14 +142,14 @@ const {validations} = useSelector(
 
   return (
     <>
-      
+            
         {/* <img 
             src={image}
             alt=''
             className="imgfix rounded float-left"
           />
           </div> */}
-         {isLoading ? <LoadingSpinner/>:<>
+         {isLoading ? <LoadingSpinner/>: <>
         <RegistrationProgressBar stage={stage} />
 
         {jsxFormStage}
@@ -154,7 +175,8 @@ const {validations} = useSelector(
         </>
         
          }
-      
+         
+
     </>
   );
 };

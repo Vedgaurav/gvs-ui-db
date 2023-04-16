@@ -6,12 +6,14 @@ import NavBar from './commonPages/NavBar';
 import FormsContainer from './commonPages/Forms/FormsContainer';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Modal from './utilities/modal/Modal';
 
 function RegistrationForm() {
-  const [stage, setStage] = useState(1);
+
   const navigate = useNavigate()
-
-
+  const [isShowModal,setIsShowModal]=useState(false);
+  const [showModalHeader,setShowModalHeader]=useState("");
+  const [showModalMessage,setShowModalMessage]=useState("");
   // useEffect(() => {
   //   if (sessionStorage.getItem("userId") == null)
   //     navigate("/login")
@@ -20,8 +22,8 @@ function RegistrationForm() {
   return (
     <div className="body mainpage">
       <NavBar />
-      <FormsContainer />
-
+     {isShowModal? <Modal open={isShowModal} header={showModalHeader} message={showModalMessage} onClose={()=>setIsShowModal(false)}/>:<FormsContainer onHeaderReceive={(msg)=>setShowModalHeader(msg)} onMessageReceive={(msg)=>setShowModalMessage(msg)}  onShowModal={()=>setIsShowModal(true)} />
+}
     </div>
   );
 }

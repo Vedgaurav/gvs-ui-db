@@ -15,29 +15,36 @@ const ContactInfoForm = (props) => {
    const [currAddState,setCurrAddState]=useState([]);
    const [currAddCity,setCurrAddCity]=useState([]);
    const [currAddPincode,setCurrAddPincode]=useState([]);
+   const [currAddDistrict,setCurrAddDistrict]=useState([]);
    
    const [perAddState,setPerAddState]=useState([]);
    const [perAddCity,setPerAddCity]=useState([]);
    const [perAddPincode,setPerAddPincode]=useState([]);
+   const [perAddDistrict,setPerAddDistrict]=useState([]);
 useEffect(()=>{
 enableSaveAndProceed();
-setCurrAddCity(StateWithDistCityPincodes.filter(e=>e.State==currentAddress.state).map(e=>e.City).filter((value, index, self) => self.indexOf(value) === index));
 setCurrAddState(StateWithDistCityPincodes.map(e=> e.State).filter((value, index, self) => self.indexOf(value) === index));
-setCurrAddPincode(StateWithDistCityPincodes.filter(e=>e.City==currentAddress.city).map(e=> e.Pincode).filter((value, index, self) => self.indexOf(value) === index));
+setCurrAddCity(StateWithDistCityPincodes.filter(e=>e.State==currentAddress.state).map(e=>e.City).filter((value, index, self) => self.indexOf(value) === index));
+setCurrAddDistrict(StateWithDistCityPincodes.filter(e=>e.City==currentAddress.city).map(e=>e.District).filter((value, index, self) => self.indexOf(value) === index));
+setCurrAddPincode(StateWithDistCityPincodes.filter(e=>e.District==currentAddress.district).map(e=> e.Pincode).filter((value, index, self) => self.indexOf(value) === index));
 
-setPerAddCity(StateWithDistCityPincodes.filter(e=>e.State==permanentAddress.state).map(e=>e.City).filter((value, index, self) => self.indexOf(value) === index));
 setPerAddState(StateWithDistCityPincodes.map(e=> e.State).filter((value, index, self) => self.indexOf(value) === index));
-setPerAddPincode(StateWithDistCityPincodes.filter(e=>e.City==permanentAddress.city).map(e=> e.Pincode).filter((value, index, self) => self.indexOf(value) === index));
+setPerAddCity(StateWithDistCityPincodes.filter(e=>e.State==permanentAddress.state).map(e=>e.City).filter((value, index, self) => self.indexOf(value) === index));
+setPerAddDistrict(StateWithDistCityPincodes.filter(e=>e.City==permanentAddress.city).map(e=>e.District).filter((value, index, self) => self.indexOf(value) === index));
+setPerAddPincode(StateWithDistCityPincodes.filter(e=>e.District==permanentAddress.district).map(e=> e.Pincode).filter((value, index, self) => self.indexOf(value) === index));
 },[])
 useEffect(()=>{
   //enableSaveAndProceed();
   setCurrAddCity(StateWithDistCityPincodes.filter(e=>e.State==currentAddress.state).map(e=>e.City).filter((value, index, self) => self.indexOf(value) === index));
-  setCurrAddPincode(StateWithDistCityPincodes.filter(e=>e.City==currentAddress.city).map(e=> e.Pincode).filter((value, index, self) => self.indexOf(value) === index));
+  setCurrAddDistrict(StateWithDistCityPincodes.filter(e=>e.City==currentAddress.city).map(e=>e.District).filter((value, index, self) => self.indexOf(value) === index));
+
+  setCurrAddPincode(StateWithDistCityPincodes.filter(e=>e.District==currentAddress.district).map(e=> e.Pincode).filter((value, index, self) => self.indexOf(value) === index));
  },[currentAddress])
 useEffect(()=>{
   //enableSaveAndProceed();
   setPerAddCity(StateWithDistCityPincodes.filter(e=>e.State==permanentAddress.state).map(e=>e.City).filter((value, index, self) => self.indexOf(value) === index));
-setPerAddPincode(StateWithDistCityPincodes.filter(e=>e.City==permanentAddress.city).map(e=> e.Pincode).filter((value, index, self) => self.indexOf(value) === index));
+  setPerAddDistrict(StateWithDistCityPincodes.filter(e=>e.City==permanentAddress.city).map(e=>e.District).filter((value, index, self) => self.indexOf(value) === index));
+setPerAddPincode(StateWithDistCityPincodes.filter(e=>e.District==permanentAddress.District).map(e=> e.Pincode).filter((value, index, self) => self.indexOf(value) === index));
 },[permanentAddress])
   const inputHandler = (e) => {
     const { value, id,name } = e.target;
@@ -63,7 +70,7 @@ setPerAddPincode(StateWithDistCityPincodes.filter(e=>e.City==permanentAddress.ci
   };
    const [sameAsCurrent,setSameAsCurrent]=useState(false);
   const enableSaveAndProceed=()=>{
-    if(validations.isValidPrimaryNo&&validations.isValidEmail&&validations.isValidCurrentAddress){
+    if(validations.isValidPrimaryNo&&validations.isValidCurrentAddress){
       dispatch({ type: 'submitDisable', data: "",valid:false });
     }
     else dispatch({ type: 'submitDisable', data: "",valid:true });
@@ -72,17 +79,9 @@ setPerAddPincode(StateWithDistCityPincodes.filter(e=>e.City==permanentAddress.ci
 const permanentAddHandler=(e)=>{
        if(e.target.checked===true){
        setSameAsCurrent(true);
-      document.getElementById('permanentAddress').value=  document.getElementById('currentAddress').value;
        }
        else {
         setSameAsCurrent(false);
-        const addline1=document.getElementById('perAddLine1').value;
-        const addLine2=document.getElementById('perAddLine2').value;
-        const city=document.getElementById('perAddCity').value;
-        const State=document.getElementById('perAddState').value;
-        const zip=document.getElementById('perAddZip').value;
-        const country=document.getElementById('perAddCountry').value;
-        document.getElementById('permanentAddress').value=addline1+','+addLine2+","+city+","+State+","+zip+","+country;
        }
 }
 
@@ -99,7 +98,7 @@ const permanentAddHandler=(e)=>{
             <div className="form-col col-md-4">
               <input
                 
-                type="tel"
+                type="number"
                 id="primaryPhone"
                 className="form-control"
                 placeholder="Always Reachable"
@@ -181,20 +180,28 @@ const permanentAddHandler=(e)=>{
             <div className="form-group row">
               <div className="form-col col-md-3"></div>
               <div className="form-col col-md-3">
-              <select className="form-select col-md-3" id="currentAddressCity" onChange={inputHandler}>
-                  {currAddCity.map((e)=>
-                    <option key={e}value={e} label={e}/>
-                  )}
-                </select>
-
-              </div>
-
-              <div className="form-col col-md-3">
-                <select className="form-select col-md-3" id="currentAddressState" onChange={inputHandler} >
+                <select className="form-select col-md-3" id="currentAddressState" onChange={inputHandler}  onPointerMove={inputHandler} >
                   {currAddState.map((state)=>
                     <option value={state} key={state} label={state}/>
                   )}
                 </select>
+                <p style={{color:"green",fontSize:"10px"}}>state</p>
+              </div>
+              <div className="form-col col-md-3">
+              <select className="form-select col-md-3" id="currentAddressCity"  onChange={inputHandler}  onPointerMove={inputHandler}>
+                  {currAddCity.map((e)=>
+                    <option key={e}value={e} label={e}/>
+                  )}
+                </select>
+                <p style={{color:"green",fontSize:"10px"}}>city</p>
+              </div>
+              <div className="form-col col-md-3">
+              <select className="form-select col-md-3" id="currentAddressDistrict" onChange={inputHandler} onPointerMove={inputHandler}>
+                  {currAddDistrict.map((e)=>
+                    <option key={e}value={e} label={e}/>
+                  )}
+                </select>
+                <p style={{color:"green",fontSize:"10px"}}>District</p>
               </div>
             </div>
 
@@ -202,18 +209,19 @@ const permanentAddHandler=(e)=>{
               <div className="form-col col-md-3"></div>
               
               <div className="form-col col-md-3">
-                <select className="form-select col-md-3" id="currentAddressPincode" onChange={inputHandler} >
+                <select className="form-select col-md-3" id="currentAddressPincode" onChange={inputHandler} onPointerMove={inputHandler}>
                   {currAddPincode.map((pincode)=>
                     <option value={pincode} key={pincode}label={pincode}/>
                   )}
                 </select>
+                <p style={{color:"green",fontSize:"10px"}}>pincode</p>
               </div>
 
               <div className="form-col col-md-3">
               <select className="form-select col-md-3" id="currentAddressCountry" onChange={inputHandler}>
-                  {countries.map((e)=>
-                    <option value={e}>{e}</option>
-                  )}
+                  
+                    <option  value="India" label="India"/>
+                  
                 </select>
               </div>
             </div>
@@ -243,7 +251,7 @@ const permanentAddHandler=(e)=>{
                   type="text"
                   className="form-control"
                   value={permanentAddress.line1}
-                  placeholder="Address Line 1"
+                  placeholder="House No./care of"
                   onChange={inputHandler}
                 />
                 <p id='permanentAddressLine1Error' style={{color:'red',fontSize:'10px'}}></p>
@@ -258,7 +266,7 @@ const permanentAddHandler=(e)=>{
                   name="^[#.0-9a-zA-Z\s,-]+$"
                   className="form-control"
                   value={permanentAddress.line2}
-                  placeholder="Address Line 2"
+                  placeholder="street/village"
                   onChange={inputHandler}
                 />
                 <p id='permanentAddressLine2Error' style={{color:'red',fontSize:'10px'}}></p>
@@ -266,20 +274,29 @@ const permanentAddHandler=(e)=>{
             </div>
             <div className="form-group row" hidden={sameAsCurrent}>
               <div className="form-col col-md-3"></div>
+              <div className="form-col col-md-3" >
+              <select className="form-select col-md-3" id="permanentAddressState" onChange={inputHandler}>
+                  {perAddState.map((e)=>
+                    <option key={e}value={e} label={e}/>
+                  )}
+                </select>
+                <p style={{color:"green",fontSize:"10px"}}>state</p>
+              </div>
               <div className="form-col col-md-3">
               <select className="form-select col-md-3" id="permanentAddressCity" onChange={inputHandler}>
                   {perAddCity.map((e)=>
                     <option key={e}value={e} label={e}/>
                   )}
                 </select>
+                <p style={{color:"green",fontSize:"10px"}}>city</p>
               </div>
-
-              <div className="form-col col-md-3" hidden={sameAsCurrent}>
-              <select className="form-select col-md-3" id="permanentAddressState" onChange={inputHandler}>
-                  {perAddState.map((e)=>
+              <div className="form-col col-md-3">
+              <select className="form-select col-md-3" id="permanentAddressDistrict" onChange={inputHandler} onPointerMove={inputHandler}>
+                  {perAddDistrict.map((e)=>
                     <option key={e}value={e} label={e}/>
                   )}
                 </select>
+                <p style={{color:"green",fontSize:"10px"}}>District</p>
               </div>
             </div>
             <div className="form-group row" hidden={sameAsCurrent}>
@@ -290,15 +307,12 @@ const permanentAddHandler=(e)=>{
                     <option key={e}value={e} label={e}/>
                   )}
                 </select>
+                <p style={{color:"green",fontSize:"10px"}}>pincode</p>
               </div>
-
               <div className="form-col col-md-3" hidden={sameAsCurrent}>
-              <select className="form-select col-md-3" id="permanentAddressCountry" onChange={inputHandler}>
-                  {countries.map((e)=>
-                    <option value={e}>{e}</option>
-                  )}
+              <select className="form-select col-md-3" id="permanentAddressCountry" onChange={inputHandler}>   
+                    <option value="India" label="India"/>   
                 </select>
-                
               </div>
             </div>
           </div>

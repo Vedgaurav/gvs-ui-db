@@ -8,7 +8,7 @@ import { languages,bloodGroup,ashrama,Gender } from "../../utilities/OptionalEnt
 
 const PersonalInfoForm = (props) => {
   const dispatch = useDispatch();
-  const { fname, mname, lname, initiatedName, gender, caste,gotra,odob ,validations} = useSelector(
+  const { fname, mname, lname, initiatedName, gender, spiritualMaster,dateOfBirth ,validations} = useSelector(
     (state) => state
   );
    
@@ -33,12 +33,18 @@ const PersonalInfoForm = (props) => {
 
     
   };
-
+  const[spMaster,setSpMaster]=useState(true);
   const enableSaveAndProceed=()=>{
     if(validations.isValidFname){
       dispatch({ type: 'submitDisable', data: "",valid:false });
     }
     else dispatch({ type: 'submitDisable', data: "",valid:true });
+  }
+  const initiatedNameHandler=(e)=>{
+    if(e.target.value.length>0){
+       setSpMaster(false);
+    }
+    else setSpMaster(true);
   }
   const genderChangeHandler=(e)=>{
     let a=document.getElementsByClassName('gender');
@@ -49,16 +55,7 @@ const PersonalInfoForm = (props) => {
       }
     }
   }
-  const ashramaChangeHandle=(e)=>{
-    
-  let a=document.getElementsByClassName('ashramahandle');
-  for (let index = 0; index < a.length; index++) {
-    
-    if(a[index].value!==e.target.value){
-      a[index].checked=false;
-    }
-  }
-  }
+
 
   useEffect(()=>{
   enableSaveAndProceed();
@@ -119,10 +116,26 @@ const PersonalInfoForm = (props) => {
                 name="^[a-zA-Z][a-zA-Z .,'-]*$"
                 className="form-control"
                 value={initiatedName}
-                placeholder="Initiated Name if any"
-                onChange={inputHandler}
+                placeholder="Initiated Name"
+                onChange={(e)=>{inputHandler(e),initiatedNameHandler(e)}}
               />
               <p id='inameError' style={{color:'red',fontSize:'8px'}}></p>
+            </div>
+            <div className="form-col col-md-3" hidden={spMaster}>
+              <label>Spiritual Master<a style={{color:'red'}}>*</a></label>
+            </div>
+            <div className="form-col col-md-3" hidden={spMaster}>
+              <input
+                id="spiritualMaster"
+                type="text"
+                className="form-control "
+                placeholder="HH ..name"
+                name="^[a-zA-Z][a-zA-Z .,'-]*$"
+                onChange={inputHandler}
+                value={spiritualMaster}
+                onBlur={enableSaveAndProceed}
+              />
+            <p id='spiritualMasterError' style={{color:'red',fontSize:'10px'}}></p>
             </div>
           </div>
           <div className="form-group row">
@@ -147,71 +160,16 @@ const PersonalInfoForm = (props) => {
             </div>
             <div className="form-col col-md-3 ">
               <input
-                id='odob'
+                id='dateOfBirth'
                 type="date"
                 className="form-control"
-                min="1900-01-01 0HH:0MM:0SS"
-                max="2023-12-31 0HH:0MM:0SS"
+                min="1900-01-01"
+                max="2023-12-31"
                 onChange={inputHandler}
-                defaultValue={odob}
+                value={dateOfBirth}
               />
             </div>
           </div>
-          {/* <div className="form-group row">
-            <div className="form-col col-md-3">
-              <label>Ancestors Info.<a style={{color:'red'}}>*</a></label>
-            </div>
-            <div className="form-col col-md-3">
-              <input
-              id='caste'
-                type="text"
-                className="form-control"
-                name="^[a-zA-Z][a-zA-Z .,'-]*$"
-                placeholder="caste"
-                onChange={inputHandler}
-                value={caste}
-                onBlur={enableSaveAndProceed}
-              />
-              <p id='casteError' style={{color:'red',fontSize:'8px'}}></p>
-            </div>
-            <div className="form-col col-md-3">
-              <input
-              id='subcast'
-                type="text"
-                className="form-control"
-                placeholder="sub caste"
-                // onChange={inputHandler}
-              />
-            </div>
-            <div className="form-col col-md-3">
-              <input
-              id='gotra'
-              name="^[a-zA-Z][a-zA-Z .,'-]*$"
-                type="text"
-                className="form-control"
-                placeholder="gotra"
-                value={gotra}
-                onInput={inputHandler}
-                
-                onBlur={enableSaveAndProceed}
-              />
-              <p id='gotraError' style={{color:'red',fontSize:'8px'}}></p>
-            </div>
-          </div> */}
-          {/* <div className="form-group row">
-            <div className="form-col form-check col-md-3">
-              <label>Aspiring Ashrama<a style={{color:'red'}}>*</a></label>
-            </div>
-            {ashrama.map((e) => (
-              <div className={`form-col col-md-${e.col}`} key={e.id} style={{marginRight:'30px'}}>
-                <label className="form-check-label">
-                  <input type="radio" className="form-check-input ashramahandle" name=''id="aspiringAshram" value={e.value} onClick={(e)=>{inputHandler(e),ashramaChangeHandle(e)}}/>
-                  {e.value}
-                </label>
-              </div>
-            ))}
-            
-          </div> */}
           <div className="form-group row">
             <div className="form-col col-md-3" >
               <label>Blood Group</label>

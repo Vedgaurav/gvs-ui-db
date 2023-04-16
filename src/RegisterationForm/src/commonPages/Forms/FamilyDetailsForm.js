@@ -3,7 +3,7 @@ import { useSelector,useDispatch } from "react-redux";
 import { useEffect,useState } from "react";
 const FamilyDetails = () => {
   const dispatch = useDispatch();
-   const { fathersName,mothersName,motherTongue,maritalStatus,validations } = useSelector(
+   const { fathersName,mothersName,motherTongue,spouseName,maritalStatus,validations } = useSelector(
      (state) => state
    );
   const[hidden,setHidden]= useState(true);
@@ -97,12 +97,12 @@ enableSaveAndProceed();
             </label>
           </div>
           <div className="form-col col-md-3">
-            <select className="form-select" onChange={inputHandler}>
+            <select className="form-select" id="motherTongue"onChange={inputHandler}>
               {mothersTongue.map((e) => {
                 if(e===motherTongue)
                return <option value={e} label={e} key={e} selected/>
                 else 
-               return <option value={e} label={e} key={e} selected/>
+               return <option value={e} label={e} key={e} />
               })}
             </select>
           </div>
@@ -113,14 +113,14 @@ enableSaveAndProceed();
             </div>
             {marritalStatus.map((e) => {
               if(e===maritalStatus)
-             return( <div className={`form-col col-md-1`} key={e} style={{marginRight:'30px'}}>
+             return( <div className="form-col col-md-1" key={e} style={{marginRight:'60px'}}>
                 <label className="form-check-label">
-                  <input type="radio" className="form-check-input maritalstatushandle" id="maritalStatus" value={e} checked={true} onClick={(e)=>{inputHandler(e),maritalStatusHandle(e)}}/>
+                  <input type="radio" className="form-check-input maritalstatushandle" id="maritalStatus" value={e} defaultChecked onClick={(e)=>{inputHandler(e),maritalStatusHandle(e)}}/>
                   {e}
                 </label>
               </div>)
               else
-              return(<div className={`form-col col-md-1`} key={e} style={{marginRight:'30px'}}>
+              return(<div className="form-col col-md-1" key={e} style={{marginRight:'60px'}}>
                 <label className="form-check-label">
                   <input type="radio" className="form-check-input maritalstatushandle" id="maritalStatus" value={e} onClick={(e)=>{inputHandler(e),maritalStatusHandle(e)}}/>
                   {e}
@@ -141,7 +141,8 @@ enableSaveAndProceed();
               type="text"
               className="form-control"
               placeholder="Enter full name"
-              
+              value={spouseName}
+              onChange={inputHandler}
             />
           </div>
           <div className="form-col col-md-3 ">
@@ -151,7 +152,7 @@ enableSaveAndProceed();
             </label>
           </div>
           <div className="form-col col-md-3 ">
-            <input type="date" className="form-control"  />
+            <input type="date" id="dateOfMarriage" className="form-control" onChange={inputHandler} />
           </div>
         </div>
         <div className="form-group row" hidden={hidden}>

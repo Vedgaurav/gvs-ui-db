@@ -12,12 +12,6 @@ export const languages = [
 ]
   export const bloodGroup = ["A +ve","A -ve","B +ve","B -ve","AB +ve","AB -ve","O +ve","O -ve",];
 
-  export const ashrama = [
-    { id: 1, value: "BRAHMACHARI", col: 1 },
-    { id: 2, value: "GRIHASTHA", col: 1 },
-    { id: 3, value: "SANAYASI", col: 1 },
-    { id: 4, value: "NOT_DECIDED", col: 1 },
-  ];
  export const occupations=[ 'EMPLOYEED_FULL_TIME',
       'EMPLOYEED_PART_TIME',
       'SELF_EMPLOYED',
@@ -42,7 +36,6 @@ export const languages = [
   export const Gender = [
     { id: 'g1', value: "Male", col: 1 },
     { id: 'g2', value: "Female", col: 2 },
-    { id: 'g3', value: "Others", col: 1 },
     
   ];
   export const countries=['India']
@@ -91,4 +84,7 @@ export const languages = [
 
   export const religion = ["Hindu", "Jain", "Sikh", "Cristian", "Muslim", "Buddhist"];
 
-  export const marritalStatus=["UNMARRIED", "MARRIED", "DIVORCED", "BRAHMACHARI"];
+  export const marritalStatus=["UNMARRIED", "MARRIED" , "BRAHMACHARI", "DIVORCED"];
+  
+  export const introductionMedium=["Temple", "House Program" , "Dham Yatra", "Own Child","Book Distribution",
+               "YouTube Lectures","Bhagwad Geeta Study","Parents"];
