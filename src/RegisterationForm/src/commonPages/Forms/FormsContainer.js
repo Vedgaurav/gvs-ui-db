@@ -22,15 +22,25 @@ const {validations} = useSelector(
   const [back, setBack] = useState(true);
   const [forward, setForward] = useState(false);
   const [submit,setSubmit] = useState('Save & Proceed');
-  const [isLoading, setIsLoading] = useState(false);
 
   
   const [submitResponse,setSubmitResponse]=useState('');
   const [error,setError]=useState('');
-
+  const options = {
+    method: 'GET',
+    url: 'https://shazam.p.rapidapi.com/shazam-events/list',
+    params: {artistId: '73406786', l: 'en-US', from: '2022-12-31', limit: '50', offset: '0'},
+    headers: {
+      'X-RapidAPI-Key': 'SIGN-UP-FOR-KEY',
+      'X-RapidAPI-Host': 'shazam.p.rapidapi.com'
+    }
+  };
   
    const submitHandler=()=>{
-    setIsLoading(true);
+    props.onShowModal(false);
+    props.onHeaderReceive("");
+    props.onMessageReceive("");
+    props.isLoading(true);
     const saveData = JSON.parse(JSON.stringify(data));
     
     delete saveData.validations
@@ -40,22 +50,25 @@ const {validations} = useSelector(
       body: JSON.stringify(saveData),
     };
     console.log(saveData);
-    fetch(ADD_DEVOTEE_DATA, requestData)
+    fetch(options)
     .then(response =>{ if(response.status === 200){
       console.log("SUCCESSS")
       props.onHeaderReceive("Success");
      props.onMessageReceive("Data Successfully Saved");
+     setError(response.status);
       return response.json();     
   }else if(response.status === 408){
       console.log("SOMETHING WENT WRONG")
       props.onHeaderReceive("API ERROR")
       props.onMessageReceive('There is error in submitting the response. Kindly try again later');
+      setError(response.status);
       return response.json();
   }
   else if(response.status === 400){
     console.log("SOMETHING WENT WRONG")
     props.onHeaderReceive("API ERROR")
     props.onMessageReceive('There is error in submitting the response. Kindly try again later');
+    setError(response.status);
     return response.json();
 }
      })
@@ -72,7 +85,7 @@ const {validations} = useSelector(
      
     console.log(error);
     console.log(submitResponse);
-    setIsLoading(false);
+    props.isLoading(false);
     props.onShowModal(true);
   }
   let forms={};
@@ -149,7 +162,7 @@ const {validations} = useSelector(
             className="imgfix rounded float-left"
           />
           </div> */}
-         {isLoading ? <LoadingSpinner/>: <>
+         
         <RegistrationProgressBar stage={stage} />
 
         {jsxFormStage}
@@ -163,7 +176,7 @@ const {validations} = useSelector(
           {" "}
           Previous
         </button>
-
+       
         <button
           type="button"
           className="btn btn-success col-sm-3 ms-5"
@@ -172,9 +185,9 @@ const {validations} = useSelector(
         >
           {submit}
         </button>
-        </>
         
-         }
+        
+        
          
 
     </>

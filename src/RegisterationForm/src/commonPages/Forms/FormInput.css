@@ -122,4 +122,13 @@
   height: 40px;
 }  
   
+
+.image-preview-container img {
+  width: 150px;
+  height: 150px;
   
+  image-rendering: pixelated;
+  display: none;
+  
+  margin-bottom: 0px;
+}

@@ -11,6 +11,7 @@ import Modal from './utilities/modal/Modal';
 function RegistrationForm() {
 
   const navigate = useNavigate()
+  const [isLoading,setIsLoading]=useState(false);
   const [isShowModal,setIsShowModal]=useState(false);
   const [showModalHeader,setShowModalHeader]=useState("");
   const [showModalMessage,setShowModalMessage]=useState("");
@@ -22,7 +23,7 @@ function RegistrationForm() {
   return (
     <div className="body mainpage">
       <NavBar />
-     {isShowModal? <Modal open={isShowModal} header={showModalHeader} message={showModalMessage} onClose={()=>setIsShowModal(false)}/>:<FormsContainer onHeaderReceive={(msg)=>setShowModalHeader(msg)} onMessageReceive={(msg)=>setShowModalMessage(msg)}  onShowModal={()=>setIsShowModal(true)} />
+     {isShowModal? <Modal open={isShowModal} isLoading={isLoading}header={showModalHeader} message={showModalMessage} onClose={()=>setIsShowModal(false)}/>:<FormsContainer onHeaderReceive={(msg)=>setShowModalHeader(msg)} onMessageReceive={(msg)=>setShowModalMessage(msg)} isLoading={(e)=>setIsLoading(e)} onShowModal={()=>setIsShowModal(true)} />
 }
     </div>
   );

@@ -172,7 +172,7 @@ const form1Reducer = (state = requiredDataAllFields, action) => {
                     return{
                       ...state,
                       permanentAddress:{...state.permanentAddress,
-                        pincode:action.data}
+                        pinCode:action.data}
                     }
     case "centerConnectedTo":
       return {

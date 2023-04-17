@@ -5,21 +5,14 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import Button from "@material-ui/core/Button";
+import LoadingSpinner from "../loadingSpinner/LoadingSpinner";
 
 export default function Modal(props) {
-    const [open, setOpen] = useState(props.open);
-    
-    const handleClickToOpen = () => {
-      setOpen(true);
-    };
-    
-    const handleToClose = () => {
-      setOpen(false);
-    };
     
     return (
       <div stlye={{}}>
-        <Dialog open={open} onClose={props.onClose}>
+        {props.isLoading ? <LoadingSpinner/>:
+        <Dialog open={props.open} onClose={props.onClose}>
           <DialogTitle>{props.header}</DialogTitle>
           <DialogContent>
             <DialogContentText>
@@ -32,7 +25,7 @@ export default function Modal(props) {
               Close
             </Button>
           </DialogActions>
-        </Dialog>
+        </Dialog>}
       </div>
     );
   }

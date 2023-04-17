@@ -2,6 +2,7 @@ import "bootstrap/dist/css/bootstrap.css";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 import "./FormInput.css"; 
+import WebcamCapture from "../../utilities/webCamCapture/WebCamComponent";
 import { languages,bloodGroup,ashrama,Gender } from "../../utilities/OptionalEntries";
 
 
@@ -11,7 +12,7 @@ const PersonalInfoForm = (props) => {
   const { fname, mname, lname, initiatedName, gender, spiritualMaster,dateOfBirth ,validations} = useSelector(
     (state) => state
   );
-   
+const [takePic,setTakePic]=useState(false);
   const inputHandler = (e) => {
     
     const { value, id,name } = e.target;
@@ -56,7 +57,24 @@ const PersonalInfoForm = (props) => {
     }
   }
 
+  const previewImage = (event) => {
+   
+    const imageFiles = event.target.files;
 
+    const imageFilesLength = imageFiles.length;
+    if (imageFilesLength > 0) {
+
+        const imageSrc = URL.createObjectURL(imageFiles[0]);
+        const imagePreviewElement = document.querySelector("#preview-selected-image");
+        imagePreviewElement.src = imageSrc;
+        imagePreviewElement.style.display = "inline";
+    }
+    else {
+        const imagePreviewElement = document.querySelector("#preview-selected-image");
+      imagePreviewElement.src = "";
+        imagePreviewElement.style.display = "none"
+    }
+};
   useEffect(()=>{
   enableSaveAndProceed();
   },[])
@@ -198,12 +216,25 @@ const PersonalInfoForm = (props) => {
             <div className="form-col col-md-3">
               <label className="form-label">Upload Self Photo<a style={{color:'red'}}>*</a></label>
             </div>
-            <div className="form-col col-md-3">
-              <input type="file" className="form-file" id="profileImageUrl" accept="image/*" onChange={inputHandler}/>
+            <div className="form-col col-md-5">
+              <input type="file" className="form-file" id="profileImageUrl" accept="image/*" capture="user"
+               onClick={()=>setTakePic(false)}onChange={(e)=>{inputHandler(e),previewImage(e)}}/>
+              
             </div>
+            <div className="form-col col-md-2">
+            <button label="Take Selfie" style={{backgroundColor:'blue',color:'white'}}onClick={()=>setTakePic(true)}>Take Selfie</button>
+            </div>
+           {takePic && <WebcamCapture/>}
+            <div className="form-col image-preview-container" >
+              <img className="form-control img-thumbnail" id="preview-selected-image" />
+              </div>
           </div>
+          
+          
         </div>
     </>
   );
+
+
 };
 export default PersonalInfoForm;

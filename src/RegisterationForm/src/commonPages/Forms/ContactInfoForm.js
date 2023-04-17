@@ -33,19 +33,21 @@ setPerAddCity(StateWithDistCityPincodes.filter(e=>e.State==permanentAddress.stat
 setPerAddDistrict(StateWithDistCityPincodes.filter(e=>e.City==permanentAddress.city).map(e=>e.District).filter((value, index, self) => self.indexOf(value) === index));
 setPerAddPincode(StateWithDistCityPincodes.filter(e=>e.District==permanentAddress.district).map(e=> e.Pincode).filter((value, index, self) => self.indexOf(value) === index));
 },[])
-useEffect(()=>{
-  //enableSaveAndProceed();
-  setCurrAddCity(StateWithDistCityPincodes.filter(e=>e.State==currentAddress.state).map(e=>e.City).filter((value, index, self) => self.indexOf(value) === index));
-  setCurrAddDistrict(StateWithDistCityPincodes.filter(e=>e.City==currentAddress.city).map(e=>e.District).filter((value, index, self) => self.indexOf(value) === index));
+// useEffect(()=>{
+//   //enableSaveAndProceed();
+//   setCurrAddState(StateWithDistCityPincodes.map(e=> e.State).filter((value, index, self) => self.indexOf(value) === index));
 
-  setCurrAddPincode(StateWithDistCityPincodes.filter(e=>e.District==currentAddress.district).map(e=> e.Pincode).filter((value, index, self) => self.indexOf(value) === index));
- },[currentAddress])
-useEffect(()=>{
-  //enableSaveAndProceed();
-  setPerAddCity(StateWithDistCityPincodes.filter(e=>e.State==permanentAddress.state).map(e=>e.City).filter((value, index, self) => self.indexOf(value) === index));
-  setPerAddDistrict(StateWithDistCityPincodes.filter(e=>e.City==permanentAddress.city).map(e=>e.District).filter((value, index, self) => self.indexOf(value) === index));
-setPerAddPincode(StateWithDistCityPincodes.filter(e=>e.District==permanentAddress.District).map(e=> e.Pincode).filter((value, index, self) => self.indexOf(value) === index));
-},[permanentAddress])
+//   setCurrAddCity(StateWithDistCityPincodes.filter(e=>e.State==currentAddress.state).map(e=>e.City).filter((value, index, self) => self.indexOf(value) === index));
+//   setCurrAddDistrict(StateWithDistCityPincodes.filter(e=>e.City==currentAddress.city).map(e=>e.District).filter((value, index, self) => self.indexOf(value) === index));
+
+//   setCurrAddPincode(StateWithDistCityPincodes.filter(e=>e.District==currentAddress.district).map(e=> e.Pincode).filter((value, index, self) => self.indexOf(value) === index));
+//  },[currentAddress.state,currentAddress.city,currentAddress.district])
+// useEffect(()=>{
+//   //enableSaveAndProceed();
+//   setPerAddCity(StateWithDistCityPincodes.filter(e=>e.State==permanentAddress.state).map(e=>e.City).filter((value, index, self) => self.indexOf(value) === index));
+//   setPerAddDistrict(StateWithDistCityPincodes.filter(e=>e.City==permanentAddress.city).map(e=>e.District).filter((value, index, self) => self.indexOf(value) === index));
+// setPerAddPincode(StateWithDistCityPincodes.filter(e=>e.District==permanentAddress.district).map(e=> e.Pincode).filter((value, index, self) => self.indexOf(value) === index));
+// },[permanentAddress.city,permanentAddress.state, permanentAddress.district])
   const inputHandler = (e) => {
     const { value, id,name } = e.target;
     console.log(name,id,value)
@@ -75,7 +77,27 @@ setPerAddPincode(StateWithDistCityPincodes.filter(e=>e.District==permanentAddres
     }
     else dispatch({ type: 'submitDisable', data: "",valid:true });
   }
+  const addressSelectionHandler=(e)=>{
+    const{id,value}=e.target;
+    switch (id) {
+      case "currentAddressState":
+        return   setCurrAddCity(StateWithDistCityPincodes.filter(e=>e.State==value).map(e=>e.City).filter((value, index, self) => self.indexOf(value) === index));
+        break;
+      case "currentAddressCity":
+        return  setCurrAddDistrict(StateWithDistCityPincodes.filter(e=>e.City==value).map(e=>e.District).filter((value, index, self) => self.indexOf(value) === index)),
+        setCurrAddPincode(StateWithDistCityPincodes.filter(e=>e.City==value).map(e=> e.Pincode).filter((value, index, self) => self.indexOf(value) === index));
+
+    
+      case "permanentAddressState":
+        return setPerAddCity(StateWithDistCityPincodes.filter(e=>e.State==value).map(e=>e.City).filter((value, index, self) => self.indexOf(value) === index));
+        case "permanentAddressCity":
+          return  setPerAddDistrict(StateWithDistCityPincodes.filter(e=>e.City==value).map(e=>e.District).filter((value, index, self) => self.indexOf(value) === index)),
+          setPerAddPincode(StateWithDistCityPincodes.filter(e=>e.City==value).map(e=> e.Pincode).filter((value, index, self) => self.indexOf(value) === index));
   
+      default:
+        break;
+    }
+  }
 const permanentAddHandler=(e)=>{
        if(e.target.checked===true){
        setSameAsCurrent(true);
@@ -116,7 +138,7 @@ const permanentAddHandler=(e)=>{
                 className="form-control"
                 type="number"
                 placeholder="Alternate/whatsapp No."
-                
+                value={whatsappPhone}
                 onChange={inputHandler}
                 name="^[0-9]{10}$"
               />
@@ -180,7 +202,7 @@ const permanentAddHandler=(e)=>{
             <div className="form-group row">
               <div className="form-col col-md-3"></div>
               <div className="form-col col-md-3">
-                <select className="form-select col-md-3" id="currentAddressState" onChange={inputHandler}  onPointerMove={inputHandler} >
+                <select className="form-select col-md-3" id="currentAddressState" onChange={(e)=>{inputHandler(e),addressSelectionHandler(e)}} >
                   {currAddState.map((state)=>
                     <option value={state} key={state} label={state}/>
                   )}
@@ -188,7 +210,7 @@ const permanentAddHandler=(e)=>{
                 <p style={{color:"green",fontSize:"10px"}}>state</p>
               </div>
               <div className="form-col col-md-3">
-              <select className="form-select col-md-3" id="currentAddressCity"  onChange={inputHandler}  onPointerMove={inputHandler}>
+              <select className="form-select col-md-3" id="currentAddressCity"  onChange={(e)=>{inputHandler(e),addressSelectionHandler(e)}}  >
                   {currAddCity.map((e)=>
                     <option key={e}value={e} label={e}/>
                   )}
@@ -196,7 +218,7 @@ const permanentAddHandler=(e)=>{
                 <p style={{color:"green",fontSize:"10px"}}>city</p>
               </div>
               <div className="form-col col-md-3">
-              <select className="form-select col-md-3" id="currentAddressDistrict" onChange={inputHandler} onPointerMove={inputHandler}>
+              <select className="form-select col-md-3" id="currentAddressDistrict" onChange={inputHandler}  >
                   {currAddDistrict.map((e)=>
                     <option key={e}value={e} label={e}/>
                   )}
@@ -209,7 +231,7 @@ const permanentAddHandler=(e)=>{
               <div className="form-col col-md-3"></div>
               
               <div className="form-col col-md-3">
-                <select className="form-select col-md-3" id="currentAddressPincode" onChange={inputHandler} onPointerMove={inputHandler}>
+                <select className="form-select col-md-3" id="currentAddressPincode" onChange={inputHandler} value={currentAddress.pinCode} onEnded={inputHandler}>
                   {currAddPincode.map((pincode)=>
                     <option value={pincode} key={pincode}label={pincode}/>
                   )}
