@@ -10,8 +10,7 @@ import LoadingSpinner from "../loadingSpinner/LoadingSpinner";
 export default function Modal(props) {
     
     return (
-      <div stlye={{}}>
-        {props.isLoading ? <LoadingSpinner/>:
+      <>
         <Dialog open={props.open} onClose={props.onClose}>
           <DialogTitle>{props.header}</DialogTitle>
           <DialogContent>
@@ -25,7 +24,7 @@ export default function Modal(props) {
               Close
             </Button>
           </DialogActions>
-        </Dialog>}
-      </div>
+        </Dialog>
+      </>
     );
   }

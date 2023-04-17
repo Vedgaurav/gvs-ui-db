@@ -15,15 +15,15 @@ function RegistrationForm() {
   const [isShowModal,setIsShowModal]=useState(false);
   const [showModalHeader,setShowModalHeader]=useState("");
   const [showModalMessage,setShowModalMessage]=useState("");
-  // useEffect(() => {
-  //   if (sessionStorage.getItem("userId") == null)
-  //     navigate("/login")
-  // })
+  useEffect(() => {
+    if (sessionStorage.getItem("userId") == null)
+      navigate("/login")
+  })
 
   return (
     <div className="body mainpage">
       <NavBar />
-     {isShowModal? <Modal open={isShowModal} isLoading={isLoading}header={showModalHeader} message={showModalMessage} onClose={()=>setIsShowModal(false)}/>:<FormsContainer onHeaderReceive={(msg)=>setShowModalHeader(msg)} onMessageReceive={(msg)=>setShowModalMessage(msg)} isLoading={(e)=>setIsLoading(e)} onShowModal={()=>setIsShowModal(true)} />
+     {isShowModal? <Modal open={isShowModal} header={showModalHeader} message={showModalMessage} onClose={()=>setIsShowModal(false)}/>:<FormsContainer onHeaderReceive={(msg)=>setShowModalHeader(msg)} onMessageReceive={(msg)=>setShowModalMessage(msg)} isLoading={(e)=>setIsLoading(e)} onShowModal={()=>setIsShowModal(true)} />
 }
     </div>
   );

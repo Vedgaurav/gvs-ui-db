@@ -40,7 +40,6 @@ const {validations} = useSelector(
     props.onShowModal(false);
     props.onHeaderReceive("");
     props.onMessageReceive("");
-    props.isLoading(true);
     const saveData = JSON.parse(JSON.stringify(data));
     
     delete saveData.validations
@@ -85,7 +84,6 @@ const {validations} = useSelector(
      
     console.log(error);
     console.log(submitResponse);
-    props.isLoading(false);
     props.onShowModal(true);
   }
   let forms={};
