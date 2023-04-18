@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { useDispatch,useSelector } from "react-redux";
 import { occupations,educations } from "../../utilities/OptionalEntries";
+import { validateName } from "../../RegexExpsValidation/RegexExps";
 
 const ProfessionalInfoForm = () => {
-  const { officeLocation, education ,occupation, currentCompany,skills,validations} = useSelector(
+  const { officeLocation, education ,occupation,presentDesignation,degreeSpecification, currentCompany,skills,validations} = useSelector(
     (state) => state
   );
   const dispatch=useDispatch();
@@ -52,13 +53,19 @@ const ProfessionalInfoForm = () => {
             <label>Highest Education<a style={{color:'red'}}>*</a></label>
           </div>
           <div className="form-col col-md-3">
-            <select className="form-select" id="education" onChange={inputHandler}>
+            <select className="form-select" id="education"  onChange={inputHandler}>
               {educations.map((e) => {
                 if(e===education)
                 return (<option value={e} label={e} key={e}selected={true} />)
                 else return (<option value={e} key={e}label={e}  />)
                })}
             </select>
+          </div>
+          <div className="form-col col-md-3">
+            <label>Degree/Education Specification<a style={{color:'red'}}>*</a></label>
+          </div>
+          <div className="form-col col-md-3">
+           <input type="text" name={validateName} id="educationSpecification"value={degreeSpecification} onChange={inputHandler}/>
           </div>
         </div>
         <div className="form-group row">
@@ -77,6 +84,12 @@ const ProfessionalInfoForm = () => {
                   })}
             </select>
           </div>
+         {collapse== "" && <><div className="form-col col-md-3">
+            <label>Designation<a style={{color:'red'}}>*</a></label>
+          </div>
+          <div className="form-col col-md-3">
+           <input type="text" name={validateName} id="presentDesignation" value={presentDesignation} onChange={inputHandler}/>
+          </div></>}
         </div>
         <div className="form-group row">
           <div className="form-col col-md-3">

@@ -55,7 +55,6 @@ const DevotionalInfoForm = () => {
   }
   }
 
- //   const [startDate, setStartDate] = useState(new Date());
   return (
     <>
       <div className="container">
@@ -109,23 +108,6 @@ const DevotionalInfoForm = () => {
             <input type="text" id='introducedBy' placeholder="name of person" value={introducedBy}className="form-control" onChange={inputHandler}/>
           </div>
         </div>
-        {/* <div className="form-group row">
-          <div className="form-col form-check col-md-3">
-            <label>Year of Introduction<a style={{color:'red'}}>*</a></label>
-          </div>
-          <div className={`form-date col-md-3`}>
-            <DatePicker
-            id="yearChantingSince"
-              className="form-control"
-              selected={startDate}
-              onChange={(date) => {setStartDate(date),inputHandler({target:{id:'yearOfIntroduction',value:date.getFullYear().toString()}})}}
-              showYearPicker
-              dateFormat="yyyy"
-              yearItemNumber={9}
-              
-            />
-          </div>
-        </div> */}
         <div className="form-group row">
           <div className="form-col col-md-3">
             <label>Introduction Medium <a style={{color:'red'}}>*</a></label>

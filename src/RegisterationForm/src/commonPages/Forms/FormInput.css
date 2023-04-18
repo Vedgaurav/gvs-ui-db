@@ -104,14 +104,14 @@
     display: flex;
     flex-direction: column;
   }
-  .new-upload__control input[type=file] {
+  /* .new-upload__control input[type=file] {
     font: inherit;
     padding: 0.3rem;
     border-radius: 6px;
     border: 1px solid #ccc;
     width: 25vh;
     max-width: 100%;
-  }
+  } */
   .container{
     font-family: Georgia, serif;
     image-rendering: auto;
@@ -121,14 +121,13 @@
   width:20px;
   height: 40px;
 }  
-  
+
 
 .image-preview-container img {
   width: 150px;
   height: 150px;
-  
   image-rendering: pixelated;
   display: none;
-  
+  margin-left: 300px ;
   margin-bottom: 0px;
 }

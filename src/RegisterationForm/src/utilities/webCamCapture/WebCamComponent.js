@@ -1,4 +1,5 @@
 import React, { Component, useState } from 'react';
+import {TbCapture,TbReload} from "react-icons/tb";
 
 import Webcam from "react-webcam";
 
@@ -37,7 +38,7 @@ const webcamRef = React.useRef(null);
       <div>
 {image!=''?
 
-<button onClick={(e)=>
+<TbReload color='red' size='30'onClick={(e)=>
 
 {
 
@@ -47,11 +48,9 @@ setImage('')
 
 }}
 
-className="webcam-btn">
+className="webcam-btn"/>:
 
-Retake Image</button>:
-
-<button onClick={(e)=>{
+<TbCapture size="30"color='blue' onClick={(e)=>{
 
 e.preventDefault();
 
@@ -59,7 +58,7 @@ capture();
 
 }}
 
-className="webcam-btn">Capture</button>
+className="webcam-btn"/>
 
 }
 </div>

@@ -3,8 +3,10 @@ import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 import "./FormInput.css"; 
 import WebcamCapture from "../../utilities/webCamCapture/WebCamComponent";
-import { languages,bloodGroup,ashrama,Gender } from "../../utilities/OptionalEntries";
-
+import {bloodGroup,Gender } from "../../utilities/OptionalEntries";
+import { validateName } from "../../RegexExpsValidation/RegexExps";
+import {FcCamera} from "react-icons/fc";
+import CameraAltIcon from '@mui/material';
 
 
 const PersonalInfoForm = (props) => {
@@ -58,22 +60,26 @@ const [takePic,setTakePic]=useState(false);
   }
 
   const previewImage = (event) => {
-   
-    const imageFiles = event.target.files;
+   {
+    const{files}=event.target;
+    
+    // const imageFiles = event.target.files;
 
-    const imageFilesLength = imageFiles.length;
-    if (imageFilesLength > 0) {
+    // const imageFilesLength = imageFiles.length;
+    if (files!==undefined && files!==null && files.length > 0  ) {
 
-        const imageSrc = URL.createObjectURL(imageFiles[0]);
+        const imageSrc = URL.createObjectURL(files[0]);
         const imagePreviewElement = document.querySelector("#preview-selected-image");
         imagePreviewElement.src = imageSrc;
-        imagePreviewElement.style.display = "inline";
+        imagePreviewElement.style.display = "block";
     }
     else {
+      const imageUploadElement = document.querySelector("#profileImageUrl")
         const imagePreviewElement = document.querySelector("#preview-selected-image");
+        imageUploadElement.value="";
       imagePreviewElement.src = "";
         imagePreviewElement.style.display = "none"
-    }
+    }}
 };
   useEffect(()=>{
   enableSaveAndProceed();
@@ -94,7 +100,7 @@ const [takePic,setTakePic]=useState(false);
                 type="text"
                 className="form-control "
                 placeholder="first name"
-                name="^[a-zA-Z][a-zA-Z .,'-]*$"
+                name={validateName}
                 onChange={inputHandler}
                 value={fname}
                 onBlur={enableSaveAndProceed}
@@ -105,14 +111,14 @@ const [takePic,setTakePic]=useState(false);
               <input
                 id="mname"
                 type="text"
-                name="^[a-zA-Z][a-zA-Z .,'-]*$"
+                name={validateName}
                 className="form-control "
                 placeholder="middle name"
                 value={mname}
                 onChange={inputHandler}
                 
               />
-              <p id='mnameError' style={{color:'red',fontSize:'8px'}}></p>
+              <p id='mnameError' style={{color:'red',fontSize:'10px'}}></p>
             </div>
             <div className="form-col col-md-3">
               <input
@@ -120,24 +126,24 @@ const [takePic,setTakePic]=useState(false);
                 type="text"
                 className="form-control"
                 placeholder="last name"
-                name="^[a-zA-Z][a-zA-Z .,'-]*$"
+                name={validateName}
                 value={lname}
                 onChange={inputHandler}
               />
-              <p id='lnameError' style={{color:'red',fontSize:'8px'}}></p>
+              <p id='lnameError' style={{color:'red',fontSize:'10px'}}></p>
             </div>
             <div className="form-col col-md-3"></div>
             <div className="form-col col-md-3">
               <input
                 id="iname"
                 type="text"
-                name="^[a-zA-Z][a-zA-Z .,'-]*$"
+                name={validateName}
                 className="form-control"
                 value={initiatedName}
                 placeholder="Initiated Name"
                 onChange={(e)=>{inputHandler(e),initiatedNameHandler(e)}}
               />
-              <p id='inameError' style={{color:'red',fontSize:'8px'}}></p>
+              <p id='inameError' style={{color:'red',fontSize:'10px'}}></p>
             </div>
             <div className="form-col col-md-3" hidden={spMaster}>
               <label>Spiritual Master<a style={{color:'red'}}>*</a></label>
@@ -148,7 +154,7 @@ const [takePic,setTakePic]=useState(false);
                 type="text"
                 className="form-control "
                 placeholder="HH ..name"
-                name="^[a-zA-Z][a-zA-Z .,'-]*$"
+                name={validateName}
                 onChange={inputHandler}
                 value={spiritualMaster}
                 onBlur={enableSaveAndProceed}
@@ -161,14 +167,24 @@ const [takePic,setTakePic]=useState(false);
               <label>Gender<a style={{color:'red'}}>*</a></label>
             </div>
            
-            {Gender.map((e) => (
+            {Gender.map((e) => {if(e.value==gender)
+            { return (
               <div className={`form-col col-md`} key={e.value}  style={{marginRight:'30px'}}>
                 <label className="form-check-label">
-                  <input type="radio" className="form-check-input gender" id="gender"  value={e.value} onChange={(e)=>{genderChangeHandler(e),inputHandler(e)}}/>
+                  <input type="radio" className="form-check-input gender" id="gender"  checked value={e.value} onChange={(e)=>{genderChangeHandler(e),inputHandler(e)}}/>
                   {e.value}
                 </label>
-                </div>
-            ))}
+                </div>)}
+                
+              else { return (
+                <div className={`form-col col-md`} key={e.value}  style={{marginRight:'30px'}}>
+                  <label className="form-check-label">
+                    <input type="radio" className="form-check-input gender" id="gender" value={e.value} onChange={(e)=>{genderChangeHandler(e),inputHandler(e)}}/>
+                    {e.value}
+                  </label>
+                  </div>)};
+            }
+            )}
            
             <p id='genderError' name='' style={{color:'red',fontSize:'10px'}}></p>
           </div>
@@ -202,33 +218,21 @@ const [takePic,setTakePic]=useState(false);
           </div>
           {/* <div className="form-group row">
             <div className="form-col col-md-3">
-              <label>languages Known<a style={{color:'red'}}>*</a></label>
-            </div>
-            <div className="form-col col-md-3">
-              <select className="form-select" id='language' onChange={inputHandler}>
-                {languages.map((e) => (
-                  <option value={e} label={e} key={e} />
-                ))}
-              </select>
-            </div>
-          </div> */}
-          <div className="form-group row">
-            <div className="form-col col-md-3">
               <label className="form-label">Upload Self Photo<a style={{color:'red'}}>*</a></label>
             </div>
-            <div className="form-col col-md-5">
-              <input type="file" className="form-file" id="profileImageUrl" accept="image/*" capture="user"
+            <div className="form-col col-md-4">
+              <input type="file" className="form-file" id="profileImageUrl" accept="image/*" capture
                onClick={()=>setTakePic(false)}onChange={(e)=>{inputHandler(e),previewImage(e)}}/>
               
             </div>
             <div className="form-col col-md-2">
-            <button label="Take Selfie" style={{backgroundColor:'blue',color:'white'}}onClick={()=>setTakePic(true)}>Take Selfie</button>
+            <FcCamera className="form-icon" style={{marginRight:'10px'}} size={30} onClick={(e)=>{setTakePic(true),previewImage(e)}}/>
             </div>
-           {takePic && <WebcamCapture/>}
+           {takePic ? <WebcamCapture/>:
             <div className="form-col image-preview-container" >
               <img className="form-control img-thumbnail" id="preview-selected-image" />
-              </div>
-          </div>
+              </div>}
+          </div> */}
           
           
         </div>

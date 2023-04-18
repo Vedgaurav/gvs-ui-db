@@ -1,7 +1,6 @@
 import PersonalInfoForm from "./PersonalInfoForm";
 import ContactInfoForm from "./ContactInfoForm";
 import { useState,useEffect } from "react";
-
 import { useSelector,useDispatch } from "react-redux";
 import RegistrationProgressBar from "../RegProgBar/RegistrationProgressBar";
 import "./FormInput.css";
@@ -11,7 +10,6 @@ import FamilyDetails from "./FamilyDetailsForm";
 import image from "../../images/lordWithDevs.png";
 import LoadingSpinner from "../../utilities/loadingSpinner/LoadingSpinner";
 import {ADD_DEVOTEE_DATA} from "../../../../constants/apiConstant";
-import Modal from '../../utilities/modal/Modal';
 const FormsContainer = (props) =>{
 const dispatch = useDispatch();
 const {validations} = useSelector(

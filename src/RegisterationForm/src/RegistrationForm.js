@@ -15,10 +15,10 @@ function RegistrationForm() {
   const [isShowModal,setIsShowModal]=useState(false);
   const [showModalHeader,setShowModalHeader]=useState("");
   const [showModalMessage,setShowModalMessage]=useState("");
-  useEffect(() => {
-    if (sessionStorage.getItem("userId") == null)
-      navigate("/login")
-  })
+  // useEffect(() => {
+  //   if (sessionStorage.getItem("userId") == null)
+  //     navigate("/login")
+  // })
 
   return (
     <div className="body mainpage">
