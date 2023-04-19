@@ -37,12 +37,6 @@ const {validations} = useSelector(
     const saveData = JSON.parse(JSON.stringify(data));
     
     delete saveData.validations
-    const requestData = {
-      method: 'POST',
-      url:ADD_DEVOTEE_DATA,
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(saveData),
-    };
     console.log(JSON.stringify(saveData));
     const response=await axios.post(ADD_DEVOTEE_DATA,saveData);
     console.log(response);
@@ -64,7 +58,7 @@ const {validations} = useSelector(
     props.onMessageReceive('There is error in submitting the response. Kindly try again later');
     setError(response.status);
 }
-     
+     props.onResponseData(response.data?[0]:[]);
      
     console.log(error);
     console.log(submitResponse);

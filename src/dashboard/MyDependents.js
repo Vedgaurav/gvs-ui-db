@@ -23,9 +23,9 @@ export default () => {
             navigate("/login")
     })
 
-    const addDep = (userId) => {    
+    const addDep = () => {    
         console.log("from dep",userId);
-        navigate("/registration", { state: { userId: userId } })
+        navigate("/registration", { state: { userId: userId,connectedTo:userId } })
     }
 
     return <>
@@ -33,7 +33,7 @@ export default () => {
 
         <div class="container-md">
             <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                <button onClick={(userId) => addDep(userId)} class="btn btn-success me-md-2" type="button">Add Dependents</button>
+                <button onClick={addDep} class="btn btn-success me-md-2" type="button">Add Dependents</button>
             </div><br />
             <table class="table table-striped">
                 <thead>
@@ -57,8 +57,8 @@ export default () => {
                             <td>{d.gender}</td>
                             <td>{d.primaryPhone}</td>
                             <td>{d.facilitator}</td>
-                            <td> <button className="btn btn-warning" type="button">Edit</button></td>
-                            <td> <button className="btn btn-danger" type="button">Delete</button></td>
+                            <td> <button className="btn btn-warning" disabled={true}type="button">Edit</button></td>
+                            <td> <button className="btn btn-danger" disabled={true} type="button">Delete</button></td>
                         </tr>
                     </tbody>
                 )) : <tbody>
