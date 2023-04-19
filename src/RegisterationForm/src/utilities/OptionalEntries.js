@@ -34,8 +34,8 @@ export const languages = [
       "POST_DOCTORATE"]
   
   export const Gender = [
-    { id: 'g1', value: "Male", col: 1 },
-    { id: 'g2', value: "Female", col: 2 },
+    { id: 'g1', value: "MALE", col: 1 },
+    { id: 'g2', value: "FEMALE", col: 2 },
     
   ];
   export const countries=['India']
@@ -82,9 +82,7 @@ export const languages = [
     "French",
   ];
 
-  export const religion = ["Hindu", "Jain", "Sikh", "Cristian", "Muslim", "Buddhist"];
-
   export const marritalStatus=["UNMARRIED", "MARRIED" , "BRAHMACHARI", "DIVORCED"];
   
   export const introductionMedium=["Temple", "House Program" , "Dham Yatra", "Own Child","Book Distribution",
-               "YouTube Lectures","Bhagwad Geeta Study","Parents"];
+               "YouTube Lectures","Bhagwad Geeta Study","Parents","others"];

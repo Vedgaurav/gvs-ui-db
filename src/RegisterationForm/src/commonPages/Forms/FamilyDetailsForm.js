@@ -97,12 +97,11 @@ enableSaveAndProceed();
             </label>
           </div>
           <div className="form-col col-md-3">
-            <select className="form-select" id="motherTongue"onChange={inputHandler}>
+            <select className="form-select" id="motherTongue" value={motherTongue}onChange={inputHandler}>
               {mothersTongue.map((e) => {
-                if(e===motherTongue)
-               return <option value={e} label={e} key={e} selected/>
-                else 
+                
                return <option value={e} label={e} key={e} />
+               
               })}
             </select>
           </div>

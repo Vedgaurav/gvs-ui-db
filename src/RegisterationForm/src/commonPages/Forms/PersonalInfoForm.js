@@ -11,7 +11,7 @@ import CameraAltIcon from '@mui/material';
 
 const PersonalInfoForm = (props) => {
   const dispatch = useDispatch();
-  const { fname, mname, lname, initiatedName, gender, spiritualMaster,dateOfBirth ,validations} = useSelector(
+  const { fname, mname, lname, initiatedName, gender,birthCity,birthState, spiritualMaster,dateOfBirth ,validations} = useSelector(
     (state) => state
   );
 const [takePic,setTakePic]=useState(false);
@@ -157,6 +157,7 @@ const [takePic,setTakePic]=useState(false);
                 name={validateName}
                 onChange={inputHandler}
                 value={spiritualMaster}
+                hidden={initiatedName.length>0 ? false:true}
                 onBlur={enableSaveAndProceed}
               />
             <p id='spiritualMasterError' style={{color:'red',fontSize:'10px'}}></p>
@@ -202,7 +203,28 @@ const [takePic,setTakePic]=useState(false);
                 onChange={inputHandler}
                 value={dateOfBirth}
               />
+          </div>
+          <div className="form-col col-md-3 ">
+              <input
+                id='birthCity'
+                type="text"
+                className="form-control"
+                value={birthCity}
+                onChange={inputHandler}
+                placeholder="birth city"
+              />
             </div>
+            <div className="form-col col-md-3 ">
+              <input
+                id='birthState'
+                type="text"
+                className="form-control"
+                onChange={inputHandler}
+                value={birthState}
+                placeholder="birth state"
+              />
+            </div>
+          
           </div>
           <div className="form-group row">
             <div className="form-col col-md-3" >

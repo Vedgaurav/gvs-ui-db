@@ -28,17 +28,18 @@ const ProfessionalInfoForm = () => {
     }}
   const [collapse, setCollapse] = useState("");
   const collapseHandler = (e) => {
+    const {value}=e.target;
     console.log(e.target.value);
     if (
-      e.target.value === "UNEMPLOYED" ||
-      e.target.value === "HOMEMAKER"
+      value === "UNEMPLOYED" ||
+      value === "HOMEMAKER" || value === "STUDENT"
     ) {
       setCollapse("collapse");
     } else setCollapse("");
 
   };
   const enableSaveAndProceed=()=>{
-    if(true){
+    if(validations.isValidEducation&&validations.isValidOccupation){
       dispatch({ type: 'submitDisable', data: "",valid:false });
     }
     else dispatch({ type: 'submitDisable', data: "",valid:true });
@@ -47,13 +48,13 @@ const ProfessionalInfoForm = () => {
   return (
     <>
     <h2>Professional Information</h2>
-      <div className="container">
+      <div className="container" onChange={enableSaveAndProceed}>
         <div className="form-group row">
           <div className="form-col col-md-3">
             <label>Highest Education<a style={{color:'red'}}>*</a></label>
           </div>
           <div className="form-col col-md-3">
-            <select className="form-select" id="education"  onChange={inputHandler}>
+            <select className="form-select" id="education"  onChange={(e)=>inputHandler(e)} >
               {educations.map((e) => {
                 if(e===education)
                 return (<option value={e} label={e} key={e}selected={true} />)
@@ -61,12 +62,12 @@ const ProfessionalInfoForm = () => {
                })}
             </select>
           </div>
-          <div className="form-col col-md-3">
+         {education=="NO_EDUCATION"? "":<><div className="form-col col-md-3">
             <label>Degree/Education Specification<a style={{color:'red'}}>*</a></label>
           </div>
           <div className="form-col col-md-3">
-           <input type="text" name={validateName} id="educationSpecification"value={degreeSpecification} onChange={inputHandler}/>
-          </div>
+           <input type="text"className="form-control" name={validateName} id="educationSpecification"value={degreeSpecification} onChange={inputHandler}/>
+          </div></>}
         </div>
         <div className="form-group row">
           <div className="form-col col-md-3">
@@ -88,7 +89,7 @@ const ProfessionalInfoForm = () => {
             <label>Designation<a style={{color:'red'}}>*</a></label>
           </div>
           <div className="form-col col-md-3">
-           <input type="text" name={validateName} id="presentDesignation" value={presentDesignation} onChange={inputHandler}/>
+           <input type="text" className="form-control"name={validateName} id="presentDesignation" value={presentDesignation} onChange={inputHandler}/>
           </div></>}
         </div>
         <div className="form-group row">

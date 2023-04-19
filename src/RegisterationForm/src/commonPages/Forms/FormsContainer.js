@@ -4,37 +4,33 @@ import { useState,useEffect } from "react";
 import { useSelector,useDispatch } from "react-redux";
 import RegistrationProgressBar from "../RegProgBar/RegistrationProgressBar";
 import "./FormInput.css";
+import {BsFillFastForwardBtnFill}from "react-icons/bs";
 import DevotionalInfoForm from "./DevotionalInfoForm";
 import ProfessionalInfoForm from "./ProfessionalInfoForm";
 import FamilyDetails from "./FamilyDetailsForm";
 import image from "../../images/lordWithDevs.png";
 import LoadingSpinner from "../../utilities/loadingSpinner/LoadingSpinner";
 import {ADD_DEVOTEE_DATA} from "../../../../constants/apiConstant";
+import axios from "axios";
 const FormsContainer = (props) =>{
 const dispatch = useDispatch();
 const {validations} = useSelector(
     (state) => state
   );
+  useEffect(()=>{
+    dispatch({type: 'connectedTo', data: props.connectedTo ,valid:true})
+    dispatch({type: 'email', data: props.guardianEmail ,valid:true})
+  },[]);
   const data=useSelector((state)=>state)
   const [stage, setStage] = useState(1);
   const [back, setBack] = useState(true);
-  const [forward, setForward] = useState(false);
   const [submit,setSubmit] = useState('Save & Proceed');
 
-  
+  const [isLoadingSpinnerActive,setIsLoadingSpinnerActive]=useState(false);
   const [submitResponse,setSubmitResponse]=useState('');
   const [error,setError]=useState('');
-  const options = {
-    method: 'GET',
-    url: 'https://shazam.p.rapidapi.com/shazam-events/list',
-    params: {artistId: '73406786', l: 'en-US', from: '2022-12-31', limit: '50', offset: '0'},
-    headers: {
-      'X-RapidAPI-Key': 'SIGN-UP-FOR-KEY',
-      'X-RapidAPI-Host': 'shazam.p.rapidapi.com'
-    }
-  };
   
-   const submitHandler=()=>{
+   const submitHandler=async()=>{
     props.onShowModal(false);
     props.onHeaderReceive("");
     props.onMessageReceive("");
@@ -43,42 +39,32 @@ const {validations} = useSelector(
     delete saveData.validations
     const requestData = {
       method: 'POST',
+      url:ADD_DEVOTEE_DATA,
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(saveData),
     };
-    console.log(saveData);
-    fetch(options)
-    .then(response =>{ if(response.status === 200){
-      console.log("SUCCESSS")
+    console.log(JSON.stringify(saveData));
+    const response=await axios.post(ADD_DEVOTEE_DATA,saveData);
+    console.log(response);
+    if(response.status === 200){
+      console.log(response)
       props.onHeaderReceive("Success");
      props.onMessageReceive("Data Successfully Saved");
      setError(response.status);
-      return response.json();     
+          
   }else if(response.status === 408){
       console.log("SOMETHING WENT WRONG")
       props.onHeaderReceive("API ERROR")
       props.onMessageReceive('There is error in submitting the response. Kindly try again later');
       setError(response.status);
-      return response.json();
   }
   else if(response.status === 400){
     console.log("SOMETHING WENT WRONG")
     props.onHeaderReceive("API ERROR")
     props.onMessageReceive('There is error in submitting the response. Kindly try again later');
     setError(response.status);
-    return response.json();
 }
-     })
-    .then(data => {
-    
-    console.log(data);
-    }).catch(e=>{
-      
-      props.onHeaderReceive("API ERROR")
-      props.onMessageReceive('There is error in submitting the response. Kindly try again later');
-      
-     } )
-    
+     
      
     console.log(error);
     console.log(submitResponse);
@@ -88,37 +74,46 @@ const {validations} = useSelector(
   const formStageHandler = (stage) => {
     switch (stage) {
       case 1:
+        setIsLoadingSpinnerActive(true);
         setFormStage(
           forms.stage1
         );
         setStage(1);
         setBack(true);
-        setForward(false);
+        setIsLoadingSpinnerActive(false);
         break;
       case 2:
+        setIsLoadingSpinnerActive(true);
         setFormStage(
          forms.stage2
         );
         setStage(2);
         setBack(false);
+        setIsLoadingSpinnerActive(false);
         break;
       case 3:
+        setIsLoadingSpinnerActive(true)
         setFormStage(
          forms.stage3
         );
         setStage(3);
+        setIsLoadingSpinnerActive(false);
         break;
       case 4:
+        setIsLoadingSpinnerActive(true);
         setFormStage(
           forms.stage4
         );
         setStage(4);
+        setIsLoadingSpinnerActive(false);
         break;
       case 5:
+        setIsLoadingSpinnerActive(true);
         setFormStage(
           forms.stage5
         );
         setStage(5);
+        setIsLoadingSpinnerActive(false);
         break;
       case 6:
         setStage(6);
@@ -130,13 +125,14 @@ const {validations} = useSelector(
          submitHandler();
       break;
       default:
+        setIsLoadingSpinnerActive(true);
         setFormStage(
           forms.stage1
         );
         
         setStage(1);
-        setForward(false);
         setBack(true);
+        setIsLoadingSpinnerActive(false);
     }
     
   };
@@ -161,7 +157,7 @@ const {validations} = useSelector(
          
         <RegistrationProgressBar stage={stage} />
 
-        {jsxFormStage}
+        {isLoadingSpinnerActive ? <LoadingSpinner/>:jsxFormStage}
 
         <button
           type="button"
@@ -181,10 +177,6 @@ const {validations} = useSelector(
         >
           {submit}
         </button>
-        
-        
-        
-         
 
     </>
   );

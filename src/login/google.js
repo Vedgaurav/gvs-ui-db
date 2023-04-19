@@ -32,7 +32,7 @@ export default function GLogin() {
 
             if (guardianUser.length == 0) {
                 // to reg
-                navigate("/registration")
+                navigate("/registration",{state:{connectedTo:"guru",guardianEmail:email}})
             }
             else {
                 sessionStorage.setItem("userId", guardianUser[0].id)

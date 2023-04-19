@@ -3,6 +3,13 @@ import { requiredDataAllFields } from "../utilities/AllFieldsData";
 
 const form1Reducer = (state = requiredDataAllFields, action) => {
   switch (action.type) {
+    case "connectedTo":
+      console.log(action.type,action.data,action.valid)
+      return {
+        ...state,
+        connectedTo: action.data,
+        };
+      
     case "fname":
       console.log(action.type,action.data,action.valid)
       return {
@@ -126,7 +133,7 @@ const form1Reducer = (state = requiredDataAllFields, action) => {
             return{
               ...state,
               currentAddress:{...state.currentAddress,
-                pincode:action.data}
+                pinCode:action.data}
             }
             case "permanentAddressLine1":
               return {
@@ -174,14 +181,6 @@ const form1Reducer = (state = requiredDataAllFields, action) => {
                       permanentAddress:{...state.permanentAddress,
                         pinCode:action.data}
                     }
-    case "centerConnectedTo":
-      return {
-        ...state,
-        centerConnectedTo: action.data,
-        validations:{
-          ...state.validations,
-          isValidCenterConnectedTo:action.valid,}
-      };
     case "facilitator":
       return {
         ...state,

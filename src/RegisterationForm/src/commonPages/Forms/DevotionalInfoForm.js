@@ -78,17 +78,18 @@ const DevotionalInfoForm = () => {
             <label>No. Of Rounds Chanting<a style={{color:'red'}}>*</a></label>
           </div>
           <div className={`form-col col-md-3`}>
-            <input type="text" id='chantingRounds' value={chantingRounds}className="form-control" onChange={inputHandler}/>
+            <input type="number" id='chantingRounds' value={chantingRounds}className="form-control" onChange={inputHandler}/>
           </div>
         </div>
+        
         <div className="form-group row">
-          <div className="form-col col-md-3">
+        {chantingRounds>0 ?  <><div className="form-col col-md-3">
             <label>Chanting Since</label>
           </div>
-          <div className={`form-col col-md-3`}>
+         <div className={`form-col col-md-3`}>
             <input type="month" id='yearChantingSince' className="form-control" onChange={inputHandler}/>
-          </div>
-          <div className="form-col col-md-3">
+          </div></>:""}
+         {chantingRounds>=16 ? <><div className="form-col col-md-3">
             <label>Chanting 16 & above Rounds Since</label>
           </div>
           <div className={`form-col col-md-3`}>
@@ -98,7 +99,7 @@ const DevotionalInfoForm = () => {
               id='yearChanting16Rounds'
               onChange={inputHandler}
             />
-          </div>
+          </div></>:""}
         </div>
         <div className="form-group row">
           <div className="form-col form-check col-md-3">
