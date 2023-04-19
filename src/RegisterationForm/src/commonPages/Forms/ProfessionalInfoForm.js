@@ -67,7 +67,9 @@ const ProfessionalInfoForm = () => {
           </div>
           <div className="form-col col-md-3">
            <input type="text"className="form-control" name={validateName} id="educationSpecification"value={degreeSpecification} onChange={inputHandler}/>
-          </div></>}
+          </div>
+          <p id="educationSpecificationError" style={{color:'red',fontSize:"10px"}}></p>
+          </>}
         </div>
         <div className="form-group row">
           <div className="form-col col-md-3">
@@ -90,7 +92,8 @@ const ProfessionalInfoForm = () => {
           </div>
           <div className="form-col col-md-3">
            <input type="text" className="form-control"name={validateName} id="presentDesignation" value={presentDesignation} onChange={inputHandler}/>
-          </div></>}
+          </div>
+          <p id="presentDesignationError" style={{color:'red',fontSize:"10px"}}></p></>}
         </div>
         <div className="form-group row">
           <div className="form-col col-md-3">
