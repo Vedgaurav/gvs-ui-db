@@ -18,7 +18,7 @@ const [takePic,setTakePic]=useState(false);
   const inputHandler = (e) => {
     
     const { value, id,name } = e.target;
-    console.log(id,name,value)
+    //console.log(id,name,value)
     if (name==undefined || name==''){
       dispatch({ type: id, data: value ,valid:true});
     }
@@ -26,15 +26,12 @@ const [takePic,setTakePic]=useState(false);
     else if(value.match(name) !==null) {
       document.getElementById(id+'Error').innerText='';
     dispatch({ type: id, data: value,valid:true });
-    enableSaveAndProceed();
     }
     else {
       document.getElementById(id+'Error').innerText='invalid input';
       dispatch({ type: id, data: value,valid:false });
-      enableSaveAndProceed();
     }
-
-    
+    enableSaveAndProceed();
   };
   const[spMaster,setSpMaster]=useState(true);
   const enableSaveAndProceed=()=>{
@@ -84,7 +81,9 @@ const [takePic,setTakePic]=useState(false);
   useEffect(()=>{
   enableSaveAndProceed();
   },[])
-
+  useEffect(()=>{
+    enableSaveAndProceed();
+    },[validations.isValidFname])
   return (
     <>
       <h3>Personal Information</h3>
@@ -204,27 +203,6 @@ const [takePic,setTakePic]=useState(false);
                 value={dateOfBirth}
               />
           </div>
-          <div className="form-col col-md-3 ">
-              <input
-                id='birthCity'
-                type="text"
-                className="form-control"
-                value={birthCity}
-                onChange={inputHandler}
-                placeholder="birth city"
-              />
-            </div>
-            <div className="form-col col-md-3 ">
-              <input
-                id='birthState'
-                type="text"
-                className="form-control"
-                onChange={inputHandler}
-                value={birthState}
-                placeholder="birth state"
-              />
-            </div>
-          
           </div>
           <div className="form-group row">
             <div className="form-col col-md-3" >

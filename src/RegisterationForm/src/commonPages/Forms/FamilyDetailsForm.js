@@ -3,31 +3,33 @@ import { useSelector,useDispatch } from "react-redux";
 import { useEffect,useState } from "react";
 const FamilyDetails = () => {
   const dispatch = useDispatch();
-   const { fathersName,mothersName,motherTongue,spouseName,maritalStatus,validations } = useSelector(
+   const { fathersName,mothersName,motherTongue,language,spouseName,maritalStatus,validations } = useSelector(
      (state) => state
    );
 useEffect(()=>{
 enableSaveAndProceed();
 },[])
+useEffect(()=>{
+  enableSaveAndProceed();
+  },[validations.isValidFathersName,validations.isValidMothersName])
 
   const inputHandler = (e) => {
     const { value, id,name } = e.target;
-    console.log(name,id,value)
+    //console.log(name,id,value)
     if (name==undefined || name==''){
       dispatch({ type: id, data: value ,valid:true});
     }
     
     else if(value.match(name) !==null) {
-      console.log('matched with regex');
+     // console.log('matched with regex');
       document.getElementById(id+'Error').innerText='';
     dispatch({ type: id, data: value,valid:true });
-    enableSaveAndProceed();
     }
     else {
       document.getElementById(id+'Error').innerText='invalid input';
       dispatch({ type: id, data: value,valid:false });
-      enableSaveAndProceed();
     }
+    enableSaveAndProceed();
   };
    
   const enableSaveAndProceed=()=>{
@@ -100,6 +102,23 @@ enableSaveAndProceed();
                
               })}
             </select>
+            </div>
+            <div className="form-col col-md-3">
+            <label>
+              Languages Known
+            </label>
+          </div>
+          <div className="form-col col-md-3">
+            <input
+              id="language"
+              type="text"
+              name="^[a-zA-Z][a-zA-Z .,'-]*$"
+              className="form-control "
+              placeholder="Enter known languages"
+              value={language}
+              onChange={inputHandler}
+            />
+            <p id="languageError" style={{color:'red',fontSize:'10px'}}></p>
           </div>
           </div>
           <div className="form-group row">

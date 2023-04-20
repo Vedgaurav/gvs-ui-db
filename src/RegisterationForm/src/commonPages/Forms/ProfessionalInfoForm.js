@@ -8,10 +8,15 @@ const ProfessionalInfoForm = () => {
     (state) => state
   );
   const dispatch=useDispatch();
-  useEffect(()=>{},[])
+  useEffect(()=>{
+    enableSaveAndProceed();
+  },[])
+  useEffect(()=>{
+    enableSaveAndProceed();
+  },[validations.isValidEducation,validations.isValidOccupation])
   function inputHandler(e) {   
     const { value, id,name } = e.target;
-    console.log(id,name,value)
+    //console.log(id,name,value)
     if (name==undefined || name==''){
       dispatch({ type: id, data: value ,valid:true});
       enableSaveAndProceed();
@@ -49,8 +54,9 @@ const ProfessionalInfoForm = () => {
                )}
             </select>
           </div>
-         {education=="NO_EDUCATION"? "":<><div className="form-col col-md-3">
-            <label>Degree/Education Specification<a style={{color:'red'}}>*</a></label>
+         {education=="NO_EDUCATION" ||education=="PRE_PRIMARY_SCHOOL"||education=="PRIMARY_SCHOOL"||education=="MIDDLE_SCHOOL" 
+         ||education=="SECONDARY_SCHOOL" ||education=="HIGHER_SECONDARY_SCHOOL"? "":<><div className="form-col col-md-3">
+            <label>Degree Specification<a style={{color:'red'}}>*</a></label>
           </div>
           <div className="form-col col-md-3">
            <input type="text"className="form-control" name={validateName} id="educationSpecification"value={degreeSpecification} placeholder="B.tech Computer Science" onChange={inputHandler}/>
@@ -85,7 +91,7 @@ const ProfessionalInfoForm = () => {
             <label>Skills/Job Experience</label>
           </div>
           <div className={`form-col col-md-5`}>
-            <textarea className="form-control" id="skills" placeholder="Eg. Java, React,Python, cooking, drawing, painting, carpenting etc.." value={skills} onChange={inputHandler}/>
+            <textarea className="form-control" id="skills" placeholder="Eg. Java, React, cooking, drawing, carpenting etc.." value={skills} onChange={inputHandler}/>
           </div>
         </div>
         {occupation === "UNEMPLOYED" ||

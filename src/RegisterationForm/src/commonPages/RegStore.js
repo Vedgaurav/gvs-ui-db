@@ -4,14 +4,14 @@ import { requiredDataAllFields } from "../utilities/AllFieldsData";
 const form1Reducer = (state = requiredDataAllFields, action) => {
   switch (action.type) {
     case "connectedTo":
-      console.log(action.type,action.data,action.valid)
+     // console.log(action.type,action.data,action.valid)
       return {
         ...state,
         connectedTo: action.data,
         };
       
     case "fname":
-      console.log(action.type,action.data,action.valid)
+   //   console.log(action.type,action.data,action.valid)
       return {
         ...state,
         fname: action.data,
@@ -37,7 +37,7 @@ const form1Reducer = (state = requiredDataAllFields, action) => {
         initiatedName: action.data,
       };
     case "gender":
-      console.log(action.type,action.data,action.valid)
+   //   console.log(action.type,action.data,action.valid)
       return {
         ...state,
         gender: action.data,
@@ -347,8 +347,13 @@ const form1Reducer = (state = requiredDataAllFields, action) => {
         ...state,
         modified: action.data,
       };
+      case "priviledge":
+        return {
+          ...state,
+          priviledge: action.data,
+        }
     case "submitDisable":
-      console.log("submitDisable",action.valid)
+     // console.log("submitDisable",action.valid)
       return{
         ...state,
         validations:{

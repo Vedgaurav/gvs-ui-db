@@ -84,5 +84,5 @@ export const languages = [
 
   export const marritalStatus=["UNMARRIED", "MARRIED" , "BRAHMACHARI", "DIVORCED"];
   
-  export const introductionMedium=["Temple", "House Program" , "Dham Yatra", "Own Child","Book Distribution",
-               "YouTube Lectures","Bhagwad Geeta Study","Parents","others"];
+  export const introductionMedium=["Temple", "House Program" , "Dham Yatra", "Home(introduced by own Child/relative/Parents)","Book Distribution",
+               "YouTube Lectures","Bhagwad Geeta Study","Rath Yatra","VOICE","Educational Institution","others"];

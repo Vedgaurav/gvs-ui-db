@@ -5,8 +5,8 @@ import "react-datepicker/dist/react-datepicker.css";
 import { useState,useEffect } from "react";
 const DevotionalInfoForm = () => {
   const dispatch=useDispatch();
-  const { spiritualMaster,chantingRounds,yearChantingSince,yearChanting16Rounds,
-    introducedBy,yearOfIntroduction,placeIntroducedIn,
+  const { chantingRounds,yearChantingSince,yearChanting16Rounds,
+    introducedBy,placeIntroducedIn,
     preferredServices, servicesRendered,facilitator,validations} = useSelector(
     (state) => state
   );
@@ -14,27 +14,28 @@ const DevotionalInfoForm = () => {
 
   enableSaveAndProceed();
   },[])
+  useEffect(()=>{
+
+    enableSaveAndProceed();
+    },[validations.isValidChantingRounds])
   
   const inputHandler = (e) => {
     
     const { value, id,name } = e.target;
-    console.log(id,name,value)
+    //console.log(id,name,value)
     if (name==undefined || name==''){
       dispatch({ type: id, data: value ,valid:true});
-      enableSaveAndProceed();
     }
     
     else if(value.match(name) !==null) {
       document.getElementById(id+'Error').innerText='';
     dispatch({ type: id, data: value,valid:true });
-    enableSaveAndProceed();
     }
     else {
       document.getElementById(id+'Error').innerText='invalid input';
       dispatch({ type: id, data: value,valid:false });
-      enableSaveAndProceed();
     }
-
+    enableSaveAndProceed();
     
   };
 
@@ -43,16 +44,6 @@ const DevotionalInfoForm = () => {
       dispatch({ type: 'submitDisable', data: "",valid:false });
     }
     else dispatch({ type: 'submitDisable', data: "",valid:true });
-  }
-  const [yourCounselor,setYourCounselor]=useState(true);
-  const centerHandler=(e)=>{
-  
-  let a=document.getElementsByClassName('temple');
-  for (let index = 0; index < a.length; index++) {
-    if(a[index].value!==e.target.value){
-      a[index].checked=false;
-    }
-  }
   }
 
   return (
@@ -64,12 +55,10 @@ const DevotionalInfoForm = () => {
             <label>Facilitator/counselor<a style={{color:'red'}}>*</a></label>
           </div>
           <div className='form-col col-md-3'>
-            <select type="select" id='facilitator' className="form-select"  onBlur={inputHandler}>
-              {facilitators.map((e) => {
-                if(e===facilitator)
-                return <option value={e} label={e} key={e} selected/>
-                else return <option value={e} label={e} key={e} />
-              })}
+            <select type="select" id='facilitator' value={facilitator} className="form-select"  onChange={inputHandler}onClick={inputHandler}>
+              {facilitators.map((e) =>
+                <option value={e} label={e} key={e} />
+              )}
             </select>
           </div>
         </div>
@@ -87,7 +76,7 @@ const DevotionalInfoForm = () => {
             <label>Chanting Since</label>
           </div>
          <div className={`form-col col-md-3`}>
-            <input type="month" id='yearChantingSince' className="form-control" onChange={inputHandler}/>
+            <input type="month" id='yearChantingSince' value={yearChantingSince} className="form-control" onChange={inputHandler}/>
           </div></>:""}
          {chantingRounds>=16 ? <><div className="form-col col-md-3">
             <label>Chanting 16 & above Rounds Since</label>
@@ -96,6 +85,7 @@ const DevotionalInfoForm = () => {
             <input
               type="month"
               className="form-control"
+              value={yearChanting16Rounds}
               id='yearChanting16Rounds'
               onChange={inputHandler}
             />
@@ -115,12 +105,10 @@ const DevotionalInfoForm = () => {
           </div>
           <div className="form-col col-md-3">
             
-              <select id='placeIntroducedIn' className="form-control col-md-3" onChange={inputHandler} >
-               {introductionMedium.map((e)=> {
-                if(e===placeIntroducedIn)
-                return <option value={e} label={e} key={e} selected/>
-                else return <option value={e} label={e} key={e} />
-              })}
+              <select id='placeIntroducedIn' value={placeIntroducedIn} className="form-control col-md-3" onClick={inputHandler}onChange={inputHandler} >
+               {introductionMedium.map((e)=> 
+               <option value={e} label={e} key={e} />
+              )}
               </select>
           </div>
         </div>
@@ -129,7 +117,7 @@ const DevotionalInfoForm = () => {
             <label>Rendered Services</label>
           </div>
           <div className={`form-col col-md-3`}>
-            <textarea id='servicesRendered' className="form-control" placeholder={"1.\n2.\n3.\n4."} onChange={inputHandler}/>
+            <textarea id='servicesRendered' className="form-control" value={servicesRendered}placeholder={"1.\n2.\n3.\n4."} onChange={inputHandler}/>
           </div>
         </div>
         <div className="form-group row">
@@ -137,7 +125,7 @@ const DevotionalInfoForm = () => {
             <label>Preferred Services</label>
           </div>
           <div className={`form-col col-md-3`}>
-            <textarea className="form-control" placeholder={"1.\n2.\n3.\n4."} />
+            <textarea className="form-control" onChange={inputHandler} value={preferredServices}placeholder={"1.\n2.\n3.\n4."} />
           </div>
         </div>
         
