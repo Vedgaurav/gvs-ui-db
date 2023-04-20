@@ -6,7 +6,6 @@ const FamilyDetails = () => {
    const { fathersName,mothersName,motherTongue,spouseName,maritalStatus,validations } = useSelector(
      (state) => state
    );
-  const[hidden,setHidden]= useState(true);
 useEffect(()=>{
 enableSaveAndProceed();
 },[])
@@ -39,9 +38,6 @@ enableSaveAndProceed();
   }
   const maritalStatusHandle=(e)=>{
     let a=document.getElementsByClassName('maritalstatushandle');
-    if(e.target.value==='MARRIED')
-     setHidden(false);
-     else setHidden(true);
     for (let index = 0; index < a.length; index++) {
       
       if(a[index].value!==e.target.value){
@@ -128,7 +124,7 @@ enableSaveAndProceed();
               })}
             
           </div>
-        <div className="form-group row" hidden={hidden}>
+       {maritalStatus==='MARRIED'? <><div className="form-group row" >
           <div className="form-col col-md-3">
             <label>
               Spouse Name<a style={{ color: "red" }}>*</a>
@@ -154,7 +150,7 @@ enableSaveAndProceed();
             <input type="date" id="dateOfMarriage" className="form-control" onChange={inputHandler} />
           </div>
         </div>
-        <div className="form-group row" hidden={hidden}>
+        <div className="form-group row" >
           <div className="form-col form-check col-md-3">
             <label>Children</label>
           </div>
@@ -166,7 +162,7 @@ enableSaveAndProceed();
               />
               <p style={{ fontSize: "10px", color: "green" }}>* leave empty if not applicable</p>
           </div>
-        </div>
+        </div></>:""}
       </div>
     </>
   );

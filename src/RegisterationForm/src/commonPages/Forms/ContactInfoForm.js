@@ -3,13 +3,11 @@ import { useState,useRef } from "react";
 import "bootstrap/dist/css/bootstrap.css";
 import "./FormInput.css";
 import { useEffect } from "react";
-import { countries } from "../../utilities/OptionalEntries";
-import { StateWithDistCityPincodes } from "../../utilities/StateWithDistCityPincode";
 import { addressData } from "../../utilities/statesAndPincodes/GovtAuthorisedStatesandPincodes";
 import { validatePhoneNo,validateEmail } from "../../RegexExpsValidation/RegexExps";
 const ContactInfoForm = (props) => {
   const dispatch = useDispatch();
-   const { primaryPhone,whatsappPhone,email,validations,currentAddress,permanentAddress,connectedTo } = useSelector(
+   const { primaryPhone,whatsAppPhone,email,validations,currentAddress,permanentAddress,connectedTo } = useSelector(
      (state) => state
    );
    
@@ -31,7 +29,6 @@ const ContactInfoForm = (props) => {
 useEffect(()=>{
 enableSaveAndProceed();
 setCurrAddState(addressData.map(e=> e.statename).filter((value, index, self) => self.indexOf(value) === index));
-
 setPerAddState(addressData.map(e=> e.statename).filter((value, index, self) => self.indexOf(value) === index));
 },[])
 
@@ -88,7 +85,7 @@ setPerAddState(addressData.map(e=> e.statename).filter((value, index, self) => s
   }
 const permanentAddHandler=(e)=>{
        if(e.target.checked===true){
-       setSameAsCurrent(true);
+        dispatch({ type: 'isSameAddress', data: "",valid:true })
        console.log(curraddLine1.current.value);
        console.log(curraddCity.current.value);
        console.log(curraddPincode.current.value);
@@ -104,7 +101,7 @@ const permanentAddHandler=(e)=>{
        dispatch({ type: "permanentAddressPincode", data: curraddPincode.current.value,valid:true });
        }
        else {
-        setSameAsCurrent(false);
+        dispatch({ type: 'isSameAddress', data: "",valid:false })
        }
 }
 
@@ -120,7 +117,6 @@ const permanentAddHandler=(e)=>{
             </div>
             <div className="form-col col-md-4">
               <input
-                
                 type="number"
                 id="primaryPhone"
                 className="form-control"
@@ -128,24 +124,22 @@ const permanentAddHandler=(e)=>{
                 maxLength='10'
                 value={primaryPhone}
                 onInput={inputHandler}
-                
                 name={validatePhoneNo}
                 onBlur={enableSaveAndProceed}
               />
-              <p id='primaryPhoneError' style={{color:'red',fontSize:'8px'}}></p>
+              <p id='primaryPhoneError' style={{color:'red',fontSize:'10px'}}></p>
             </div>
             <div className="form-col col-md-4">
               <input
-                id="whatsappPhone"
+                id="whatsAppPhone"
                 className="form-control"
                 type="number"
                 placeholder="Alternate/whatsapp No."
-                value={whatsappPhone}
+                value={whatsAppPhone}
                 onChange={inputHandler}
                 name={validatePhoneNo}
-              />
-              
-              <p id='whatsappPhoneError' style={{color:'red',fontSize:'10px'}}></p>
+              />              
+              <p id='whatsAppPhoneError' style={{color:'red',fontSize:'10px'}}></p>
             </div>
             <div className="form-group row">
               <div className="form-col col-md-3">
@@ -208,7 +202,7 @@ const permanentAddHandler=(e)=>{
               <div className="form-col col-md-3"></div>
               <div className="form-col col-md-3">
                 <select className="form-select col-md-3" ref={curraddState} value={currentAddress.state}id="currentAddressState" onChange={(e)=>{inputHandler(e),addressSelectionHandler(e)}} onClick={(e)=>{inputHandler(e),addressSelectionHandler(e)}}>
-                  {currAddState.map((state)=>
+                  {currAddState?.map((state)=>
                     <option value={state} key={state} label={state}/>
                   )}
                 </select>
@@ -216,19 +210,19 @@ const permanentAddHandler=(e)=>{
               </div>
               <div className="form-col col-md-3">
               <select className="form-select col-md-3" ref={curraddCity}  id="currentAddressCity"  onChange={(e)=>{inputHandler(e),addressSelectionHandler(e)}} onClick={(e)=>{inputHandler(e),addressSelectionHandler(e)}} >
-                  {currAddCity.map((e)=>
+                 {currAddCity.length!==0 ?  <>{currAddCity.map((e)=>
                     <option key={e}value={e} label={e}/>
-                  )}
+                  ) }</>: <option value={currentAddress.city} label={currentAddress.city}/>}
                 </select>
-                <p style={{color:"green",fontSize:"10px"}}>city</p>
+                <p style={{color:"green",fontSize:"10px"}}>District</p>
               </div>
               <div className="form-col col-md-3">
               <select className="form-select col-md-3" id="currentAddressDistrict" ref={curraddDistrict}onChange={(e)=>{inputHandler(e),addressSelectionHandler(e)}} onClick={(e)=>{inputHandler(e),addressSelectionHandler(e)}} >
-                  {currAddDistrict.map((e)=>
+                  {currAddDistrict.length!==0 ?currAddDistrict.map((e)=>
                     <option key={e}value={e} label={e}/>
-                  )}
+                  ) :<option value={currentAddress.district} label={currentAddress.district}/>}
                 </select>
-                <p style={{color:"green",fontSize:"10px"}}>District</p>
+                <p style={{color:"green",fontSize:"10px"}}>City/village</p>
               </div>
             </div>
 
@@ -237,11 +231,11 @@ const permanentAddHandler=(e)=>{
               
               <div className="form-col col-md-3">
                 <select className="form-select col-md-3" id="currentAddressPincode" ref={curraddPincode}  onChange={inputHandler} onClick={inputHandler}>
-                  {currAddPincode.map((pincode)=>
+                  {currAddPincode.length!==0 ? currAddPincode.map((pincode)=>
                     <option value={pincode} key={pincode}label={pincode}/>
-                  )}
+                  ):<option value={currentAddress.pinCode} label={currentAddress.pinCode}/>}
                 </select>
-                <p style={{color:"green",fontSize:"10px"}}>pincode</p>
+                <p style={{color:"green",fontSize:"10px"}}>Pincode</p>
               </div>
 
               <div className="form-col col-md-3">
@@ -262,14 +256,14 @@ const permanentAddHandler=(e)=>{
 
               <div className="form-col col-md-3">
               <div className="form-check">
-  <input className="form-check-input" type="checkbox" value="" id="flexCheckChecked"  onClick={permanentAddHandler} />
+  <input className="form-check-input" type="checkbox" value="" id="flexCheckChecked"  checked={validations.isSameAddress}onClick={permanentAddHandler} />
   <label className="form-check-label" htmlFor="flexCheckChecked">
     Same as current
   </label>
 </div>
 </div>
 </div>
-{sameAsCurrent ? "":<><div className="form-group row" hidden={sameAsCurrent}>
+{validations.isSameAddress ? "":<><div className="form-group row" hidden={sameAsCurrent}>
                     <div className="form-col col-md-3"/>
                       <div className="form-col col-md-5">
                        <input
@@ -302,8 +296,8 @@ const permanentAddHandler=(e)=>{
             <div className="form-group row" hidden={sameAsCurrent}>
               <div className="form-col col-md-3"></div>
               <div className="form-col col-md-3" >
-              <select className="form-select col-md-3" id="permanentAddressState"   onChange={(e)=>{inputHandler(e),addressSelectionHandler(e)}} onClick={(e)=>{inputHandler(e),addressSelectionHandler(e)}}>
-                  {perAddState.map((e)=>
+              <select className="form-select col-md-3" id="permanentAddressState"  value={permanentAddress.state} onChange={(e)=>{inputHandler(e),addressSelectionHandler(e)}} onClick={(e)=>{inputHandler(e),addressSelectionHandler(e)}}>
+                  {perAddState?.map((e)=>
                     <option key={e}value={e} label={e}/>
                   )}
                 </select>
@@ -311,34 +305,34 @@ const permanentAddHandler=(e)=>{
               </div>
               <div className="form-col col-md-3">
               <select className="form-select col-md-3" id="permanentAddressCity"  onChange={(e)=>{inputHandler(e),addressSelectionHandler(e)}} onClick={(e)=>{inputHandler(e),addressSelectionHandler(e)}}>
-                  {perAddCity.map((e)=>
+                  {perAddCity.length!==0? perAddCity?.map((e)=>
                     <option key={e}value={e} label={e}/>
-                  )}
+                  ):<option value={permanentAddress.city} label={permanentAddress.city}/>}
                 </select>
-                <p style={{color:"green",fontSize:"10px"}}>city</p>
+                <p style={{color:"green",fontSize:"10px"}}>District</p>
               </div>
               <div className="form-col col-md-3">
               <select className="form-select col-md-3" id="permanentAddressDistrict"  onChange={(e)=>{inputHandler(e),addressSelectionHandler(e)}} onClick={(e)=>{inputHandler(e),addressSelectionHandler(e)}}>
-                  {perAddDistrict.map((e)=>
+                  {perAddDistrict.length!==0 ? perAddDistrict.map((e)=>
                     <option key={e}value={e} label={e}/>
-                  )}
+                  ):<option value={permanentAddress.district} label={permanentAddress.district}/>}
                 </select>
-                <p style={{color:"green",fontSize:"10px"}}>District</p>
+                <p style={{color:"green",fontSize:"10px"}}>city/Village</p>
               </div>
             </div>
             <div className="form-group row" hidden={sameAsCurrent}>
               <div className="form-col col-md-3"></div>
               <div className="form-col col-md-3">
               <select className="form-select col-md-3" id="permanentAddressPincode"  onChange={(e)=>{inputHandler(e)}}onClick={(e)=>{inputHandler(e)}}>
-                  {perAddPincode.map((e)=>
+                  {perAddPincode.length!==0 ? perAddPincode.map((e)=>
                     <option key={e}value={e} label={e}/>
-                  )}
+                  ):<option value={permanentAddress.pinCode} label={permanentAddress.pinCode}/>}
                 </select>
-                <p style={{color:"green",fontSize:"10px"}}>pincode</p>
+                <p style={{color:"green",fontSize:"10px"}}>Pincode</p>
               </div>
               <div className="form-col col-md-3" hidden={sameAsCurrent}>
               <select className="form-select col-md-3" id="permanentAddressCountry" >   
-                    <option value="India" label="India"/>   
+                    <option value="INDIA" label="INDIA"/>   
                 </select>
               </div>
             </div></>

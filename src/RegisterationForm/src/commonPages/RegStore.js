@@ -105,7 +105,7 @@ const form1Reducer = (state = requiredDataAllFields, action) => {
         currentAddress:{ ...state.currentAddress,
           line2:action.data,}
       };
-    case "currentAddressState":
+     case "currentAddressState":
       return {
         ...state,
         currentAddress:{ ...state.currentAddress,
@@ -117,70 +117,77 @@ const form1Reducer = (state = requiredDataAllFields, action) => {
           currentAddress:{...state.currentAddress,
             country: action.data}
         }
-        case "currentAddressCity":
+      case "currentAddressCity":
           return{
             ...state,
             currentAddress:{...state.currentAddress,
               city:action.data}
           }
-          case "currentAddressDistrict":
+      case "currentAddressDistrict":
           return{
             ...state,
             currentAddress:{...state.currentAddress,
               district:action.data}
           }
-          case "currentAddressPincode":
+      case "currentAddressPincode":
             return{
               ...state,
               currentAddress:{...state.currentAddress,
                 pinCode:action.data}
             }
-            case "permanentAddressLine1":
-              return {
-                ...state,
-                permanentAddress:{ ...state.permanentAddress,
-                  line1:action.data,},
-                  validations:{
+      case "permanentAddressLine1":
+          return {
+            ...state,
+            permanentAddress:{ ...state.permanentAddress,
+             line1:action.data,},
+             validations:{
           ...state.validations,
           isValidPermanentAddress:action.valid,
         }
               };
-              case "permanentAddressLine2":
+      case "permanentAddressLine2":
               return {
                 ...state,
                 permanentAddress:{ ...state.permanentAddress,
                   line2:action.data,}
               };
-            case "permanentAddressState":
+      case "permanentAddressState":
               return {
                 ...state,
                 permanentAddress:{ ...state.permanentAddress,
                   state:action.data,}
               };
-              case "permanentAddressCountry":
-                return{
-                  ...state,
-                  permanentAddress:{...state.permanentAddress,
-                    country: action.data}
+      case "permanentAddressCountry":
+            return{
+            ...state,
+            permanentAddress:{...state.permanentAddress,
+            country: action.data}
                 }
-                case "permanentAddressCity":
-                  return{
+      case "permanentAddressCity":
+            return{
                     ...state,
                     permanentAddress:{...state.permanentAddress,
                       city:action.data}
                   }
-                  case "permanentAddressDistrict":
+      case "permanentAddressDistrict":
                   return{
                     ...state,
                     permanentAddress:{...state.permanentAddress,
                       district:action.data}
                   }
-                  case "permanentAddressPincode":
-                    return{
-                      ...state,
-                      permanentAddress:{...state.permanentAddress,
-                        pinCode:action.data}
-                    }
+      case "permanentAddressPincode":
+          return{
+            ...state,
+            permanentAddress:{...state.permanentAddress,
+            pinCode:action.data}
+                }
+      case "isSameAddress":
+      return {
+        ...state,
+        validations:{
+          ...state.validations,
+          isSameAddress:action.valid,}
+      };
     case "facilitator":
       return {
         ...state,

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { useDispatch,useSelector } from "react-redux";
 import { occupations,educations } from "../../utilities/OptionalEntries";
 import { validateName } from "../../RegexExpsValidation/RegexExps";
@@ -8,6 +8,7 @@ const ProfessionalInfoForm = () => {
     (state) => state
   );
   const dispatch=useDispatch();
+  useEffect(()=>{},[])
   function inputHandler(e) {   
     const { value, id,name } = e.target;
     console.log(id,name,value)
@@ -26,18 +27,7 @@ const ProfessionalInfoForm = () => {
       dispatch({ type: id, data: value,valid:false });
       enableSaveAndProceed();
     }}
-  const [collapse, setCollapse] = useState("");
-  const collapseHandler = (e) => {
-    const {value}=e.target;
-    console.log(e.target.value);
-    if (
-      value === "UNEMPLOYED" ||
-      value === "HOMEMAKER" || value === "STUDENT"
-    ) {
-      setCollapse("collapse");
-    } else setCollapse("");
-
-  };
+ 
   const enableSaveAndProceed=()=>{
     if(validations.isValidEducation&&validations.isValidOccupation){
       dispatch({ type: 'submitDisable', data: "",valid:false });
@@ -54,21 +44,19 @@ const ProfessionalInfoForm = () => {
             <label>Highest Education<a style={{color:'red'}}>*</a></label>
           </div>
           <div className="form-col col-md-3">
-            <select className="form-select" id="education"  onChange={(e)=>inputHandler(e)} >
-              {educations.map((e) => {
-                if(e===education)
-                return (<option value={e} label={e} key={e}selected={true} />)
-                else return (<option value={e} key={e}label={e}  />)
-               })}
+            <select className="form-select" id="education" value={education} onChange={(e)=>inputHandler(e)} >
+              {educations?.map((e) => <option value={e} label={e} key={e} />
+               )}
             </select>
           </div>
          {education=="NO_EDUCATION"? "":<><div className="form-col col-md-3">
             <label>Degree/Education Specification<a style={{color:'red'}}>*</a></label>
           </div>
           <div className="form-col col-md-3">
-           <input type="text"className="form-control" name={validateName} id="educationSpecification"value={degreeSpecification} onChange={inputHandler}/>
+           <input type="text"className="form-control" name={validateName} id="educationSpecification"value={degreeSpecification} placeholder="B.tech Computer Science" onChange={inputHandler}/>
+           <p id="educationSpecificationError" style={{color:'red',fontSize:"10px"}}></p>
           </div>
-          <p id="educationSpecificationError" style={{color:'red',fontSize:"10px"}}></p>
+          
           </>}
         </div>
         <div className="form-group row">
@@ -76,64 +64,64 @@ const ProfessionalInfoForm = () => {
             <label>Occupation<a style={{color:'red'}}>*</a></label>
           </div>
           <div className="form-col col-md-3">
-            <select className="form-select"  onChange={(e)=>{inputHandler(e),collapseHandler(e)}} id='occupation' >
-              {occupations.map((e) => {
-                if (e===occupation) {
-                return (<option value={e} key={e} id={e} label={e} selected={true}/>)
-                }
-                else{
-                return (<option value={e} key={e} id={e} label={e} />)
-                }
-                  })}
+            <select className="form-select"  value={occupation} onChange={(e)=>{inputHandler(e)}} onClick={(e)=>{inputHandler(e)}}id='occupation' >
+              {occupations.map((e) => 
+                <option value={e} key={e} id={e} label={e} />
+                  )}
             </select>
           </div>
-         {collapse== "" && <><div className="form-col col-md-3">
+         {occupation === "UNEMPLOYED" ||
+      occupation === "HOMEMAKER" || occupation === "STUDENT" ? "":<><div className="form-col col-md-3">
             <label>Designation<a style={{color:'red'}}>*</a></label>
           </div>
           <div className="form-col col-md-3">
-           <input type="text" className="form-control"name={validateName} id="presentDesignation" value={presentDesignation} onChange={inputHandler}/>
+           <input type="text" className="form-control"name={validateName} id="presentDesignation" placeholder="Eg. Assistant Software Engineer"value={presentDesignation} onChange={inputHandler}/>
+           <p id="presentDesignationError" style={{color:'red',fontSize:"10px"}}></p>
           </div>
-          <p id="presentDesignationError" style={{color:'red',fontSize:"10px"}}></p></>}
+          </>}
         </div>
         <div className="form-group row">
           <div className="form-col col-md-3">
             <label>Skills/Job Experience</label>
           </div>
-          <div className={`form-col col-md-8`}>
-            <textarea className="form-control" id="skills" value={skills} onChange={inputHandler}/>
+          <div className={`form-col col-md-5`}>
+            <textarea className="form-control" id="skills" placeholder="Eg. Java, React,Python, cooking, drawing, painting, carpenting etc.." value={skills} onChange={inputHandler}/>
           </div>
         </div>
-        <div className={`form-group row ${collapse}`}>
+        {occupation === "UNEMPLOYED" ||
+      occupation === "HOMEMAKER" || occupation === "STUDENT" ? "":<> <div className={`form-group row `}>
           <div className="form-col col-md-3">
-            <label>Current Company/Business Name</label>
+            <label>Current Company/Business Name<a style={{color:'red'}}>*</a></label>
           </div>
           <div className={`form-col col-md-5`}>
             <input
               type="text"
               className="form-control"
+              placeholder="Eg. Infosys"
               id="currentCompany"
               value={currentCompany}
               onChange={inputHandler}
             />
           </div>
         </div>
-        <div className={`form-group row ${collapse}`}>
+        <div className={`form-group row `}>
           <div className="form-col col-md-3">
             <label>
               Office/Business location<a style={{ color: "red" }}>*</a>
             </label>
           </div>
 
-          <div className={`form-col col-md-5 ${collapse}`}>
+          <div className={`form-col col-md-5 `}>
             <input
               type="text"
               className="form-control"
               id="officeLocation"
+              placeholder="Eg. Twin Tower, kalynai nagar, pune"
               value={officeLocation}
               onChange={inputHandler}
             />
           </div>
-        </div>
+        </div></>}
       </div>
     </>
   );
