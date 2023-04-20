@@ -18,13 +18,18 @@ function RegistrationForm(props) {
   const[responseData,setResponseData]=useState([]);
   const { state } = useLocation()
     const { connectedTo,guardianEmail } = state?state:""
-  // useEffect(() => {
-  //   if (sessionStorage.getItem("userId") == null)
-  //     navigate("/login")
-  // },[])
+  useEffect(() => {
+    if (sessionStorage.getItem("userEmail") == null)
+         navigate("/login")
+  },[])
+
   const onCloseModal=()=>{
     setIsShowModal(false);
-    navigate("/dashboard", { state: { userDetail:responseData} })
+    const detail = {
+      id:sessionStorage.getItem("userId"),
+      fname:sessionStorage.getItem("userFname")
+    }
+    navigate("/dashboard", { state: { userDetail:detail} })
   }
 
   return (

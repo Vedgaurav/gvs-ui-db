@@ -6,13 +6,13 @@ export default function Dashboard() {
     const navigate = useNavigate()
     const { state } = useLocation()
     const { userDetail } = state?state:""
-    const {id,fname} = userDetail
+    const {id,fname} = userDetail?userDetail:{} 
     const userId = id
 
     useEffect(()=>{
         if(sessionStorage.getItem("userId")==null)
             navigate("/login")
-    })
+    },[])
 
     const goToMyDep = () => {
         // to my dep page

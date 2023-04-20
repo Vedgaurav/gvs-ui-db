@@ -1,34 +1,40 @@
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import { useLocation, useNavigate } from "react-router-dom"
 import axiosGetAllDependents from "../axios/axiosGetAllDependents"
+import { PleaseWaitContext } from "../context/PleaseWaitContextProvider.js"
+import PleaseWait from "../pleaseWait/PleaseWait"
 
 
 export default () => {
     const { state } = useLocation()
-    const { userId } = state?state:""
+    const { userId } = state ? state : ""
     const [dep, setDep] = useState([])
     const navigate = useNavigate()
+    const { gWaitOn, setGWaitOn } = useContext(PleaseWaitContext)
 
 
     useEffect(() => {
-        const fun=async (setDep)=>{
+        const fun = async (setDep) => {
+            setGWaitOn(true)
             const res = await axiosGetAllDependents(userId)
             setDep(res.data);
+            setGWaitOn(false)
         }
         fun(setDep)
+        console.log("useEffect ran");
     }, [])
 
-    useEffect(()=>{
-        if(sessionStorage.getItem("userId")==null)
+    useEffect(() => {
+        if (sessionStorage.getItem("userId") == null)
             navigate("/login")
-    })
+    }, [])
 
-    const addDep = () => {    
-        console.log("from dep",userId);
-        navigate("/registration", { state: { userId: userId,connectedTo:userId } })
+    const addDep = () => {
+        console.log("from dep", userId);
+        navigate("/registration", { state: { userId: userId, connectedTo: userId } })
     }
 
-    return <>
+    const template = <>
         <h1 class="display-1">Manage Members</h1>
 
         <div class="container-md">
@@ -57,18 +63,20 @@ export default () => {
                             <td>{d.gender}</td>
                             <td>{d.primaryPhone}</td>
                             <td>{d.facilitator}</td>
-                            <td> <button className="btn btn-warning" disabled={true}type="button">Edit</button></td>
+                            <td> <button className="btn btn-warning" disabled={true} type="button">Edit</button></td>
                             <td> <button className="btn btn-danger" disabled={true} type="button">Delete</button></td>
                         </tr>
                     </tbody>
                 )) : <tbody>
                     <tr>
                         <td colSpan="3">No members found.</td>
-                        
+
                     </tr>
                 </tbody>}
             </table>
         </div>
-
+    </>
+    return <>
+            {gWaitOn?<PleaseWait/>:template}
     </>
 }
