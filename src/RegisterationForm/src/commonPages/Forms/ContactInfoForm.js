@@ -62,7 +62,7 @@ const ContactInfoForm = (props) => {
     if (name == undefined || name == "") {
       dispatch({ type: id, data: value, valid: true });
     } else if (value.match(name) !== null) {
-      console.log("matched with regex");
+      //console.log("matched with regex");
       document.getElementById(id + "Error").innerText = "";
       dispatch({ type: id, data: value, valid: true });
     } else {
