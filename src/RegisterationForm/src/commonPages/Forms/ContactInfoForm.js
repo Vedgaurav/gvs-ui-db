@@ -37,19 +37,10 @@ const ContactInfoForm = (props) => {
   const curraddDistrict = useRef();
   const curraddPincode = useRef();
   useEffect(() => {
-   setGWaitOn(true);
     enableSaveAndProceed();
-    setCurrAddState(
-      addressData
-        .map((e) => e.statename)
-        .filter((value, index, self) => self.indexOf(value) === index)
-    );
-    setPerAddState(
-      addressData
-        .map((e) => e.statename)
-        .filter((value, index, self) => self.indexOf(value) === index)
-    );
-    setGWaitOn(false);
+    
+    
+    
   }, []);
 
   useEffect(() => {
@@ -81,14 +72,20 @@ const ContactInfoForm = (props) => {
     const { id, value } = e.target;
     switch (id) {
       case "currentAddressState":
+        setCurrAddState(
+          addressData
+            .map((e) => e.statename)
+            .filter((value, index, self) => self.indexOf(value) === index)
+        );
+        
+        break;
+      case "currentAddressCity": {
         setCurrAddCity(
           addressData
             .filter((e) => e.statename == value)
             .map((e) => e.Districtname)
             .filter((value, index, self) => self.indexOf(value) === index)
         );
-        break;
-      case "currentAddressCity": {
         setCurrAddDistrict(
           addressData
             .filter((e) => e.Districtname == value)
@@ -104,6 +101,14 @@ const ContactInfoForm = (props) => {
         break;
       }
       case "permanentAddressState":
+        setPerAddState(
+          addressData
+            .map((e) => e.statename)
+            .filter((value, index, self) => self.indexOf(value) === index)
+        );
+        
+        break;
+      case "permanentAddressCity": 
         setPerAddCity(
           addressData
             .filter((e) => e.statename == value)
@@ -111,7 +116,7 @@ const ContactInfoForm = (props) => {
             .filter((value, index, self) => self.indexOf(value) === index)
         );
         break;
-      case "permanentAddressCity": {
+        case "permanentAddressDistrict":
         setPerAddDistrict(
           addressData
             .filter((e) => e.Districtname == value)
@@ -125,7 +130,6 @@ const ContactInfoForm = (props) => {
             .filter((value, index, self) => self.indexOf(value) === index)
         );
         break;
-      }
       default:
         break;
     }
@@ -133,13 +137,6 @@ const ContactInfoForm = (props) => {
   const permanentAddHandler = (e) => {
     if (e.target.checked === true) {
       dispatch({ type: "isSameAddress", data: "", valid: true });
-      console.log(curraddLine1.current.value);
-      console.log(curraddCity.current.value);
-      console.log(curraddPincode.current.value);
-      console.log(curraddState.current.value);
-      console.log(curraddDistrict.current.value);
-      console.log(curraddLine2.current.value);
-
       dispatch({
         type: "permanentAddressLine1",
         data: curraddLine1.current.value,
@@ -295,9 +292,12 @@ const ContactInfoForm = (props) => {
                   inputHandler(e), addressSelectionHandler(e);
                 }}
               >
-                {currAddState?.map((state) => (
+                {currAddState!==0? currAddState?.map((state) => (
                   <option value={state} key={state} label={state} />
-                ))}
+                )):<option
+                value={currentAddress.state}
+                label={currentAddress.state}
+              />}
               </select>
               <p style={{ color: "green", fontSize: "10px" }}>state</p>
             </div>
@@ -466,9 +466,9 @@ const ContactInfoForm = (props) => {
                       inputHandler(e), addressSelectionHandler(e);
                     }}
                   >
-                    {perAddState?.map((e) => (
+                    {perAddState.length!==0 ? perAddState?.map((e) => (
                       <option key={e} value={e} label={e} />
-                    ))}
+                    )):<option value={permanentAddress.state} label={permanentAddress.state} />}
                   </select>
                   <p style={{ color: "green", fontSize: "10px" }}>state</p>
                 </div>

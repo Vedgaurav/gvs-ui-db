@@ -35,7 +35,7 @@ const FormsContainer = (props) => {
   const [error, setError] = useState("");
 
   const submitHandler = async () => {
-    props.onShowModal(false);
+    setIsLoadingSpinnerActive(true);
     props.onHeaderReceive("");
     props.onMessageReceive("");
     const saveData = JSON.parse(JSON.stringify(data));
@@ -74,11 +74,9 @@ const FormsContainer = (props) => {
   const formStageHandler = (stage) => {
     switch (stage) {
       case 1:
-        setIsLoadingSpinnerActive(true);
         setFormStage(forms.stage1);
         setStage(1);
         setBack(true);
-        setIsLoadingSpinnerActive(false);
         break;
       case 2:
         setIsLoadingSpinnerActive(true);
@@ -94,16 +92,14 @@ const FormsContainer = (props) => {
         setIsLoadingSpinnerActive(false);
         break;
       case 4:
-        setIsLoadingSpinnerActive(true);
         setFormStage(forms.stage4);
         setStage(4);
-        setIsLoadingSpinnerActive(false);
+        
         break;
       case 5:
-        setIsLoadingSpinnerActive(true);
         setFormStage(forms.stage5);
         setStage(5);
-        setIsLoadingSpinnerActive(false);
+        
         break;
       case 6:
         setStage(6);
@@ -140,14 +136,11 @@ const FormsContainer = (props) => {
             className="imgfix rounded float-left"
           />
           </div> */}
-
-      {gWaitOn ? (
-        <PleaseWait/>
-      ) : (
+     { isLoadingSpinnerActive ? <LoadingSpinner /> :
         <>
           {" "}
           <RegistrationProgressBar stage={stage} />
-          {isLoadingSpinnerActive ? <LoadingSpinner /> : jsxFormStage}
+          { jsxFormStage}
           <button
             type="button"
             className="btn btn-success col-sm-3"
@@ -166,7 +159,7 @@ const FormsContainer = (props) => {
             {submit}
           </button>
         </>
-      )}
+}
     </>
   );
 };

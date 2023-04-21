@@ -35,7 +35,7 @@ function RegistrationForm(props) {
   return (
     <div className="body mainpage">
       <NavBar />
-     {isShowModal? <Modal open={isShowModal} header={showModalHeader} message={showModalMessage} onClose={onCloseModal}/>:<FormsContainer onHeaderReceive={(msg)=>setShowModalHeader(msg)} guardianEmail={guardianEmail}connectedTo={connectedTo} onMessageReceive={(msg)=>setShowModalMessage(msg)} onResponseData={(obj)=>setResponseData(obj)}isLoading={(e)=>setIsLoading(e)} onShowModal={()=>setIsShowModal(true)} />
+     {isShowModal? <Modal open={isShowModal} header={showModalHeader} message={showModalMessage} onClose={onCloseModal}/>:<FormsContainer onHeaderReceive={(msg)=>setShowModalHeader(msg)} guardianEmail={guardianEmail}connectedTo={connectedTo} onMessageReceive={(msg)=>setShowModalMessage(msg)} onResponseData={(obj)=>setResponseData(obj)}isLoading={(e)=>setIsLoading(e)} onShowModal={(val)=>setIsShowModal(val)} />
 }
     </div>
   );
