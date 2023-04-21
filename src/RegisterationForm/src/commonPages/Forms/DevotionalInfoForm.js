@@ -3,6 +3,7 @@ import { useSelector,useDispatch } from "react-redux";
 import DatePicker, { CalendarContainer } from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useState,useEffect } from "react";
+import { validateRounds,validateName } from "../../RegexExpsValidation/RegexExps";
 const DevotionalInfoForm = () => {
   const dispatch=useDispatch();
   const { chantingRounds,yearChantingSince,yearChanting16Rounds,
@@ -17,7 +18,7 @@ const DevotionalInfoForm = () => {
   useEffect(()=>{
 
     enableSaveAndProceed();
-    },[validations.isValidChantingRounds])
+    },[validations.isValidChantingRounds,validations.isValidIntroducedBy,validations.isValidYearChantingSince,validations.isValidYearChanting16Rounds])
   
   const inputHandler = (e) => {
     
@@ -40,7 +41,7 @@ const DevotionalInfoForm = () => {
   };
 
   const enableSaveAndProceed=()=>{
-    if(validations.isValidChantingRounds){
+    if(validations.isValidChantingRounds&&validations.isValidIntroducedBy){
       dispatch({ type: 'submitDisable', data: "",valid:false });
     }
     else dispatch({ type: 'submitDisable', data: "",valid:true });
@@ -60,6 +61,7 @@ const DevotionalInfoForm = () => {
                 <option value={e} label={e} key={e} />
               )}
             </select>
+            <p/>
           </div>
         </div>
         <div className="form-group row">
@@ -67,19 +69,21 @@ const DevotionalInfoForm = () => {
             <label>No. Of Rounds Chanting<a style={{color:'red'}}>*</a></label>
           </div>
           <div className={`form-col col-md-3`}>
-            <input type="number" id='chantingRounds' value={chantingRounds}className="form-control" onChange={inputHandler}/>
+            <input type="number" id='chantingRounds' name={validateRounds}value={chantingRounds}className="form-control" placeholder="0" onChange={inputHandler}/>
+            <p id="chantingRoundsError" style={{color:'red',fontSize:"10px"}}/>
           </div>
+          
         </div>
         
         <div className="form-group row">
         {chantingRounds>0 ?  <><div className="form-col col-md-3">
-            <label>Chanting Since</label>
+            <label>Chanting Since<a style={{color:'red'}}>*</a></label>
           </div>
          <div className={`form-col col-md-3`}>
             <input type="month" id='yearChantingSince' value={yearChantingSince} className="form-control" onChange={inputHandler}/>
           </div></>:""}
          {chantingRounds>=16 ? <><div className="form-col col-md-3">
-            <label>Chanting 16 & above Rounds Since</label>
+            <label>Chanting 16 & above Rounds Since<a style={{color:'red'}}>*</a></label>
           </div>
           <div className={`form-col col-md-3`}>
             <input
@@ -96,8 +100,10 @@ const DevotionalInfoForm = () => {
             <label>Introduced By<a style={{color:'red'}}>*</a></label>
           </div>
           <div className={`form-col col-md-3`}>
-            <input type="text" id='introducedBy' placeholder="name of person" value={introducedBy}className="form-control" onChange={inputHandler}/>
+            <input type="text" id='introducedBy' name={validateName}placeholder="name of person" value={introducedBy}className="form-control" onChange={inputHandler}/>
+            <p id="introducedByError"style={{color:'red',fontSize:"10px"}}/>
           </div>
+          
         </div>
         <div className="form-group row">
           <div className="form-col col-md-3">
@@ -110,6 +116,7 @@ const DevotionalInfoForm = () => {
                <option value={e} label={e} key={e} />
               )}
               </select>
+              <p/>
           </div>
         </div>
         <div className="form-group row">
@@ -119,6 +126,7 @@ const DevotionalInfoForm = () => {
           <div className={`form-col col-md-3`}>
             <textarea id='servicesRendered' className="form-control" value={servicesRendered}placeholder={"1.\n2.\n3.\n4."} onChange={inputHandler}/>
           </div>
+          <p/>
         </div>
         <div className="form-group row">
           <div className="form-col form-check col-md-3">
@@ -127,6 +135,7 @@ const DevotionalInfoForm = () => {
           <div className={`form-col col-md-3`}>
             <textarea className="form-control" onChange={inputHandler} value={preferredServices}placeholder={"1.\n2.\n3.\n4."} />
           </div>
+          <p/>
         </div>
         
       </div>

@@ -53,9 +53,10 @@ const ProfessionalInfoForm = () => {
               {educations?.map((e) => <option value={e} label={e} key={e} />
                )}
             </select>
+            <p/>
           </div>
-         {education=="NO_EDUCATION" ||education=="PRE_PRIMARY_SCHOOL"||education=="PRIMARY_SCHOOL"||education=="MIDDLE_SCHOOL" 
-         ||education=="SECONDARY_SCHOOL" ||education=="HIGHER_SECONDARY_SCHOOL"? "":<><div className="form-col col-md-3">
+         {education=="NO_EDUCATION" ||education=="UPTO 5th STD"||education=="UPTO 10th STD"||education=="11-12th STD" 
+            ? "":<><div className="form-col col-md-3">
             <label>Degree Specification<a style={{color:'red'}}>*</a></label>
           </div>
           <div className="form-col col-md-3">
@@ -75,45 +76,39 @@ const ProfessionalInfoForm = () => {
                 <option value={e} key={e} id={e} label={e} />
                   )}
             </select>
+            <p/>
           </div>
          {occupation === "UNEMPLOYED" ||
-      occupation === "HOMEMAKER" || occupation === "STUDENT" ? "":<><div className="form-col col-md-3">
-            <label>Designation<a style={{color:'red'}}>*</a></label>
+      occupation === "HOMEMAKER" ? "":<><div className="form-col col-md-3">
+            <label>{occupation === "STUDENT" ? "Course Duration":(occupation === "RETIRED") ?"Last held Designation":"Designation"}<a style={{color:'red'}}>*</a></label>
           </div>
           <div className="form-col col-md-3">
-           <input type="text" className="form-control"name={validateName} id="presentDesignation" placeholder="Eg. Assistant Software Engineer"value={presentDesignation} onChange={inputHandler}/>
+           <input type="text" className="form-control"name={validateName} id="presentDesignation" placeholder="specify here"value={presentDesignation} onChange={inputHandler}/>
            <p id="presentDesignationError" style={{color:'red',fontSize:"10px"}}></p>
           </div>
           </>}
         </div>
-        <div className="form-group row">
-          <div className="form-col col-md-3">
-            <label>Skills/Job Experience</label>
-          </div>
-          <div className={`form-col col-md-5`}>
-            <textarea className="form-control" id="skills" placeholder="Eg. Java, React, cooking, drawing, carpenting etc.." value={skills} onChange={inputHandler}/>
-          </div>
-        </div>
         {occupation === "UNEMPLOYED" ||
-      occupation === "HOMEMAKER" || occupation === "STUDENT" ? "":<> <div className={`form-group row `}>
+      occupation === "HOMEMAKER" ? "":<> <div className={`form-group row `}>
           <div className="form-col col-md-3">
-            <label>Current Company/Business Name<a style={{color:'red'}}>*</a></label>
+            <label>{occupation === "STUDENT" ? "College Name":"Current Company/Business Name"}<a style={{color:'red'}}>*</a></label>
           </div>
           <div className={`form-col col-md-5`}>
             <input
               type="text"
               className="form-control"
-              placeholder="Eg. Infosys"
+              placeholder="Eg. XYZ Organization"
               id="currentCompany"
               value={currentCompany}
               onChange={inputHandler}
             />
+            <p/>
           </div>
         </div>
         <div className={`form-group row `}>
           <div className="form-col col-md-3">
             <label>
-              Office/Business location<a style={{ color: "red" }}>*</a>
+            {occupation === "STUDENT" ? "College Location": "Office/Business location"}<a style={{ color: "red" }}>*</a>
             </label>
           </div>
 
@@ -126,8 +121,18 @@ const ProfessionalInfoForm = () => {
               value={officeLocation}
               onChange={inputHandler}
             />
+            <p/>
           </div>
         </div></>}
+        <div className="form-group row">
+          <div className="form-col col-md-3">
+            <label>Skills/Job Experience</label>
+          </div>
+          <div className={`form-col col-md-5`}>
+            <textarea className="form-control" id="skills" placeholder="Eg. Java, React, cooking, drawing, carpenting etc.." value={skills} onChange={inputHandler}/>
+             <p/>
+          </div>
+        </div>
       </div>
     </>
   );

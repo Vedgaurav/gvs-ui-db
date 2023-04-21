@@ -39,8 +39,6 @@ const ContactInfoForm = (props) => {
   useEffect(() => {
     enableSaveAndProceed();
     
-    
-    
   }, []);
 
   useEffect(() => {
@@ -72,20 +70,22 @@ const ContactInfoForm = (props) => {
     const { id, value } = e.target;
     switch (id) {
       case "currentAddressState":
-        setCurrAddState(
+       if(currAddState.length==0){ setCurrAddState(
           addressData
             .map((e) => e.statename)
             .filter((value, index, self) => self.indexOf(value) === index)
         );
-        
-        break;
-      case "currentAddressCity": {
+       }
+       else {
         setCurrAddCity(
           addressData
             .filter((e) => e.statename == value)
             .map((e) => e.Districtname)
             .filter((value, index, self) => self.indexOf(value) === index)
         );
+       }
+        break;
+      case "currentAddressCity": {
         setCurrAddDistrict(
           addressData
             .filter((e) => e.Districtname == value)
@@ -101,22 +101,20 @@ const ContactInfoForm = (props) => {
         break;
       }
       case "permanentAddressState":
-        setPerAddState(
+        if(perAddState.length==0){setPerAddState(
           addressData
             .map((e) => e.statename)
             .filter((value, index, self) => self.indexOf(value) === index)
-        );
-        
-        break;
-      case "permanentAddressCity": 
-        setPerAddCity(
+        );}
+        else{setPerAddCity(
           addressData
             .filter((e) => e.statename == value)
             .map((e) => e.Districtname)
             .filter((value, index, self) => self.indexOf(value) === index)
-        );
+        );}
+        
         break;
-        case "permanentAddressDistrict":
+      case "permanentAddressCity": 
         setPerAddDistrict(
           addressData
             .filter((e) => e.Districtname == value)
@@ -292,7 +290,7 @@ const ContactInfoForm = (props) => {
                   inputHandler(e), addressSelectionHandler(e);
                 }}
               >
-                {currAddState!==0? currAddState?.map((state) => (
+                {currAddState.length!==0? currAddState?.map((state) => (
                   <option value={state} key={state} label={state} />
                 )):<option
                 value={currentAddress.state}
@@ -410,6 +408,7 @@ const ContactInfoForm = (props) => {
                   Same as current
                 </label>
               </div>
+              <p/>
             </div>
           </div>
           {validations.isSameAddress ? (

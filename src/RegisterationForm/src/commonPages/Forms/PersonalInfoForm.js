@@ -11,7 +11,7 @@ import CameraAltIcon from '@mui/material';
 
 const PersonalInfoForm = (props) => {
   const dispatch = useDispatch();
-  const { fname, mname, lname, initiatedName, gender,birthCity,birthState, spiritualMaster,dateOfBirth ,validations} = useSelector(
+  const { fname, mname, lname, initiatedName, gender, spiritualMaster,dateOfBirth ,validations} = useSelector(
     (state) => state
   );
 const [takePic,setTakePic]=useState(false);
@@ -33,19 +33,13 @@ const [takePic,setTakePic]=useState(false);
     }
     enableSaveAndProceed();
   };
-  const[spMaster,setSpMaster]=useState(true);
   const enableSaveAndProceed=()=>{
-    if(validations.isValidFname){
+    if(validations.isValidFname && validations.isValidDateOfBirth && validations.isValidGender){
       dispatch({ type: 'submitDisable', data: "",valid:false });
     }
     else dispatch({ type: 'submitDisable', data: "",valid:true });
   }
-  const initiatedNameHandler=(e)=>{
-    if(e.target.value.length>0){
-       setSpMaster(false);
-    }
-    else setSpMaster(true);
-  }
+
   const genderChangeHandler=(e)=>{
     let a=document.getElementsByClassName('gender');
     for (let index = 0; index < a.length; index++) {
@@ -83,7 +77,7 @@ const [takePic,setTakePic]=useState(false);
   },[])
   useEffect(()=>{
     enableSaveAndProceed();
-    },[validations.isValidFname])
+    },[validations.isValidFname,validations.isValidDateOfBirth,validations.isValidGender])
   return (
     <>
       <h3>Personal Information</h3>
@@ -140,14 +134,14 @@ const [takePic,setTakePic]=useState(false);
                 className="form-control"
                 value={initiatedName}
                 placeholder="Initiated Name"
-                onChange={(e)=>{inputHandler(e),initiatedNameHandler(e)}}
+                onChange={(e)=>inputHandler(e)}
               />
               <p id='inameError' style={{color:'red',fontSize:'10px'}}></p>
             </div>
-            <div className="form-col col-md-3" hidden={spMaster}>
+            {initiatedName.length>0 ? <><div className="form-col col-md-3" >
               <label>Spiritual Master<a style={{color:'red'}}>*</a></label>
             </div>
-            <div className="form-col col-md-3" hidden={spMaster}>
+            <div className="form-col col-md-3" >
               <input
                 id="spiritualMaster"
                 type="text"
@@ -156,11 +150,10 @@ const [takePic,setTakePic]=useState(false);
                 name={validateName}
                 onChange={inputHandler}
                 value={spiritualMaster}
-                hidden={initiatedName.length>0 ? false:true}
                 onBlur={enableSaveAndProceed}
               />
             <p id='spiritualMasterError' style={{color:'red',fontSize:'10px'}}></p>
-            </div>
+            </div></>:""}
           </div>
           <div className="form-group row">
             <div className="form-col form-check col-md-3">
@@ -202,6 +195,7 @@ const [takePic,setTakePic]=useState(false);
                 onChange={inputHandler}
                 value={dateOfBirth}
               />
+              <p/>
           </div>
           </div>
           <div className="form-group row">
@@ -214,6 +208,7 @@ const [takePic,setTakePic]=useState(false);
                   <option value={e} label={e} key={e} />
                 ))}
               </select>
+              <p/>
             </div>
           </div>
           {/* <div className="form-group row">

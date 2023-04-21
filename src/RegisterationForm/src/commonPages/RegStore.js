@@ -218,11 +218,17 @@ const form1Reducer = (state = requiredDataAllFields, action) => {
       return {
         ...state,
         yearChanting16Rounds: action.data,
+        validations:{
+          ...state.validations,
+          isValidChanting16Rounds:action.valid,}
       };
     case "introducedBy":
       return {
         ...state,
         introducedBy: action.data,
+        validations:{
+          ...state.validations,
+          isValidIntroducedBy:action.valid,}
       };
     case "placeIntroducedIn":
       return {
@@ -336,12 +342,19 @@ const form1Reducer = (state = requiredDataAllFields, action) => {
       return {
         ...state,
         dateOfMarriage: action.data,
-      };
+        validations:{
+          ...state.validations,
+          isValidDateOfMarriage:action.valid,
+      }
+    }
       case "maritalStatus":
       return {
         ...state,
         maritalStatus: action.data,
-      };
+        validations:{
+          ...state.validations,
+          isValidMaritalStatus:action.valid,}
+      }
     case "modified":
       return {
         ...state,

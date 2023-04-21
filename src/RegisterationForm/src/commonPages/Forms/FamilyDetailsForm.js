@@ -3,7 +3,7 @@ import { useSelector,useDispatch } from "react-redux";
 import { useEffect,useState } from "react";
 const FamilyDetails = () => {
   const dispatch = useDispatch();
-   const { fathersName,mothersName,motherTongue,language,spouseName,maritalStatus,validations } = useSelector(
+   const { fathersName,mothersName,motherTongue,language,spouseName,dateOfMarriage,maritalStatus,validations } = useSelector(
      (state) => state
    );
 useEffect(()=>{
@@ -11,7 +11,7 @@ enableSaveAndProceed();
 },[])
 useEffect(()=>{
   enableSaveAndProceed();
-  },[validations.isValidFathersName,validations.isValidMothersName])
+  },[validations.isValidFathersName,validations.isValidMothersName,validations.isValidMaritalStatus,validations.isValidDateOfMarriage])
 
   const inputHandler = (e) => {
     const { value, id,name } = e.target;
@@ -33,7 +33,14 @@ useEffect(()=>{
   };
    
   const enableSaveAndProceed=()=>{
-    if(validations.isValidFathersName&&validations.isValidMothersName){
+    if(maritalStatus==="MARRIED"){
+      if(validations.isValidFathersName&&validations.isValidMothersName && validations.isValidMaritalStatus && validations.isValidSpouseName&& validations.isValidDateOfMarriage){
+        dispatch({ type: 'submitDisable', data: "",valid:false });}
+        else {
+         dispatch({ type: 'submitDisable', data: "",valid:true });
+        }
+    }
+    else if(validations.isValidFathersName&&validations.isValidMothersName && validations.isValidMaritalStatus){
       dispatch({ type: 'submitDisable', data: "",valid:false });
     }
     else dispatch({ type: 'submitDisable', data: "",valid:true });
@@ -166,7 +173,7 @@ useEffect(()=>{
             </label>
           </div>
           <div className="form-col col-md-3 ">
-            <input type="date" id="dateOfMarriage" className="form-control" onChange={inputHandler} />
+            <input type="date" id="dateOfMarriage" className="form-control" value={dateOfMarriage} onChange={inputHandler} />
           </div>
         </div>
         <div className="form-group row" >
