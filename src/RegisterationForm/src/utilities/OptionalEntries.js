@@ -22,14 +22,14 @@ export const languages = [
 
   export const educations=[
       "NO_EDUCATION",
-      "UPTO 5th STD",
-      "UPTO 10th STD",
-      "11-12th STD",
+      "UPTO_5th_STD",
+      "UPTO_10th_STD",
+      "UPTO_12th_STD",
       "DIPLOMA",
       "GRADUATION",
-      "POST GRADUATION",
+      "POST_GRADUATION",
       "DOCTORATE",
-      "POST DOCTORATE"]
+      "POST_DOCTORATE"]
   
   export const Gender = [
     { id: 'g1', value: "MALE", col: 1 },

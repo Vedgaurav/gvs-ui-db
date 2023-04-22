@@ -24,6 +24,7 @@ const FormsContainer = (props) => {
     if(props.connectedTo==="guru"){
       dispatch({ type: "priviledge", data: "GUARDIAN", valid: true });
     }
+    else dispatch({ type: "priviledge", data: "USER", valid: true });
   }, []);
   const data = useSelector((state) => state);
   const [stage, setStage] = useState(1);
@@ -41,11 +42,17 @@ const FormsContainer = (props) => {
     const saveData = JSON.parse(JSON.stringify(data));
 
     delete saveData.validations;
-    console.log(JSON.stringify(saveData));
-    const response = await axios.post(ADD_DEVOTEE_DATA, saveData);
-    console.log(response);
+    // console.log(JSON.stringify(saveData));
+    try{
+    const response = await axios.post(ADD_DEVOTEE_DATA, saveData).catch((e)=>{
+      props.onHeaderReceive("API ERROR");
+      props.onMessageReceive(
+        "There is error in submitting the response. Kindly try again later"
+      );
+    });
+    // console.log(response);
     if (response.status === 200) {
-      console.log(response);
+      // console.log(response);
       props.onHeaderReceive("Success");
       props.onMessageReceive("Data Successfully Saved");
       setError(response.status);
@@ -56,7 +63,7 @@ const FormsContainer = (props) => {
         "There is error in submitting the response. Kindly try again later"
       );
       setError(response.status);
-    } else if (response.status === 400) {
+    } else if (response.data.status === 400) {
       console.log("SOMETHING WENT WRONG");
       props.onHeaderReceive("API ERROR");
       props.onMessageReceive(
@@ -64,10 +71,24 @@ const FormsContainer = (props) => {
       );
       setError(response.status);
     }
-    props.onResponseData(response.data ? [0] : []);
+    else{
+      props.onHeaderReceive("API ERROR");
+      props.onMessageReceive(
+        "There is error in submitting the response. Kindly try again later"
+      );
 
-    console.log(error);
-    console.log(submitResponse);
+    }
+    props.onResponseData(response.data ? [0] : []);
+  }
+  catch(e){
+    
+    props.onHeaderReceive("API ERROR");
+    props.onMessageReceive(
+      "There is error in submitting the response. Kindly try again later"
+    );
+  }
+    // console.log(error);
+    // console.log(submitResponse);
     setIsLoadingSpinnerActive(false);
     props.onShowModal(true);
   };

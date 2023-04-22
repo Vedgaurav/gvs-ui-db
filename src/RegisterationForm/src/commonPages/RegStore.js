@@ -392,6 +392,9 @@ const form1Reducer = (state = requiredDataAllFields, action) => {
           ...state.validations,
           isSubmitDisabled:action.valid,}
       }
+      // case "submitted":
+      //   return form1Reducer(undefined,action);
+     // console.log("submitDisable",action.valid)
     default:
       return state;
   }

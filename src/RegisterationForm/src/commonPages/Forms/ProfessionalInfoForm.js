@@ -35,7 +35,7 @@ const ProfessionalInfoForm = () => {
     }}
  
   const enableSaveAndProceed=()=>{
-    if((education!=="NO_EDUCATION"&&education!=="UPTO 5th STD"&&education!=="UPTO 10th STD"&&education!=="11-12th STD")
+    if((education!=="NO_EDUCATION"&&education!=="UPTO_5th_STD"&&education!=="UPTO_10th_STD"&&education!=="UPTO_12th_STD")
     &&(occupation!=="UNEMPLOYED"&&occupation!=="HOMEMAKER")){
       if(validations.isValidEducation&&validations.isValidOccupation&&validations.isValidEducationSpecification
         &&degreeSpecification.length>0&&validations.isValidOccupationLocation&&validations.isValidCurrentCompany&&occupationLocation.length>0
@@ -44,7 +44,7 @@ const ProfessionalInfoForm = () => {
       }
       else dispatch({ type: 'submitDisable', data: "",valid:true });
     }
-    else if((education!=="NO_EDUCATION"&&education!=="UPTO 5th STD"&&education!=="UPTO 10th STD"&&education!=="11-12th STD")
+    else if((education!=="NO_EDUCATION"&&education!=="UPTO_5th_STD"&&education!=="UPTO_10th_STD"&&education!=="UPTO_12th_STD")
     &&(occupation=="UNEMPLOYED"||occupation=="HOMEMAKER")){
       if(validations.isValidEducation&&validations.isValidOccupation&&validations.isValidEducationSpecification
         &&degreeSpecification.length>0){
@@ -52,7 +52,7 @@ const ProfessionalInfoForm = () => {
       }
       else dispatch({ type: 'submitDisable', data: "",valid:true });
     }
-    else if((education=="NO_EDUCATION"||education=="UPTO 5th STD"||education=="UPTO 10th STD"||education=="11-12th STD")
+    else if((education=="NO_EDUCATION"||education=="UPTO_5th_STD"||education=="UPTO_10th_STD"||education=="UPTO_12th_STD")
     &&(occupation!=="UNEMPLOYED"&&occupation!=="HOMEMAKER")){
       if(validations.isValidEducation&&validations.isValidOccupation&&
         validations.isValidOccupationLocation&&validations.isValidCurrentCompany&&occupationLocation.length>0
@@ -86,7 +86,7 @@ const ProfessionalInfoForm = () => {
             </select>
             <p/>
           </div>
-         {education=="NO_EDUCATION" ||education=="UPTO 5th STD"||education=="UPTO 10th STD"||education=="11-12th STD" 
+         {education=="NO_EDUCATION" ||education=="UPTO_5th_STD"||education=="UPTO_10th_STD"||education=="UPTO_12th_STD" 
             ? "":<><div className="form-col col-md-3">
             <label>Degree Specification<a style={{color:'red'}}>*</a></label>
           </div>
