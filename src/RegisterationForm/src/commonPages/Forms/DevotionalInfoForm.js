@@ -18,7 +18,7 @@ const DevotionalInfoForm = () => {
   useEffect(()=>{
 
     enableSaveAndProceed();
-    },[validations.isValidChantingRounds,validations.isValidIntroducedBy,validations.isValidYearChantingSince,validations.isValidYearChanting16Rounds])
+    },[chantingRounds,yearChantingSince,yearChanting16Rounds,validations.isValidChantingRounds,validations.isValidIntroducedBy,validations.isValidYearChantingSince,validations.isValidYearChanting16Rounds])
   
   const inputHandler = (e) => {
     
@@ -41,10 +41,23 @@ const DevotionalInfoForm = () => {
   };
 
   const enableSaveAndProceed=()=>{
-    if(validations.isValidChantingRounds&&validations.isValidIntroducedBy){
+    if(chantingRounds>0&&chantingRounds<16){
+      if(validations.isValidChantingRounds&&validations.isValidIntroducedBy&&validations.isValidYearChantingSince){
+        dispatch({ type: 'submitDisable', data: "",valid:false });
+      }
+      else dispatch({ type: 'submitDisable', data: "",valid:true });
+    }
+   else if(chantingRounds>=16){
+      if(validations.isValidChantingRounds&&validations.isValidIntroducedBy&&validations.isValidYearChantingSince&&validations.isValidYearChanting16Rounds){
+        dispatch({ type: 'submitDisable', data: "",valid:false });
+      }
+      else dispatch({ type: 'submitDisable', data: "",valid:true });
+    }
+   else if(chantingRounds==0&&validations.isValidChantingRounds&&validations.isValidIntroducedBy){
       dispatch({ type: 'submitDisable', data: "",valid:false });
     }
-    else dispatch({ type: 'submitDisable', data: "",valid:true });
+    else {
+      dispatch({ type: 'submitDisable', data: "",valid:true });}
   }
 
   return (
@@ -111,7 +124,7 @@ const DevotionalInfoForm = () => {
           </div>
           <div className="form-col col-md-3">
             
-              <select id='placeIntroducedIn' value={placeIntroducedIn} className="form-control col-md-3" onClick={inputHandler}onChange={inputHandler} >
+              <select id='placeIntroducedIn' value={placeIntroducedIn} className="form-select" onClick={inputHandler}onChange={inputHandler} >
                {introductionMedium.map((e)=> 
                <option value={e} label={e} key={e} />
               )}

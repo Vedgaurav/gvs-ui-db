@@ -233,7 +233,7 @@ const form1Reducer = (state = requiredDataAllFields, action) => {
         yearChanting16Rounds: action.data,
         validations:{
           ...state.validations,
-          isValidChanting16Rounds:action.valid,}
+          isValidYearChanting16Rounds:action.valid,}
       };
     case "introducedBy":
       return {

@@ -18,10 +18,10 @@ function RegistrationForm(props) {
   const[responseData,setResponseData]=useState([]);
   const { state } = useLocation()
     const { connectedTo,guardianEmail } = state?state:""
-  useEffect(() => {
-    if (sessionStorage.getItem("userEmail") == null)
-         navigate("/login")
-  },[])
+  // useEffect(() => {
+  //   if (sessionStorage.getItem("userEmail") == null)
+  //        navigate("/login")
+  // },[])
 
   const onCloseModal=()=>{
     setIsShowModal(false);
