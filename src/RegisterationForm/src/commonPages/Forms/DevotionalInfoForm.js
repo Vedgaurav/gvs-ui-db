@@ -81,7 +81,7 @@ const DevotionalInfoForm = () => {
           </div>
          <div className={`form-col col-md-3`}>
             <input type="month" id='yearChantingSince' value={yearChantingSince} className="form-control" onChange={inputHandler}/>
-          </div></>:""}
+          </div><p/></>:""}
          {chantingRounds>=16 ? <><div className="form-col col-md-3">
             <label>Chanting 16 & above Rounds Since<a style={{color:'red'}}>*</a></label>
           </div>

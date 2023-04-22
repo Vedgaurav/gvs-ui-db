@@ -43,8 +43,24 @@ const ContactInfoForm = (props) => {
 
   useEffect(() => {
     enableSaveAndProceed();
-  }, [validations.isValidCurrentAddress, validations.isValidPrimaryNo]);
-
+  }, [validations.isValidCurrentAddress, validations.isValidPrimaryNo,validations.isValidPermanentAddress]);
+  useEffect(() => {
+    if(currentAddress.line1.length!==0&&currentAddress.state.length!==0&&currentAddress.state!=="State"&&
+    currentAddress.city.length!==0&&currentAddress.city!=="City"&&
+      currentAddress.district.length!==0&&currentAddress.district!=="District"&&currentAddress.pinCode.length!==0){
+        dispatch({ type: "isValidCurrentAddress", data: "", valid: true });
+      }
+      else{
+        dispatch({ type: "isValidCurrentAddress", data: "", valid: false });
+      }
+      if(permanentAddress.line1.length!==0&&permanentAddress.state.length!==0&&permanentAddress.state!=="State"&&permanentAddress.city.length!==0&&permanentAddress.city!=="City"&&
+        permanentAddress.district.length!==0&&permanentAddress.district!=="District"&&permanentAddress.pinCode.length!==0){
+          dispatch({ type: "isValidPermanentAddress", data: "", valid: true });
+        }
+        else{
+          dispatch({ type: "isValidPermanentAddress", data: "", valid: false });
+        }
+  }, [currentAddress,permanentAddress]);
   const inputHandler = (e) => {
     const { value, id, name } = e.target;
     //console.log(name,id,value)
@@ -62,7 +78,7 @@ const ContactInfoForm = (props) => {
   };
   const [sameAsCurrent, setSameAsCurrent] = useState(false);
   const enableSaveAndProceed = () => {
-    if (validations.isValidPrimaryNo && validations.isValidCurrentAddress) {
+    if (validations.isValidPrimaryNo && validations.isValidCurrentAddress && validations.isValidPermanentAddress) {
       dispatch({ type: "submitDisable", data: "", valid: false });
     } else dispatch({ type: "submitDisable", data: "", valid: true });
   };
@@ -77,7 +93,7 @@ const ContactInfoForm = (props) => {
         );
        }
        else {
-        setCurrAddCity(
+        setCurrAddDistrict(
           addressData
             .filter((e) => e.statename == value)
             .map((e) => e.Districtname)
@@ -85,8 +101,8 @@ const ContactInfoForm = (props) => {
         );
        }
         break;
-      case "currentAddressCity": {
-        setCurrAddDistrict(
+      case "currentAddressDistrict": {
+        setCurrAddCity(
           addressData
             .filter((e) => e.Districtname == value)
             .map((e) => e.Taluk)
@@ -106,7 +122,7 @@ const ContactInfoForm = (props) => {
             .map((e) => e.statename)
             .filter((value, index, self) => self.indexOf(value) === index)
         );}
-        else{setPerAddCity(
+        else{setPerAddDistrict(
           addressData
             .filter((e) => e.statename == value)
             .map((e) => e.Districtname)
@@ -114,8 +130,8 @@ const ContactInfoForm = (props) => {
         );}
         
         break;
-      case "permanentAddressCity": 
-        setPerAddDistrict(
+      case "permanentAddressDistrict": 
+        setPerAddCity(
           addressData
             .filter((e) => e.Districtname == value)
             .map((e) => e.Taluk)
@@ -302,35 +318,8 @@ const ContactInfoForm = (props) => {
             <div className="form-col col-md-3">
               <select
                 className="form-select col-md-3"
-                ref={curraddCity}
-                id="currentAddressCity"
-                onChange={(e) => {
-                  inputHandler(e), addressSelectionHandler(e);
-                }}
-                onClick={(e) => {
-                  inputHandler(e), addressSelectionHandler(e);
-                }}
-              >
-                {currAddCity.length !== 0 ? (
-                  <>
-                    {currAddCity.map((e) => (
-                      <option key={e} value={e} label={e} />
-                    ))}
-                  </>
-                ) : (
-                  <option
-                    value={currentAddress.city}
-                    label={currentAddress.city}
-                  />
-                )}
-              </select>
-              <p style={{ color: "green", fontSize: "10px" }}>District</p>
-            </div>
-            <div className="form-col col-md-3">
-              <select
-                className="form-select col-md-3"
-                id="currentAddressDistrict"
                 ref={curraddDistrict}
+                id="currentAddressDistrict"
                 onChange={(e) => {
                   inputHandler(e), addressSelectionHandler(e);
                 }}
@@ -339,13 +328,40 @@ const ContactInfoForm = (props) => {
                 }}
               >
                 {currAddDistrict.length !== 0 ? (
-                  currAddDistrict.map((e) => (
-                    <option key={e} value={e} label={e} />
-                  ))
+                  <>
+                    {currAddDistrict.map((e) => (
+                      <option key={e} value={e} label={e} />
+                    ))}
+                  </>
                 ) : (
                   <option
                     value={currentAddress.district}
                     label={currentAddress.district}
+                  />
+                )}
+              </select>
+              <p style={{ color: "green", fontSize: "10px" }}>District</p>
+            </div>
+            <div className="form-col col-md-3">
+              <select
+                className="form-select col-md-3"
+                id="currentAddressCity"
+                ref={curraddCity}
+                onChange={(e) => {
+                  inputHandler(e), addressSelectionHandler(e);
+                }}
+                onClick={(e) => {
+                  inputHandler(e), addressSelectionHandler(e);
+                }}
+              >
+                {currAddCity.length !== 0 ? (
+                  currAddCity.map((e) => (
+                    <option key={e} value={e} label={e} />
+                  ))
+                ) : (
+                  <option
+                    value={currentAddress.city}
+                    label={currentAddress.city}
                   />
                 )}
               </select>
@@ -474,30 +490,6 @@ const ContactInfoForm = (props) => {
                 <div className="form-col col-md-3">
                   <select
                     className="form-select col-md-3"
-                    id="permanentAddressCity"
-                    onChange={(e) => {
-                      inputHandler(e), addressSelectionHandler(e);
-                    }}
-                    onClick={(e) => {
-                      inputHandler(e), addressSelectionHandler(e);
-                    }}
-                  >
-                    {perAddCity.length !== 0 ? (
-                      perAddCity?.map((e) => (
-                        <option key={e} value={e} label={e} />
-                      ))
-                    ) : (
-                      <option
-                        value={permanentAddress.city}
-                        label={permanentAddress.city}
-                      />
-                    )}
-                  </select>
-                  <p style={{ color: "green", fontSize: "10px" }}>District</p>
-                </div>
-                <div className="form-col col-md-3">
-                  <select
-                    className="form-select col-md-3"
                     id="permanentAddressDistrict"
                     onChange={(e) => {
                       inputHandler(e), addressSelectionHandler(e);
@@ -507,13 +499,37 @@ const ContactInfoForm = (props) => {
                     }}
                   >
                     {perAddDistrict.length !== 0 ? (
-                      perAddDistrict.map((e) => (
+                      perAddDistrict?.map((e) => (
                         <option key={e} value={e} label={e} />
                       ))
                     ) : (
                       <option
                         value={permanentAddress.district}
                         label={permanentAddress.district}
+                      />
+                    )}
+                  </select>
+                  <p style={{ color: "green", fontSize: "10px" }}>District</p>
+                </div>
+                <div className="form-col col-md-3">
+                  <select
+                    className="form-select col-md-3"
+                    id="permanentAddressCity"
+                    onChange={(e) => {
+                      inputHandler(e), addressSelectionHandler(e);
+                    }}
+                    onClick={(e) => {
+                      inputHandler(e), addressSelectionHandler(e);
+                    }}
+                  >
+                    {perAddCity.length !== 0 ? (
+                      perAddCity.map((e) => (
+                        <option key={e} value={e} label={e} />
+                      ))
+                    ) : (
+                      <option
+                        value={permanentAddress.city}
+                        label={permanentAddress.city}
                       />
                     )}
                   </select>

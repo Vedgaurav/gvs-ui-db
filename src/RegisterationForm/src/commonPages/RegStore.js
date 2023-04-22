@@ -135,15 +135,19 @@ const form1Reducer = (state = requiredDataAllFields, action) => {
               currentAddress:{...state.currentAddress,
                 pinCode:action.data}
             }
+      case "isValidCurrentAddress":
+              return {
+                ...state,
+                validations:{
+                  ...state.validations,
+                  isValidCurrentAddress:action.valid,
+                }
+              };
       case "permanentAddressLine1":
           return {
             ...state,
             permanentAddress:{ ...state.permanentAddress,
              line1:action.data,},
-             validations:{
-          ...state.validations,
-          isValidPermanentAddress:action.valid,
-        }
               };
       case "permanentAddressLine2":
               return {
@@ -181,12 +185,21 @@ const form1Reducer = (state = requiredDataAllFields, action) => {
             permanentAddress:{...state.permanentAddress,
             pinCode:action.data}
                 }
+      case "isValidPermanentAddress":
+          return {
+                ...state,
+                validations:{
+                  ...state.validations,
+                  isValidPermanentAddress:action.valid,
+                }
+              };
       case "isSameAddress":
       return {
         ...state,
         validations:{
           ...state.validations,
-          isSameAddress:action.valid,}
+          isSameAddress:action.valid,
+          }
       };
     case "facilitator":
       return {
