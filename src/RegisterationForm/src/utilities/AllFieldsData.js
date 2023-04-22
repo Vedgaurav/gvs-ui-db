@@ -39,7 +39,7 @@ export const requiredDataAllFields={
     presentDesignation: "",
     skills: "",
     currentCompany: "",
-    officeLocation: "",
+    occupationLocation: "",
     birthCity: "",
     birthState: "",
     motherTongue: "Hindi",
@@ -74,7 +74,11 @@ export const requiredDataAllFields={
     isValidDateOfMarriage:false,
     isValidMothersTongue:true,
     isValidEducation:true,
+    isValidEducationSpecification:false,
     isValidOccupation:true,
+    isValidOccupationLocation:false,
+    isValidDesignation:false,
+    isValidCurrentCompany:false,
     isSameAddress:false,
   }
   }

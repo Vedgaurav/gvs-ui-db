@@ -273,7 +273,7 @@ const form1Reducer = (state = requiredDataAllFields, action) => {
         degreeSpecification: action.data,
         validations:{
           ...state.validations,
-          isValidEducation:action.valid,}
+          isValidEducationSpecification:action.valid,}
       };
     case "occupation":
       return {
@@ -297,11 +297,17 @@ const form1Reducer = (state = requiredDataAllFields, action) => {
       return {
         ...state,
         currentCompany: action.data,
+        validations:{
+          ...state.validations,
+          isValidCurrentCompany:action.valid,}
       };
-    case "officeLocation":
+    case "occupationLocation":
       return {
         ...state,
-        officeLocation: action.data,
+        occupationLocation: action.data,
+        validations:{
+          ...state.validations,
+          isValidOccupationLocation:action.valid,}
       };
     case "birthCity":
       return {

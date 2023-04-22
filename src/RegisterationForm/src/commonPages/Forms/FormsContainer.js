@@ -68,6 +68,7 @@ const FormsContainer = (props) => {
 
     console.log(error);
     console.log(submitResponse);
+    setIsLoadingSpinnerActive(false);
     props.onShowModal(true);
   };
   let forms = {};

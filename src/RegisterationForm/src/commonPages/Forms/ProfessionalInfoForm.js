@@ -4,7 +4,7 @@ import { occupations,educations } from "../../utilities/OptionalEntries";
 import { validateName } from "../../RegexExpsValidation/RegexExps";
 
 const ProfessionalInfoForm = () => {
-  const { officeLocation, education ,occupation,presentDesignation,degreeSpecification, currentCompany,skills,validations} = useSelector(
+  const { occupationLocation, education ,occupation,presentDesignation,degreeSpecification, currentCompany,skills,validations} = useSelector(
     (state) => state
   );
   const dispatch=useDispatch();
@@ -13,7 +13,8 @@ const ProfessionalInfoForm = () => {
   },[])
   useEffect(()=>{
     enableSaveAndProceed();
-  },[validations.isValidEducation,validations.isValidOccupation])
+  },[validations.isValidEducation,validations.isValidOccupation,validations.isValidEducationSpecification,validations.isValidCurrentCompany
+  ,validations.isValidOccupationLocation])
   function inputHandler(e) {   
     const { value, id,name } = e.target;
     //console.log(id,name,value)
@@ -34,10 +35,40 @@ const ProfessionalInfoForm = () => {
     }}
  
   const enableSaveAndProceed=()=>{
-    if(validations.isValidEducation&&validations.isValidOccupation){
+    if((education!=="NO_EDUCATION"&&education!=="UPTO 5th STD"&&education!=="UPTO 10th STD"&&education!=="11-12th STD")
+    &&(occupation!=="UNEMPLOYED"&&occupation!=="HOMEMAKER")){
+      if(validations.isValidEducation&&validations.isValidOccupation&&validations.isValidEducationSpecification
+        &&degreeSpecification.length>0&&validations.isValidOccupationLocation&&validations.isValidCurrentCompany&&occupationLocation.length>0
+        &&presentDesignation.length>0&&currentCompany.length>0){
+        dispatch({ type: 'submitDisable', data: "",valid:false });
+      }
+      else dispatch({ type: 'submitDisable', data: "",valid:true });
+    }
+    else if((education!=="NO_EDUCATION"&&education!=="UPTO 5th STD"&&education!=="UPTO 10th STD"&&education!=="11-12th STD")
+    &&(occupation=="UNEMPLOYED"||occupation=="HOMEMAKER")){
+      if(validations.isValidEducation&&validations.isValidOccupation&&validations.isValidEducationSpecification
+        &&degreeSpecification.length>0){
+        dispatch({ type: 'submitDisable', data: "",valid:false });
+      }
+      else dispatch({ type: 'submitDisable', data: "",valid:true });
+    }
+    else if((education=="NO_EDUCATION"||education=="UPTO 5th STD"||education=="UPTO 10th STD"||education=="11-12th STD")
+    &&(occupation!=="UNEMPLOYED"&&occupation!=="HOMEMAKER")){
+      if(validations.isValidEducation&&validations.isValidOccupation&&
+        validations.isValidOccupationLocation&&validations.isValidCurrentCompany&&occupationLocation.length>0
+        &&presentDesignation.length>0&&currentCompany.length>0){
+        dispatch({ type: 'submitDisable', data: "",valid:false });
+      }
+      else dispatch({ type: 'submitDisable', data: "",valid:true });
+    }
+    else {
+      if(validations.isValidEducation&&validations.isValidOccupation){
       dispatch({ type: 'submitDisable', data: "",valid:false });
     }
     else dispatch({ type: 'submitDisable', data: "",valid:true });
+
+    }
+    
   }
   
   return (
@@ -83,7 +114,7 @@ const ProfessionalInfoForm = () => {
             <label>{occupation === "STUDENT" ? "Course Duration":(occupation === "RETIRED") ?"Last held Designation":"Designation"}<a style={{color:'red'}}>*</a></label>
           </div>
           <div className="form-col col-md-3">
-           <input type="text" className="form-control"name={validateName} id="presentDesignation" placeholder="specify here"value={presentDesignation} onChange={inputHandler}/>
+           <input type="text" className="form-control"name={validateName} id="presentDesignation" placeholder="words only"value={presentDesignation} onChange={inputHandler}/>
            <p id="presentDesignationError" style={{color:'red',fontSize:"10px"}}></p>
           </div>
           </>}
@@ -97,12 +128,13 @@ const ProfessionalInfoForm = () => {
             <input
               type="text"
               className="form-control"
+              name={validateName}
               placeholder="Eg. XYZ Organization"
               id="currentCompany"
               value={currentCompany}
               onChange={inputHandler}
             />
-            <p/>
+            <p id="currentCompanyError" style={{color:"red" ,fontSize:"10px"}}/>
           </div>
         </div>
         <div className={`form-group row `}>
@@ -116,9 +148,9 @@ const ProfessionalInfoForm = () => {
             <input
               type="text"
               className="form-control"
-              id="officeLocation"
+              id="occupationLocation"
               placeholder="Eg. Twin Tower, kalynai nagar, pune"
-              value={officeLocation}
+              value={occupationLocation}
               onChange={inputHandler}
             />
             <p/>

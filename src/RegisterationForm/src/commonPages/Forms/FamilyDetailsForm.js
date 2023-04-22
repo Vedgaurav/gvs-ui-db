@@ -11,7 +11,7 @@ enableSaveAndProceed();
 },[])
 useEffect(()=>{
   enableSaveAndProceed();
-  },[validations.isValidFathersName,validations.isValidMothersName,validations.isValidMaritalStatus,validations.isValidDateOfMarriage])
+  },[maritalStatus,validations.isValidFathersName,validations.isValidMothersName,validations.isValidMaritalStatus,validations.isValidDateOfMarriage])
 
   const inputHandler = (e) => {
     const { value, id,name } = e.target;
