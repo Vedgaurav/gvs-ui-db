@@ -10,7 +10,7 @@ export const languages = [
     "NEPALI",
     "PUNJABI"
 ]
-  export const bloodGroup = ["A +ve","A -ve","B +ve","B -ve","AB +ve","AB -ve","O +ve","O -ve",];
+  export const bloodGroups = ["A +ve","A -ve","B +ve","B -ve","AB +ve","AB -ve","O +ve","O -ve","No Idea"];
 
  export const occupations=[ 'EMPLOYEED_FULL_TIME',
       'EMPLOYEED_PART_TIME',

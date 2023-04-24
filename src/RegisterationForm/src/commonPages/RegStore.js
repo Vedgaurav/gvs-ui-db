@@ -35,6 +35,9 @@ const form1Reducer = (state = requiredDataAllFields, action) => {
       return {
         ...state,
         initiatedName: action.data,
+        validations:{
+          ...state.validations,
+          isValidInitiatedName:action.valid,}
       };
     case "gender":
    //   console.log(action.type,action.data,action.valid)
@@ -210,6 +213,10 @@ const form1Reducer = (state = requiredDataAllFields, action) => {
       return {
         ...state,
         spiritualMaster: action.data,
+        validations:{
+          ...state.validations,
+          isValidSpiritualMaster:action.valid,}
+      
       };
     case "chantingRounds":
       return {
@@ -287,6 +294,9 @@ const form1Reducer = (state = requiredDataAllFields, action) => {
       return {
         ...state,
         presentDesignation: action.data,
+        validations:{
+          ...state.validations,
+          isValidDesignation:action.valid,}
       };
     case "skills":
       return {
@@ -357,6 +367,11 @@ const form1Reducer = (state = requiredDataAllFields, action) => {
           ...state.validations,
           isValidSpouseName:action.valid,}
       };
+      case "children":
+      return {
+        ...state,
+        children: action.data,
+      };
       case "dateOfMarriage":
       return {
         ...state,
@@ -392,9 +407,92 @@ const form1Reducer = (state = requiredDataAllFields, action) => {
           ...state.validations,
           isSubmitDisabled:action.valid,}
       }
-      // case "submitted":
-      //   return form1Reducer(undefined,action);
-     // console.log("submitDisable",action.valid)
+       case "submitted":
+         return {
+          fname: "",
+          mname: "",
+          lname: "",
+          initiatedName: "",
+          gender: "",
+          dateOfBirth: "",
+          maritalStatus: "",
+          bloodGroup: "No Idea",
+          language: "HINDI",
+          profileImgUrl: "",
+          primaryPhone: '',
+          whatsAppPhone: '',
+          email: '',
+          currentAddress: {line1:'',line2:'',
+          country:'India',
+          state:'State',
+          city:'City',
+          district:"District",
+          pinCode:'100001'},
+          permanentAddress: {line1:'',line2:'',
+          country:'India',
+          state:'State',
+          city:'City',
+          district:"District",
+          pinCode:'100001'},
+          facilitator: "",
+          spiritualMaster: "",
+          chantingRounds: "",
+          yearChantingSince: "",
+          yearChanting16Rounds: "",
+          introducedBy: "",
+          preferredServices: "",
+          servicesRendered: "",
+          education: "NO_EDUCATION",
+          degreeSpecification:"",
+          occupation: "STUDENT",
+          presentDesignation: "",
+          skills: "",
+          currentCompany: "",
+          occupationLocation: "",
+          birthCity: "",
+          birthState: "",
+          motherTongue: "Hindi",
+          fathersName: "",
+          mothersName: "",
+          dateOfMarriage:"",
+          spouseName:"",
+          children:"",
+          connectedTo:"",
+          modified: false,
+          priviledge:"",
+          validations:{
+          isValidFname: false,
+          isValidGender:false,
+          isValidDateOfBirth:false,
+          isValidSpiritualMaster:false,
+          isValidInitiatedName:false,
+          isValidMaritalStatus:false,
+          isValidImageURL:false,
+          isSubmitDisabled:true,
+          isValidPrimaryNo :false,
+          isValidEmail:false,
+          isValidCurrentAddress:false,
+          isValidPermanentAddress:false,
+          isValidCenterConnectedTo:false,
+          isValidYearChantingSince:false,
+          isValidYearChanting16Rounds:false,
+          isValidChantingRounds:false,
+          isValidCounselor:false,
+          isValidIntroducedBy:false,
+          isValidFathersName:false,
+          isValidMothersName:false,
+          isValidSpouseName:false,
+          isValidDateOfMarriage:false,
+          isValidMothersTongue:true,
+          isValidEducation:true,
+          isValidEducationSpecification:false,
+          isValidOccupation:true,
+          isValidOccupationLocation:false,
+          isValidDesignation:false,
+          isValidCurrentCompany:false,
+          isSameAddress:false,
+        }
+        }
     default:
       return state;
   }

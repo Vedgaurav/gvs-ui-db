@@ -1,7 +1,7 @@
 import { useState,useEffect } from "react";
 import { useDispatch,useSelector } from "react-redux";
 import { occupations,educations } from "../../utilities/OptionalEntries";
-import { validateName } from "../../RegexExpsValidation/RegexExps";
+import { validateName,validateAddress } from "../../RegexExpsValidation/RegexExps";
 
 const ProfessionalInfoForm = () => {
   const { occupationLocation, education ,occupation,presentDesignation,degreeSpecification, currentCompany,skills,validations} = useSelector(
@@ -14,7 +14,7 @@ const ProfessionalInfoForm = () => {
   useEffect(()=>{
     enableSaveAndProceed();
   },[validations.isValidEducation,validations.isValidOccupation,validations.isValidEducationSpecification,validations.isValidCurrentCompany
-  ,validations.isValidOccupationLocation])
+  ,validations.isValidOccupationLocation,validations.isValidDesignation,education])
   function inputHandler(e) {   
     const { value, id,name } = e.target;
     //console.log(id,name,value)
@@ -39,7 +39,7 @@ const ProfessionalInfoForm = () => {
     &&(occupation!=="UNEMPLOYED"&&occupation!=="HOMEMAKER")){
       if(validations.isValidEducation&&validations.isValidOccupation&&validations.isValidEducationSpecification
         &&degreeSpecification.length>0&&validations.isValidOccupationLocation&&validations.isValidCurrentCompany&&occupationLocation.length>0
-        &&presentDesignation.length>0&&currentCompany.length>0){
+        &&presentDesignation.length>0&&currentCompany.length>0&&validations.isValidDesignation){
         dispatch({ type: 'submitDisable', data: "",valid:false });
       }
       else dispatch({ type: 'submitDisable', data: "",valid:true });
@@ -56,7 +56,7 @@ const ProfessionalInfoForm = () => {
     &&(occupation!=="UNEMPLOYED"&&occupation!=="HOMEMAKER")){
       if(validations.isValidEducation&&validations.isValidOccupation&&
         validations.isValidOccupationLocation&&validations.isValidCurrentCompany&&occupationLocation.length>0
-        &&presentDesignation.length>0&&currentCompany.length>0){
+        &&presentDesignation.length>0&&currentCompany.length>0&&validations.isValidDesignation){
         dispatch({ type: 'submitDisable', data: "",valid:false });
       }
       else dispatch({ type: 'submitDisable', data: "",valid:true });
@@ -149,11 +149,12 @@ const ProfessionalInfoForm = () => {
               type="text"
               className="form-control"
               id="occupationLocation"
+              name={validateAddress}
               placeholder="Eg. Twin Tower, kalynai nagar, pune"
               value={occupationLocation}
               onChange={inputHandler}
             />
-            <p/>
+            <p id="occupationLocationError" style={{color:"red" ,fontSize:"10px"}}/>
           </div>
         </div></>}
         <div className="form-group row">

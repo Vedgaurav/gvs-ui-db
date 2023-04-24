@@ -6,7 +6,7 @@ import { useEffect } from "react";
 import { addressData } from "../../utilities/statesAndPincodes/GovtAuthorisedStatesandPincodes";
 import {
   validatePhoneNo,
-  validateEmail,
+  validateEmail,validateAddress
 } from "../../RegexExpsValidation/RegexExps";
 import { PleaseWaitContext } from "../../../../context/PleaseWaitContextProvider.js";
 const ContactInfoForm = (props) => {
@@ -260,7 +260,7 @@ const ContactInfoForm = (props) => {
                 id="currentAddressLine1"
                 type="text"
                 ref={curraddLine1}
-                name="^[#.0-9a-zA-Z\s,-]+$"
+                name={validateAddress}
                 className="form-control"
                 value={currentAddress.line1}
                 placeholder="House No./Care of"
@@ -280,7 +280,7 @@ const ContactInfoForm = (props) => {
                 ref={curraddLine2}
                 className="form-control"
                 id="currentAddressLine2"
-                name="^[#.0-9a-zA-Z\s,-]+$"
+                name={validateAddress}
                 placeholder="street/village"
                 value={currentAddress.line2}
                 onChange={inputHandler}
@@ -436,7 +436,7 @@ const ContactInfoForm = (props) => {
                 <div className="form-col col-md-5">
                   <input
                     id="permanentAddressLine1"
-                    name="^[#.0-9a-zA-Z\s,-]+$"
+                    name={validateAddress}
                     type="text"
                     className="form-control"
                     value={permanentAddress.line1}
@@ -455,7 +455,7 @@ const ContactInfoForm = (props) => {
                   <input
                     id="permanentAddressLine2"
                     type="text"
-                    name="^[#.0-9a-zA-Z\s,-]+$"
+                    name={validateAddress}
                     className="form-control"
                     value={permanentAddress.line2}
                     placeholder="street/village"

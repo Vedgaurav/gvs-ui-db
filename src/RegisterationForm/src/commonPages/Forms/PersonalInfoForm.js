@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 import "./FormInput.css"; 
 import WebcamCapture from "../../utilities/webCamCapture/WebCamComponent";
-import {bloodGroup,Gender } from "../../utilities/OptionalEntries";
+import {bloodGroups,Gender } from "../../utilities/OptionalEntries";
 import { validateName } from "../../RegexExpsValidation/RegexExps";
 import {FcCamera} from "react-icons/fc";
 import CameraAltIcon from '@mui/material';
@@ -11,7 +11,7 @@ import CameraAltIcon from '@mui/material';
 
 const PersonalInfoForm = (props) => {
   const dispatch = useDispatch();
-  const { fname, mname, lname, initiatedName, gender, spiritualMaster,dateOfBirth ,validations} = useSelector(
+  const { fname, mname, lname, initiatedName, gender,bloodGroup, spiritualMaster,dateOfBirth ,validations} = useSelector(
     (state) => state
   );
 const [takePic,setTakePic]=useState(false);
@@ -34,8 +34,13 @@ const [takePic,setTakePic]=useState(false);
     enableSaveAndProceed();
   };
   const enableSaveAndProceed=()=>{
-    if(validations.isValidFname && validations.isValidDateOfBirth && validations.isValidGender){
+    if(initiatedName.length>0&&spiritualMaster.length>0&&validations.isValidFname && validations.isValidDateOfBirth &&
+       validations.isValidGender&&validations.isValidSpiritualMaster&& validations.isValidInitiatedName){
       dispatch({ type: 'submitDisable', data: "",valid:false });
+    }
+   else if(initiatedName.length==0&&validations.isValidFname && validations.isValidDateOfBirth && validations.isValidGender){
+      dispatch({ type: 'submitDisable', data: "",valid:false });
+      dispatch({type: 'spiritualMaster', data: "",valid:false });
     }
     else dispatch({ type: 'submitDisable', data: "",valid:true });
   }
@@ -77,7 +82,7 @@ const [takePic,setTakePic]=useState(false);
   },[])
   useEffect(()=>{
     enableSaveAndProceed();
-    },[validations.isValidFname,validations.isValidDateOfBirth,validations.isValidGender])
+    },[validations.isValidFname,validations.isValidDateOfBirth,validations.isValidGender,validations.isValidSpiritualMaster,validations.isValidInitiatedName])
   return (
     <>
       <h3>Personal Information</h3>
@@ -203,8 +208,8 @@ const [takePic,setTakePic]=useState(false);
               <label>Blood Group</label>
             </div>
             <div className="form-col col-md-3">
-              <select className="form-select" id='bloodGroup'onChange={inputHandler}>
-                {bloodGroup.map((e) => (
+              <select className="form-select" value={bloodGroup}id='bloodGroup'onChange={inputHandler}>
+                {bloodGroups.map((e) => (
                   <option value={e} label={e} key={e} />
                 ))}
               </select>

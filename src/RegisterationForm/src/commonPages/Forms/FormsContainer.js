@@ -5,7 +5,6 @@ import { useSelector, useDispatch } from "react-redux";
 import RegistrationProgressBar from "../RegProgBar/RegistrationProgressBar";
 import "./FormInput.css";
 import { BsFillFastForwardBtnFill } from "react-icons/bs";
-import PleaseWait from "../../../../pleaseWait/PleaseWait";
 import DevotionalInfoForm from "./DevotionalInfoForm";
 import ProfessionalInfoForm from "./ProfessionalInfoForm";
 import FamilyDetails from "./FamilyDetailsForm";
@@ -17,7 +16,6 @@ import { PleaseWaitContext } from "../../../../context/PleaseWaitContextProvider
 const FormsContainer = (props) => {
   const dispatch = useDispatch();
   const { validations } = useSelector((state) => state);
-  const { gWaitOn, setGWaitOn } = useContext(PleaseWaitContext);
   useEffect(() => {
     dispatch({ type: "connectedTo", data: props.connectedTo, valid: true });
     dispatch({ type: "email", data: props.guardianEmail, valid: true });
@@ -55,6 +53,7 @@ const FormsContainer = (props) => {
       // console.log(response);
       props.onHeaderReceive("Success");
       props.onMessageReceive("Data Successfully Saved");
+      dispatch({type:"submitted"});
       setError(response.status);
     } else if (response.status === 408) {
       console.log("SOMETHING WENT WRONG");

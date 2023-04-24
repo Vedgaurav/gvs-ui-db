@@ -3,7 +3,7 @@ import { useSelector,useDispatch } from "react-redux";
 import { useEffect,useState } from "react";
 const FamilyDetails = () => {
   const dispatch = useDispatch();
-   const { fathersName,mothersName,motherTongue,language,spouseName,dateOfMarriage,maritalStatus,validations } = useSelector(
+   const { fathersName,mothersName,motherTongue,language,children,spouseName,dateOfMarriage,maritalStatus,validations } = useSelector(
      (state) => state
    );
 useEffect(()=>{
@@ -40,8 +40,11 @@ useEffect(()=>{
          dispatch({ type: 'submitDisable', data: "",valid:true });
         }
     }
-    else if(validations.isValidFathersName&&validations.isValidMothersName && validations.isValidMaritalStatus){
+    else if(validations.isValidFathersName&&validations.isValidMothersName && validations.isValidMaritalStatus&&maritalStatus!=="MARRIED"){
       dispatch({ type: 'submitDisable', data: "",valid:false });
+      dispatch({ type: 'spouseName', data: "",valid:false });
+      dispatch({ type: 'dateOfMarriage', data: "",valid:false });
+      dispatch({ type: 'children', data: "",valid:false });
     }
     else dispatch({ type: 'submitDisable', data: "",valid:true });
   }
@@ -183,8 +186,10 @@ useEffect(()=>{
           <div className={`form-col col-md-3`}>
               <textarea
                 className="form-control"
-                
+                id="children"
                 placeholder={"1.\n2.\n3.\n4."}
+                value={children}
+                onChange={inputHandler}
               />
               <p style={{ fontSize: "10px", color: "green" }}>* leave empty if not applicable</p>
           </div>

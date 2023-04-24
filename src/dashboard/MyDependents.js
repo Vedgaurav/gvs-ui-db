@@ -35,13 +35,13 @@ export default () => {
     }
 
     const template = <>
-        <h1 class="display-1">Manage Members</h1>
+        <h1 className="display-1">Manage Members</h1>
 
-        <div class="container-md">
-            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                <button onClick={addDep} class="btn btn-success me-md-2" type="button">Add Dependents</button>
+        <div className="container-md">
+            <div className="d-grid gap-2 d-md-flex justify-content-md-end">
+                <button onClick={addDep} className="btn btn-success me-md-2" type="button">Add Dependents</button>
             </div><br />
-            <table class="table table-striped">
+            <table className="table table-striped">
                 <thead>
                     <tr>
                         <th scope="col">#</th>
