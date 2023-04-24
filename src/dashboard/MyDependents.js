@@ -25,7 +25,7 @@ export default () => {
     }, [])
 
     useEffect(() => {
-        if (sessionStorage.getItem("userId") == null)
+        if (sessionStorage.getItem("userEmail") == null)
             navigate("/login")
     }, [])
 

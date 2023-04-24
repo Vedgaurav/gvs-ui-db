@@ -10,7 +10,7 @@ export default function Dashboard() {
     const userId = id
 
     useEffect(()=>{
-        if(sessionStorage.getItem("userId")==null)
+        if(sessionStorage.getItem("userEmail")==null)
             navigate("/login")
     },[])
 
