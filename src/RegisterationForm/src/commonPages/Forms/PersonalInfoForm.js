@@ -6,6 +6,8 @@ import WebcamCapture from "../../utilities/webCamCapture/WebCamComponent";
 import {bloodGroups,Gender } from "../../utilities/OptionalEntries";
 import { validateName } from "../../RegexExpsValidation/RegexExps";
 import {FcCamera} from "react-icons/fc";
+import { BsFillCheckCircleFill } from "react-icons/bs";
+
 
 
 
@@ -232,12 +234,16 @@ const[fileImage,setFileImage]=useState("");
             {/* <div className="form-col col-md-1">
             <FcCamera className="form-icon" style={{marginRight:'10px'}} size={30} onClick={(e)=>{setTakePic(true),setImageSource(""),setFileImage(""),previewImage(e)}}/>
             </div> */}
-            <div className="form-col col-md-4">
-              <input type="file" className="form-file" id="profileImageUrl" accept="image/*" capture
+            <div className="form-col col-md-3">
+              <input type="file" className="form-control" id="profileImageUrl" defaultValue={profileImgUrl} accept="image/*" 
                onChange={(e)=>{previewImage(e)}}/>
               
             </div>
+            <div className="form-col col-md-1">
+            {profileImgUrl.length>0 ?<BsFillCheckCircleFill size={30} color="green"/>:""}
             
+            </div>
+            <p/>
            {validations.isShowPreviewOn ? <WebcamCapture onOpen={validations.isShowPreviewOn} onClose={(e)=>setTakePic(false)} imageSrc={imageSource} fileImageSrc={fileImage}/>:""}
           </div>
           
