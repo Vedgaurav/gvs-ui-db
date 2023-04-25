@@ -58,7 +58,7 @@ export const requiredDataAllFields={
     isValidSpiritualMaster:false,
     isValidInitiatedName:false,
     isValidMaritalStatus:false,
-    isValidImageURL:false,
+    isValidProfileImgUrl:false,
     isSubmitDisabled:true,
     isValidPrimaryNo :false,
     isValidEmail:false,
@@ -82,6 +82,7 @@ export const requiredDataAllFields={
     isValidDesignation:false,
     isValidCurrentCompany:false,
     isSameAddress:false,
+    isShowPreviewOn:false,
   }
   }
 

@@ -1,0 +1,7 @@
+.image-preview-container img {
+    width: 250px;
+    height: 250px;
+    image-rendering: pixelated;
+    margin-bottom: 0px;
+    margin-left: 0px;
+  }

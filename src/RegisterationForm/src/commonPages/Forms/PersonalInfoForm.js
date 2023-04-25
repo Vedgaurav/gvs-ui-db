@@ -6,12 +6,12 @@ import WebcamCapture from "../../utilities/webCamCapture/WebCamComponent";
 import {bloodGroups,Gender } from "../../utilities/OptionalEntries";
 import { validateName } from "../../RegexExpsValidation/RegexExps";
 import {FcCamera} from "react-icons/fc";
-import CameraAltIcon from '@mui/material';
+
 
 
 const PersonalInfoForm = (props) => {
   const dispatch = useDispatch();
-  const { fname, mname, lname, initiatedName, gender,bloodGroup, spiritualMaster,dateOfBirth ,validations} = useSelector(
+  const { fname, mname, lname, initiatedName, gender,bloodGroup,profileImgUrl, spiritualMaster,dateOfBirth ,validations} = useSelector(
     (state) => state
   );
 const [takePic,setTakePic]=useState(false);
@@ -54,7 +54,8 @@ const [takePic,setTakePic]=useState(false);
       }
     }
   }
-
+const [imageSource,setImageSource]=useState("");
+const[fileImage,setFileImage]=useState("");
   const previewImage = (event) => {
    {
     const{files}=event.target;
@@ -64,17 +65,25 @@ const [takePic,setTakePic]=useState(false);
     // const imageFilesLength = imageFiles.length;
     if (files!==undefined && files!==null && files.length > 0  ) {
 
+      if(files[0].size>505000){
+        alert("please select file less than 500kb");
+        setTakePic(false);
+        setImageSource("");
+        return 0;
+      }
+      else{
         const imageSrc = URL.createObjectURL(files[0]);
-        const imagePreviewElement = document.querySelector("#preview-selected-image");
-        imagePreviewElement.src = imageSrc;
-        imagePreviewElement.style.display = "block";
+        
+        setFileImage(files[0]);
+        setImageSource(imageSrc);
+        setTakePic(true);
+        // console.log("hi");
+        dispatch({ type: "isShowPreviewOn", data: "",valid:true });
+      }
     }
     else {
-      const imageUploadElement = document.querySelector("#profileImageUrl")
-        const imagePreviewElement = document.querySelector("#preview-selected-image");
-        imageUploadElement.value="";
-      imagePreviewElement.src = "";
-        imagePreviewElement.style.display = "none"
+        setTakePic(false);
+        setImageSource("");
     }}
 };
   useEffect(()=>{
@@ -82,7 +91,7 @@ const [takePic,setTakePic]=useState(false);
   },[])
   useEffect(()=>{
     enableSaveAndProceed();
-    },[validations.isValidFname,validations.isValidDateOfBirth,validations.isValidGender,validations.isValidSpiritualMaster,validations.isValidInitiatedName])
+    },[profileImgUrl,validations.isValidFname,validations.isValidProfileImgUrl,validations.isValidDateOfBirth,validations.isValidGender,validations.isValidSpiritualMaster,validations.isValidInitiatedName])
   return (
     <>
       <h3>Personal Information</h3>
@@ -216,23 +225,21 @@ const [takePic,setTakePic]=useState(false);
               <p/>
             </div>
           </div>
-          {/* <div className="form-group row">
+          <div className="form-group row">
             <div className="form-col col-md-3">
               <label className="form-label">Upload Self Photo<a style={{color:'red'}}>*</a></label>
             </div>
+            {/* <div className="form-col col-md-1">
+            <FcCamera className="form-icon" style={{marginRight:'10px'}} size={30} onClick={(e)=>{setTakePic(true),setImageSource(""),setFileImage(""),previewImage(e)}}/>
+            </div> */}
             <div className="form-col col-md-4">
               <input type="file" className="form-file" id="profileImageUrl" accept="image/*" capture
-               onClick={()=>setTakePic(false)}onChange={(e)=>{inputHandler(e),previewImage(e)}}/>
+               onChange={(e)=>{previewImage(e)}}/>
               
             </div>
-            <div className="form-col col-md-2">
-            <FcCamera className="form-icon" style={{marginRight:'10px'}} size={30} onClick={(e)=>{setTakePic(true),previewImage(e)}}/>
-            </div>
-           {takePic ? <WebcamCapture/>:
-            <div className="form-col image-preview-container" >
-              <img className="form-control img-thumbnail" id="preview-selected-image" />
-              </div>}
-          </div> */}
+            
+           {validations.isShowPreviewOn ? <WebcamCapture onOpen={validations.isShowPreviewOn} onClose={(e)=>setTakePic(false)} imageSrc={imageSource} fileImageSrc={fileImage}/>:""}
+          </div>
           
           
         </div>

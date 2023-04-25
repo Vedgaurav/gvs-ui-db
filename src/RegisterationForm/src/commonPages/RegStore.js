@@ -66,11 +66,15 @@ const form1Reducer = (state = requiredDataAllFields, action) => {
         ...state,
         language: action.data,
       };
-    case "profileImageUrl":
+    case "profileImgUrl":
       return {
         ...state,
         profileImgUrl: action.data,
+        validations:{
+          ...state.validations,
+          isValidProfileImgUrl:action.valid,}
       };
+      
     case "primaryPhone":
       return {
         ...state,
@@ -490,8 +494,17 @@ const form1Reducer = (state = requiredDataAllFields, action) => {
           isValidOccupationLocation:false,
           isValidDesignation:false,
           isValidCurrentCompany:false,
+          isShowPreviewOn:false,
           isSameAddress:false,
         }
+      }
+      case "isShowPreviewOn":
+        return {
+          ...state,
+          validations:{
+            ...state.validations,
+            isShowPreviewOn:action.valid,
+          }
         }
     default:
       return state;

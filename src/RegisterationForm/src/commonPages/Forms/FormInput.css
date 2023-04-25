@@ -121,13 +121,3 @@
   width:20px;
   height: 40px;
 }  
-
-
-.image-preview-container img {
-  width: 150px;
-  height: 150px;
-  image-rendering: pixelated;
-  display: none;
-  margin-left: 300px ;
-  margin-bottom: 0px;
-}
