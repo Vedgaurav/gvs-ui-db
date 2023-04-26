@@ -37,10 +37,11 @@ const [takePic,setTakePic]=useState(false);
   };
   const enableSaveAndProceed=()=>{
     if(initiatedName.length>0&&spiritualMaster.length>0&&validations.isValidFname && validations.isValidDateOfBirth &&
-       validations.isValidGender&&validations.isValidSpiritualMaster&& validations.isValidInitiatedName){
+       validations.isValidGender&&validations.isValidSpiritualMaster&& validations.isValidInitiatedName && profileImgUrl.length>0 && validations.isValidProfileImgUrl){
+        
       dispatch({ type: 'submitDisable', data: "",valid:false });
     }
-   else if(initiatedName.length==0&&validations.isValidFname && validations.isValidDateOfBirth && validations.isValidGender){
+   else if(initiatedName.length==0&&validations.isValidFname && validations.isValidDateOfBirth && validations.isValidGender && profileImgUrl.length>0 && validations.isValidProfileImgUrl){
       dispatch({ type: 'submitDisable', data: "",valid:false });
       dispatch({type: 'spiritualMaster', data: "",valid:false });
     }
@@ -235,18 +236,18 @@ const[fileImage,setFileImage]=useState("");
             <FcCamera className="form-icon" style={{marginRight:'10px'}} size={30} onClick={(e)=>{setTakePic(true),setImageSource(""),setFileImage(""),previewImage(e)}}/>
             </div> */}
             <div className="form-col col-md-3">
-              <input type="file" className="form-control" id="profileImageUrl" defaultValue={profileImgUrl} accept="image/*" 
+              <input type="file" className="form-control" id="profileImageUrl"  accept="image/*" 
                onChange={(e)=>{previewImage(e)}}/>
               
             </div>
             <div className="form-col col-md-1">
-            {profileImgUrl.length>0 ?<BsFillCheckCircleFill size={30} color="green"/>:""}
+            {profileImgUrl.length>0 ?<BsFillCheckCircleFill size={20} color="green"/>:""}
             
             </div>
             <p/>
-           {validations.isShowPreviewOn ? <WebcamCapture onOpen={validations.isShowPreviewOn} onClose={(e)=>setTakePic(false)} imageSrc={imageSource} fileImageSrc={fileImage}/>:""}
+           {validations.isShowPreviewOn ? <WebcamCapture onOpen={validations.isShowPreviewOn} onClose={enableSaveAndProceed} imageSrc={imageSource} fileImageSrc={fileImage}/>:""}
           </div>
-          
+         {validations.imageSource.length>0 ? <div className="form-col img-prev-cont"><img src={validations.imageSource}/><p/></div>:""}
           
         </div>
     </>

@@ -42,13 +42,14 @@ const DevotionalInfoForm = () => {
 
   const enableSaveAndProceed=()=>{
     if(chantingRounds>0&&chantingRounds<16){
-      if(validations.isValidChantingRounds&&validations.isValidIntroducedBy&&validations.isValidYearChantingSince){
+      if(validations.isValidChantingRounds&&validations.isValidIntroducedBy&&validations.isValidYearChantingSince&&yearChantingSince.length>0){
         dispatch({ type: 'submitDisable', data: "",valid:false });
       }
       else dispatch({ type: 'submitDisable', data: "",valid:true });
     }
    else if(chantingRounds>=16){
-      if(validations.isValidChantingRounds&&validations.isValidIntroducedBy&&validations.isValidYearChantingSince&&validations.isValidYearChanting16Rounds){
+      if(validations.isValidChantingRounds&&validations.isValidIntroducedBy&&validations.isValidYearChantingSince&&
+        validations.isValidYearChanting16Rounds&&yearChantingSince.length>0&&yearChanting16Rounds.length>0){
         dispatch({ type: 'submitDisable', data: "",valid:false });
       }
       else dispatch({ type: 'submitDisable', data: "",valid:true });

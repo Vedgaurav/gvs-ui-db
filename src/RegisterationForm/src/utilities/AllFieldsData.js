@@ -8,7 +8,7 @@ export const requiredDataAllFields={
     dateOfBirth: "",
     maritalStatus: "",
     bloodGroup: "--Select--",
-    language: "HINDI",
+    language: "Hindi",
     profileImgUrl: "",
     primaryPhone: '',
     whatsAppPhone: '',
@@ -83,6 +83,7 @@ export const requiredDataAllFields={
     isValidCurrentCompany:false,
     isSameAddress:false,
     isShowPreviewOn:false,
+    imageSource:"",
   }
   }
 

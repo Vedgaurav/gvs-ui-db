@@ -8,7 +8,6 @@ import {
   validatePhoneNo,
   validateEmail,validateAddress
 } from "../../RegexExpsValidation/RegexExps";
-import { PleaseWaitContext } from "../../../../context/PleaseWaitContextProvider.js";
 const ContactInfoForm = (props) => {
   const dispatch = useDispatch();
   const {
@@ -20,7 +19,6 @@ const ContactInfoForm = (props) => {
     permanentAddress,
     connectedTo,
   } = useSelector((state) => state);
-  const { gWaitOn, setGWaitOn } = useContext(PleaseWaitContext);
   const [currAddState, setCurrAddState] = useState([]);
   const [currAddCity, setCurrAddCity] = useState([]);
   const [currAddPincode, setCurrAddPincode] = useState([]);
@@ -76,7 +74,6 @@ const ContactInfoForm = (props) => {
     }
     enableSaveAndProceed();
   };
-  const [sameAsCurrent, setSameAsCurrent] = useState(false);
   const enableSaveAndProceed = () => {
     if (validations.isValidPrimaryNo && validations.isValidCurrentAddress && validations.isValidPermanentAddress) {
       dispatch({ type: "submitDisable", data: "", valid: false });
@@ -183,6 +180,36 @@ const ContactInfoForm = (props) => {
       });
     } else {
       dispatch({ type: "isSameAddress", data: "", valid: false });
+      dispatch({
+        type: "permanentAddressLine1",
+        data: "",
+        valid: false,
+      });
+      dispatch({
+        type: "permanentAddressLine2",
+        data: "",
+        valid: false,
+      });
+      dispatch({
+        type: "permanentAddressState",
+        data: "State",
+        valid: false,
+      });
+      dispatch({
+        type: "permanentAddressCity",
+        data: "City",
+        valid: false,
+      });
+      dispatch({
+        type: "permanentAddressDistrict",
+        data: "District",
+        valid: false,
+      });
+      dispatch({
+        type: "permanentAddressPincode",
+        data: "100001",
+        valid: false,
+      });
     }
   };
 
@@ -198,6 +225,7 @@ const ContactInfoForm = (props) => {
             </label>
           </div>
           <div className="form-col col-md-4">
+            
             <input
               type="number"
               id="primaryPhone"
@@ -212,7 +240,7 @@ const ContactInfoForm = (props) => {
             <p
               id="primaryPhoneError"
               style={{ color: "red", fontSize: "10px" }}
-            ></p>
+            >For all further communications</p>
           </div>
           <div className="form-col col-md-4">
             <input
@@ -431,7 +459,7 @@ const ContactInfoForm = (props) => {
             ""
           ) : (
             <>
-              <div className="form-group row" hidden={sameAsCurrent}>
+              <div className="form-group row" >
                 <div className="form-col col-md-3" />
                 <div className="form-col col-md-5">
                   <input
@@ -449,7 +477,7 @@ const ContactInfoForm = (props) => {
                   ></p>
                 </div>
               </div>
-              <div className="form-group row" hidden={sameAsCurrent}>
+              <div className="form-group row" >
                 <div className="form-col col-md-3"></div>
                 <div className="form-col col-md-5">
                   <input
@@ -467,7 +495,7 @@ const ContactInfoForm = (props) => {
                   ></p>
                 </div>
               </div>
-              <div className="form-group row" hidden={sameAsCurrent}>
+              <div className="form-group row" >
                 <div className="form-col col-md-3"></div>
                 <div className="form-col col-md-3">
                   <select
@@ -538,7 +566,7 @@ const ContactInfoForm = (props) => {
                   </p>
                 </div>
               </div>
-              <div className="form-group row" hidden={sameAsCurrent}>
+              <div className="form-group row" >
                 <div className="form-col col-md-3"></div>
                 <div className="form-col col-md-3">
                   <select
@@ -564,7 +592,7 @@ const ContactInfoForm = (props) => {
                   </select>
                   <p style={{ color: "green", fontSize: "10px" }}>Pincode</p>
                 </div>
-                <div className="form-col col-md-3" hidden={sameAsCurrent}>
+                <div className="form-col col-md-3" >
                   <select
                     className="form-select col-md-3"
                     id="permanentAddressCountry"

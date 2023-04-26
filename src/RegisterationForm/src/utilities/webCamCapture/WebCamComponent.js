@@ -51,11 +51,12 @@ const webcamRef = React.useRef(null);
      response.data? dispatch({type:"profileImgUrl",data:response.data,valid:true}):"";
     // console.log(profileImgUrl)
     if (response.status === 200) {
-       console.log("uploaded");
+      // console.log("uploaded");
       setModalHeader("Success");
       setModalMessage("Image Successfully Uploaded");
       setIsModalOpen(true);
-      dispatch({type:"profileImgUrl",data:response.data,valid:false})
+      dispatch({type:"profileImgUrl",data:response.data,valid:true})
+      dispatch({type:"imageSource",data:image})
       
     } else if (response.status === 408) {
     //  console.log("SOMETHING WENT WRONG");
@@ -119,17 +120,6 @@ const webcamRef = React.useRef(null);
       <div>
 {image!=''?
 <>
-{/* <TbReload color='red' size='30'onClick={(e)=>
-
-{
-
-e.preventDefault();
-
-setImage('')
-
-}}
-
-className="webcam-btn"/> */}
 <DialogActions>
 <Button style={{background:"lightBlue"}} onClick={uploadHandler} 
 color="success" >
@@ -140,23 +130,7 @@ UPLOAD
 color="success" >
 Close
 </Button>
-</DialogActions></>:<>
-{/* 
-<TbCapture style={{background:"lightBlue",marginRight:"119px"}} size="35"color='blue' onClick={(e)=>{
-
-e.preventDefault();
-
-capture();
-
-}}
-
-className="webcam-btn"/> */}
-{/* <Button style={{background:"lightBlue"}} onClick={()=>props.onClose} 
-                    color="success" >
-              Close
-            </Button></> */}
-
-</>
+</DialogActions></>:""
 }
 </div>
 

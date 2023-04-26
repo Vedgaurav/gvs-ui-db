@@ -1,6 +1,7 @@
 import { mothersTongue,marritalStatus } from "../../utilities/OptionalEntries";
 import { useSelector,useDispatch } from "react-redux";
 import { useEffect,useState } from "react";
+import { validateName } from "../../RegexExpsValidation/RegexExps";
 const FamilyDetails = () => {
   const dispatch = useDispatch();
    const { fathersName,mothersName,motherTongue,language,children,spouseName,dateOfMarriage,maritalStatus,validations } = useSelector(
@@ -11,7 +12,7 @@ enableSaveAndProceed();
 },[])
 useEffect(()=>{
   enableSaveAndProceed();
-  },[maritalStatus,validations.isValidFathersName,validations.isValidMothersName,validations.isValidMaritalStatus,validations.isValidDateOfMarriage])
+  },[maritalStatus,validations.isValidFathersName,validations.isValidMothersName,validations.isValidMaritalStatus,validations.isValidSpouseName])
 
   const inputHandler = (e) => {
     const { value, id,name } = e.target;
@@ -34,7 +35,7 @@ useEffect(()=>{
    
   const enableSaveAndProceed=()=>{
     if(maritalStatus==="MARRIED"){
-      if(validations.isValidFathersName&&validations.isValidMothersName && validations.isValidMaritalStatus && validations.isValidSpouseName&& validations.isValidDateOfMarriage){
+      if(validations.isValidFathersName&&validations.isValidMothersName && validations.isValidMaritalStatus && validations.isValidSpouseName){
         dispatch({ type: 'submitDisable', data: "",valid:false });}
         else {
          dispatch({ type: 'submitDisable', data: "",valid:true });
@@ -163,16 +164,18 @@ useEffect(()=>{
             <input
               id="spouseName"
               type="text"
+              name={validateName}
               className="form-control"
               placeholder="Enter full name"
               value={spouseName}
               onChange={inputHandler}
             />
+            <p id="spouseNameError" style={{color:'red',fontSize:'10px'}}></p>
           </div>
           <div className="form-col col-md-3 ">
             <label>
               {" "}
-              Date of Marriage<a style={{ color: "red" }}>*</a>
+              Date of Marriage
             </label>
           </div>
           <div className="form-col col-md-3 ">

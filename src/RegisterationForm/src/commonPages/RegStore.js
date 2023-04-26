@@ -323,22 +323,6 @@ const form1Reducer = (state = requiredDataAllFields, action) => {
           ...state.validations,
           isValidOccupationLocation:action.valid,}
       };
-    case "birthCity":
-      return {
-        ...state,
-        birthCity: action.data,
-        validations:{
-          ...state.validations,
-          isValidBirthCity:action.valid,}
-      };
-    case "birthState":
-      return {
-        ...state,
-        birthState: action.data,
-        validations:{
-          ...state.validations,
-          isValidBirthState:action.valid,}
-      };
     case "motherTongue":
       return {
         ...state,
@@ -421,7 +405,7 @@ const form1Reducer = (state = requiredDataAllFields, action) => {
           dateOfBirth: "",
           maritalStatus: "",
           bloodGroup: "--Select--",
-          language: "HINDI",
+          language: "Hindi",
           profileImgUrl: "",
           primaryPhone: '',
           whatsAppPhone: '',
@@ -471,7 +455,7 @@ const form1Reducer = (state = requiredDataAllFields, action) => {
           isValidSpiritualMaster:false,
           isValidInitiatedName:false,
           isValidMaritalStatus:false,
-          isValidImageURL:false,
+          isValidProfileImgUrl:false,
           isSubmitDisabled:true,
           isValidPrimaryNo :false,
           isValidEmail:false,
@@ -496,6 +480,7 @@ const form1Reducer = (state = requiredDataAllFields, action) => {
           isValidCurrentCompany:false,
           isShowPreviewOn:false,
           isSameAddress:false,
+          imageSource:"",
         }
       }
       case "isShowPreviewOn":
@@ -506,6 +491,14 @@ const form1Reducer = (state = requiredDataAllFields, action) => {
             isShowPreviewOn:action.valid,
           }
         }
+        case "imageSource":
+          return {
+            ...state,
+            validations:{
+              ...state.validations,
+              imageSource:action.data,
+            }
+          }
     default:
       return state;
   }
