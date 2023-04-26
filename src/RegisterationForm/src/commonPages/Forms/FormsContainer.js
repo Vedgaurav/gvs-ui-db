@@ -51,8 +51,7 @@ const FormsContainer = (props) => {
     // console.log(response);
     if (response.status === 200) {
        //console.log(response);
-       sessionStorage.setItem("userId",response.data.id);
-       sessionStorage.setItem("userFname",response.data.fname);
+
       props.onHeaderReceive("Success");
       props.onMessageReceive("Data Successfully Saved");
       dispatch({type:"submitted"});

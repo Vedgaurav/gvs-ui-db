@@ -8,35 +8,46 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Modal from './utilities/modal/Modal';
 import { useLocation } from 'react-router-dom';
+import axiosDoesUserExist from '../../axios/axiosDoesUserExist';
 
 function RegistrationForm(props) {
 
   const navigate = useNavigate()
-  const [isShowModal,setIsShowModal]=useState(false);
-  const [showModalHeader,setShowModalHeader]=useState("");
-  const [showModalMessage,setShowModalMessage]=useState("");
-  const[responseData,setResponseData]=useState([]);
+  const [isShowModal, setIsShowModal] = useState(false);
+  const [showModalHeader, setShowModalHeader] = useState("");
+  const [showModalMessage, setShowModalMessage] = useState("");
+  const [responseData, setResponseData] = useState([]);
   const { state } = useLocation()
-    const { connectedTo,guardianEmail } = state?state:""
+  const { connectedTo, guardianEmail } = state ? state : ""
   useEffect(() => {
     if (sessionStorage.getItem("userEmail") == null)
-         navigate("/login")
-  },[])
+      navigate("/login")
+  }, [])
 
-  const onCloseModal=()=>{
+  const onCloseModal = async () => {
     setIsShowModal(false);
+
+    if (sessionStorage.getItem("userId") == null) {
+      const email = sessionStorage.getItem("userEmail")
+      const res = await axiosDoesUserExist(email)
+      const allMatchedEmails = res.data
+      const guardianUser = allMatchedEmails.filter((one) => one.connectedTo == "guru")
+      sessionStorage.setItem("userId", guardianUser[0].id)
+      sessionStorage.setItem("userFname", guardianUser[0].fname)
+    }
+
     const detail = {
       id:sessionStorage.getItem("userId"),
-      fname:sessionStorage.getItem("userFname")
+      fname: sessionStorage.getItem("userFname")
     }
-    navigate("/dashboard", { state: { userDetail:detail} })
+    navigate("/dashboard", { state: { userDetail: detail } })
   }
 
   return (
     <div className="body mainpage">
       <NavBar />
-     {isShowModal? <Modal open={isShowModal} header={showModalHeader} message={showModalMessage} onClose={onCloseModal}/>:<FormsContainer onHeaderReceive={(msg)=>setShowModalHeader(msg)} guardianEmail={guardianEmail}connectedTo={connectedTo} onMessageReceive={(msg)=>setShowModalMessage(msg)} onResponseData={(obj)=>setResponseData(obj)}isLoading={(e)=>setIsLoading(e)} onShowModal={(val)=>setIsShowModal(val)} />
-}
+      {isShowModal ? <Modal open={isShowModal} header={showModalHeader} message={showModalMessage} onClose={onCloseModal} /> : <FormsContainer onHeaderReceive={(msg) => setShowModalHeader(msg)} guardianEmail={guardianEmail} connectedTo={connectedTo} onMessageReceive={(msg) => setShowModalMessage(msg)} onResponseData={(obj) => setResponseData(obj)} isLoading={(e) => setIsLoading(e)} onShowModal={(val) => setIsShowModal(val)} />
+      }
     </div>
   );
 }
