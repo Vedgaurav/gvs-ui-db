@@ -88,7 +88,7 @@ const ProfessionalInfoForm = () => {
             <label>Highest Education<a style={{color:'red'}}>*</a></label>
           </div>
           <div className="form-col col-md-3">
-            <select className="form-select" id="education" value={education} onChange={(e)=>{inputHandler(e),clearDegreeSpecification}} >
+            <select className="form-select" id="education" value={education} onChange={(e)=>{inputHandler(e),clearDegreeSpecification()}} >
               {educations?.map((e) => <option value={e} label={e} key={e} />
                )}
             </select>
@@ -110,7 +110,7 @@ const ProfessionalInfoForm = () => {
             <label>Occupation<a style={{color:'red'}}>*</a></label>
           </div>
           <div className="form-col col-md-3">
-            <select className="form-select"  value={occupation} onChange={(e)=>{inputHandler(e),clearOccupationDetails}} onClick={(e)=>{inputHandler(e)}}id='occupation' >
+            <select className="form-select"  value={occupation} onChange={(e)=>{inputHandler(e),clearOccupationDetails()}} onClick={(e)=>{inputHandler(e)}}id='occupation' >
               {occupations.map((e) => 
                 <option value={e} key={e} id={e} label={e} />
                   )}
