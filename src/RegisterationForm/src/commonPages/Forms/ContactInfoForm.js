@@ -334,7 +334,7 @@ const ContactInfoForm = (props) => {
                   inputHandler(e), addressSelectionHandler(e);
                 }}
               >
-                {currAddState.length!==0? currAddState?.map((state) => (
+                {currAddState.length!==0? currAddState?.sort().map((state) => (
                   <option value={state} key={state} label={state} />
                 )):<option
                 value={currentAddress.state}
@@ -357,7 +357,7 @@ const ContactInfoForm = (props) => {
               >
                 {currAddDistrict.length !== 0 ? (
                   <>
-                    {currAddDistrict.map((e) => (
+                    {currAddDistrict.sort().map((e) => (
                       <option key={e} value={e} label={e} />
                     ))}
                   </>
@@ -383,7 +383,7 @@ const ContactInfoForm = (props) => {
                 }}
               >
                 {currAddCity.length !== 0 ? (
-                  currAddCity.map((e) => (
+                  currAddCity.sort().map((e) => (
                     <option key={e} value={e} label={e} />
                   ))
                 ) : (
@@ -409,7 +409,7 @@ const ContactInfoForm = (props) => {
                 onClick={inputHandler}
               >
                 {currAddPincode.length !== 0 ? (
-                  currAddPincode.map((pincode) => (
+                  currAddPincode.sort().map((pincode) => (
                     <option value={pincode} key={pincode} label={pincode} />
                   ))
                 ) : (
@@ -509,7 +509,7 @@ const ContactInfoForm = (props) => {
                       inputHandler(e), addressSelectionHandler(e);
                     }}
                   >
-                    {perAddState.length!==0 ? perAddState?.map((e) => (
+                    {perAddState.length!==0 ? perAddState?.sort().map((e) => (
                       <option key={e} value={e} label={e} />
                     )):<option value={permanentAddress.state} label={permanentAddress.state} />}
                   </select>
@@ -527,7 +527,7 @@ const ContactInfoForm = (props) => {
                     }}
                   >
                     {perAddDistrict.length !== 0 ? (
-                      perAddDistrict?.map((e) => (
+                      perAddDistrict?.sort().map((e) => (
                         <option key={e} value={e} label={e} />
                       ))
                     ) : (
@@ -551,7 +551,7 @@ const ContactInfoForm = (props) => {
                     }}
                   >
                     {perAddCity.length !== 0 ? (
-                      perAddCity.map((e) => (
+                      perAddCity.sort().map((e) => (
                         <option key={e} value={e} label={e} />
                       ))
                     ) : (
@@ -580,7 +580,7 @@ const ContactInfoForm = (props) => {
                     }}
                   >
                     {perAddPincode.length !== 0 ? (
-                      perAddPincode.map((e) => (
+                      perAddPincode.sort().map((e) => (
                         <option key={e} value={e} label={e} />
                       ))
                     ) : (
