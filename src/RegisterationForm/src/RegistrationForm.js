@@ -46,8 +46,12 @@ function RegistrationForm(props) {
   return (
     <div className="body mainpage">
       <NavBar />
-      {isShowModal ? <Modal open={isShowModal} header={showModalHeader} message={showModalMessage} onClose={onCloseModal} /> : <FormsContainer onHeaderReceive={(msg) => setShowModalHeader(msg)} guardianEmail={guardianEmail} connectedTo={connectedTo} onMessageReceive={(msg) => setShowModalMessage(msg)} onResponseData={(obj) => setResponseData(obj)} isLoading={(e) => setIsLoading(e)} onShowModal={(val) => setIsShowModal(val)} />
-      }
+
+      {/* disable registration */}
+      {/* {isShowModal ? <Modal open={isShowModal} header={showModalHeader} message={showModalMessage} onClose={onCloseModal} /> : <FormsContainer onHeaderReceive={(msg) => setShowModalHeader(msg)} guardianEmail={guardianEmail} connectedTo={connectedTo} onMessageReceive={(msg) => setShowModalMessage(msg)} onResponseData={(obj) => setResponseData(obj)} isLoading={(e) => setIsLoading(e)} onShowModal={(val) => setIsShowModal(val)} />
+      } */}
+
+      <h4 style={{"color":red}}>Registration has been closed.</h4>
     </div>
   );
 }
