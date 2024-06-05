@@ -17,6 +17,7 @@ import NavBar from "./nav/NavBar";
 export default function App() {
   const template = () => (
     <>
+    <meta httpEquiv="Access-Control-Allow-Origin" content="*" />
       <BrowserRouter>
       <NavBar/>
         <Routes>
@@ -33,7 +34,7 @@ export default function App() {
             }
           />
            <Route
-            path="/registration"
+            path="/v1"
             element={
               <RegistrationForm/>
             }
