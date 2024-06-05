@@ -2,7 +2,6 @@
   "name": "playground",
   "version": "1.0.0",
   "description": "",
-  "proxy": "https://localhost:8443/auth",
   "keywords": [],
   "main": "src/index.js",
   "dependencies": {
@@ -27,12 +26,12 @@
     "web-vitals": "^2.1.4"
   },
   "devDependencies": {
-    "@babel/runtime": "7.13.8",
-    "proxy": "https://localhost:8443/auth"
+    "@babel/runtime": "7.13.8"
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "npm clean-install --force && npm run build:project",
+    "build:project": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   },
