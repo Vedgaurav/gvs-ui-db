@@ -12,6 +12,7 @@ export default function GLogin() {
     const navigate = useNavigate();
     const [message, setMessage] = useState("")
     const { gWaitOn, setGWaitOn } = useContext(PleaseWaitContext)
+
     const fetchData = async()=>{
         const url1 = 'https://api.gaurangavedic.org.in:8443/auth';
         const url2 = 'https://localhost:8443/auth'
@@ -19,15 +20,56 @@ export default function GLogin() {
           method: 'GET',
           credentials: 'include',
         });
-        if(response.ok){
-          const data = await response.json();
-          console.log('Parsed JSON data:', data);
+        const userData= await response.json();
+        return userData;
+    }
+
+    const loginRedirection=async(data)=>{
+        
+        
+        if(data){
+          let { userEmail,userId } = data;
+          console.log(userEmail)
+
+          
+          if (userId!=null&&userId.length!=0) {
+  
+              setGWaitOn(true)
+              const res = await axiosDoesUserExist()
+              const guardianUser = res.data
+  
+              if (guardianUser.length == 0) {
+                  // to reg
+                  sessionStorage.setItem("userEmail", userEmail)
+                  navigate("/registration", { state: { connectedTo: "guru", guardianEmail: userEmail } })
+              }
+              else {
+                  sessionStorage.setItem("userId", guardianUser[0].id)
+                  sessionStorage.setItem("userFname", guardianUser[0].fname)
+                  sessionStorage.setItem("userEmail", userEmail)
+                  // to dashboard of dependents
+                  navigate("/dashboard", { state: { userDetail: guardianUser[0] } })
+              }
+          }
+          else {
+            await fetch('https://api.gaurangavedic.org.in:8443/logout',{
+                method: 'POST',
+                credentials: 'include',
+              });
+  
+              setMessage("Not Authorized. Please contact admin.")
+          }
+          setGWaitOn(false)
+  
+  
+     }
+          
         }
       
         
-       }
+       
         useEffect(() => {
-         fetchData()
+         fetchData().then(data=> loginRedirection(data)).catch((e)=> setMessage("Server is down"));
         }, [])
 
     // const auth = async ()=>{
@@ -53,47 +95,47 @@ export default function GLogin() {
     //     auth();
     // }, [])
 
-    const googleFail = (e) => {
-        console.log("google fial", e);
-    };
+    // const googleFail = (e) => {
+    //     console.log("google fial", e);
+    // };
 
     setTimeout(() => {
         setMessage("")
     }, 2000)
 
-    const responseGoogle = async (response) => {
-        let { email, name, googleId } = response.profileObj;
+//     const responseGoogle = async (response) => {
+//         let { email, name, googleId } = response.profileObj;
 
-        const permissionRes = await axiosCheckPermission(email)
-        const isPermitted = permissionRes.data
-        if (isPermitted) {
+//         const permissionRes = await axiosCheckPermission(email)
+//         const isPermitted = permissionRes.data
+//         if (isPermitted) {
 
-            setGWaitOn(true)
-            const res = await axiosDoesUserExist(email)
-            const allMatchedEmails = res.data
-            const guardianUser = allMatchedEmails.filter((one) => one.connectedTo == "guru")
+//             setGWaitOn(true)
+//             const res = await axiosDoesUserExist(email)
+//             const allMatchedEmails = res.data
+//             const guardianUser = allMatchedEmails.filter((one) => one.connectedTo == "guru")
 
-            if (guardianUser.length == 0) {
-                // to reg
-                sessionStorage.setItem("userEmail", email)
-                navigate("/registration", { state: { connectedTo: "guru", guardianEmail: email } })
-            }
-            else {
-                sessionStorage.setItem("userId", guardianUser[0].id)
-                sessionStorage.setItem("userFname", guardianUser[0].fname)
-                sessionStorage.setItem("userEmail", email)
-                // to dashboard of dependents
-                navigate("/dashboard", { state: { userDetail: guardianUser[0] } })
-            }
-        }
-        else {
+//             if (guardianUser.length == 0) {
+//                 // to reg
+//                 sessionStorage.setItem("userEmail", email)
+//                 navigate("/registration", { state: { connectedTo: "guru", guardianEmail: email } })
+//             }
+//             else {
+//                 sessionStorage.setItem("userId", guardianUser[0].id)
+//                 sessionStorage.setItem("userFname", guardianUser[0].fname)
+//                 sessionStorage.setItem("userEmail", email)
+//                 // to dashboard of dependents
+//                 navigate("/dashboard", { state: { userDetail: guardianUser[0] } })
+//             }
+//         }
+//         else {
 
-            setMessage("Not Authorized. Please contact admin.")
-        }
-        setGWaitOn(false)
+//             setMessage("Not Authorized. Please contact admin.")
+//         }
+//         setGWaitOn(false)
 
 
-   }
+//    }
 
     const template = <>
         <div className="row pt-5" style={{}}>
@@ -110,8 +152,7 @@ export default function GLogin() {
         </div>
     </>
     return <>
-    {template}
-        {/* {gWaitOn?<PleaseWait/>:template} */}
+        {gWaitOn?<PleaseWait/>:template}
     </>
 
 }
