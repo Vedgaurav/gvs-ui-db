@@ -12,6 +12,23 @@ export default function GLogin() {
     const navigate = useNavigate();
     const [message, setMessage] = useState("")
     const { gWaitOn, setGWaitOn } = useContext(PleaseWaitContext)
+    const fetchData = async()=>{
+        const url1 = 'https://api.gaurangavedic.org.in:8443/auth';
+        const url2 = 'https://localhost:8443/auth'
+        const response = await fetch(url1,{
+          method: 'GET',
+          credentials: 'include',
+        });
+        if(response.ok){
+          const data = await response.json();
+          console.log('Parsed JSON data:', data);
+        }
+      
+        
+       }
+        useEffect(() => {
+         fetchData()
+        }, [])
 
     // useEffect(() => {
 
