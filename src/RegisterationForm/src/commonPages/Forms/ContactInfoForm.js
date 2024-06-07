@@ -41,7 +41,7 @@ const ContactInfoForm = (props) => {
 
   useEffect(() => {
     enableSaveAndProceed();
-  }, [validations.isValidCurrentAddress, validations.isValidPrimaryNo,validations.isValidPermanentAddress]);
+  }, [validations.isValidCurrentAddress, validations.isValidPrimaryNo]);
   useEffect(() => {
     if(currentAddress.line1.length!==0&&currentAddress.state.length!==0&&currentAddress.state!=="State"&&
     currentAddress.city.length!==0&&currentAddress.city!=="City"&&
@@ -51,14 +51,14 @@ const ContactInfoForm = (props) => {
       else{
         dispatch({ type: "isValidCurrentAddress", data: "", valid: false });
       }
-      if(permanentAddress.line1.length!==0&&permanentAddress.state.length!==0&&permanentAddress.state!=="State"&&permanentAddress.city.length!==0&&permanentAddress.city!=="City"&&
-        permanentAddress.district.length!==0&&permanentAddress.district!=="District"&&permanentAddress.pinCode.length!==0){
-          dispatch({ type: "isValidPermanentAddress", data: "", valid: true });
-        }
-        else{
-          dispatch({ type: "isValidPermanentAddress", data: "", valid: false });
-        }
-  }, [currentAddress,permanentAddress]);
+      // if(permanentAddress.line1.length!==0&&permanentAddress.state.length!==0&&permanentAddress.state!=="State"&&permanentAddress.city.length!==0&&permanentAddress.city!=="City"&&
+      //   permanentAddress.district.length!==0&&permanentAddress.district!=="District"&&permanentAddress.pinCode.length!==0){
+      //     dispatch({ type: "isValidPermanentAddress", data: "", valid: true });
+      //   }
+      //   else{
+      //     dispatch({ type: "isValidPermanentAddress", data: "", valid: false });
+      //   }
+  }, [currentAddress]);
   const inputHandler = (e) => {
     const { value, id, name } = e.target;
     //console.log(name,id,value)
@@ -75,7 +75,7 @@ const ContactInfoForm = (props) => {
     enableSaveAndProceed();
   };
   const enableSaveAndProceed = () => {
-    if (validations.isValidPrimaryNo && validations.isValidCurrentAddress && validations.isValidPermanentAddress) {
+    if (validations.isValidPrimaryNo && validations.isValidCurrentAddress) {
       dispatch({ type: "submitDisable", data: "", valid: false });
     } else dispatch({ type: "submitDisable", data: "", valid: true });
   };
@@ -113,35 +113,36 @@ const ContactInfoForm = (props) => {
         );
         break;
       }
-      case "permanentAddressState":
-        if(perAddState.length==0){setPerAddState(
-          addressData
-            .map((e) => e.statename)
-            .filter((value, index, self) => self.indexOf(value) === index)
-        );}
-        else{setPerAddDistrict(
-          addressData
-            .filter((e) => e.statename == value)
-            .map((e) => e.Districtname)
-            .filter((value, index, self) => self.indexOf(value) === index)
-        );}
+      // case "permanentAddressState":
+      //   if(perAddState.length==0){setPerAddState(
+      //     addressData
+      //       .map((e) => e.statename)
+      //       .filter((value, index, self) => self.indexOf(value) === index)
+      //   );}
+      //   else{setPerAddDistrict(
+      //     addressData
+      //       .filter((e) => e.statename == value)
+      //       .map((e) => e.Districtname)
+      //       .filter((value, index, self) => self.indexOf(value) === index)
+      //   );}
         
-        break;
-      case "permanentAddressDistrict": 
-        setPerAddCity(
-          addressData
-            .filter((e) => e.Districtname == value)
-            .map((e) => e.Taluk)
-            .filter((value, index, self) => self.indexOf(value) === index)
-        );
-        setPerAddPincode(
-          addressData
-            .filter((e) => e.Districtname == value)
-            .map((e) => e.pincode)
-            .filter((value, index, self) => self.indexOf(value) === index)
-        );
-        break;
-      default:
+      //   break;
+      // case "permanentAddressDistrict": 
+      //   setPerAddCity(
+      //     addressData
+      //       .filter((e) => e.Districtname == value)
+      //       .map((e) => e.Taluk)
+      //       .filter((value, index, self) => self.indexOf(value) === index)
+      //   );
+      //   setPerAddPincode(
+      //     addressData
+      //       .filter((e) => e.Districtname == value)
+      //       .map((e) => e.pincode)
+      //       .filter((value, index, self) => self.indexOf(value) === index)
+      //   );
+      //   break;
+     
+        default:
         break;
     }
   };
@@ -431,7 +432,7 @@ const ContactInfoForm = (props) => {
               </select>
             </div>
           </div>
-          <div className="form-group row">
+          {/* <div className="form-group row">
             <div className="form-col col-md-3">
               <label>
                 Permanent Address<a style={{ color: "red" }}>*</a>
@@ -602,7 +603,7 @@ const ContactInfoForm = (props) => {
                 </div>
               </div>
             </>
-          )}
+          )} */}
         </div>
       </div>
     </>
