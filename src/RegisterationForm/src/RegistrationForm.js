@@ -1,3 +1,4 @@
+import axios, { all } from "axios";
 import logo from './logo.svg';
 import "./commonPages/Forms/FormInput.css";
 import 'bootstrap'
@@ -9,6 +10,7 @@ import { useNavigate } from 'react-router-dom';
 import Modal from './utilities/modal/Modal';
 import { useLocation } from 'react-router-dom';
 import axiosDoesUserExist from '../../axios/axiosDoesUserExist';
+import { CHECK_AUTHENTICATION_URL } from '../../constants/apiConstant';
 
 function RegistrationForm(props) {
 
@@ -19,35 +21,44 @@ function RegistrationForm(props) {
   const [responseData, setResponseData] = useState([]);
   const { state } = useLocation()
   const { connectedTo, guardianEmail } = state ? state : ""
+
+  const auth = async ()=>{
+    const AuthRes = await axios.get(CHECK_AUTHENTICATION_URL).catch((e)=>{console.log('There is an auth api error')})
+    console.log(AuthRes);
+    console.log('we are now redirected to registration page');
+    // if (sessionStorage.getItem("userEmail") == null)
+    //   navigate("/login")
+    }
   useEffect(() => {
-    if (sessionStorage.getItem("userEmail") == null)
-      navigate("/login")
+
+
+    auth();
   }, [])
 
-  const onCloseModal = async () => {
-    setIsShowModal(false);
+  // const onCloseModal = async () => {
+  //   setIsShowModal(false);
 
-    if (sessionStorage.getItem("userId") == null) {
-      const email = sessionStorage.getItem("userEmail")
-      const res = await axiosDoesUserExist(email)
-      const allMatchedEmails = res.data
-      const guardianUser = allMatchedEmails.filter((one) => one.connectedTo == "guru")
-      sessionStorage.setItem("userId", guardianUser[0].id)
-      sessionStorage.setItem("userFname", guardianUser[0].fname)
-    }
+  //   if (sessionStorage.getItem("userId") == null) {
+  //     const email = sessionStorage.getItem("userEmail")
+  //     const res = await axiosDoesUserExist(email)
+  //     const allMatchedEmails = res.data
+  //     const guardianUser = allMatchedEmails.filter((one) => one.connectedTo == "guru")
+  //     sessionStorage.setItem("userId", guardianUser[0].id)
+  //     sessionStorage.setItem("userFname", guardianUser[0].fname)
+  //   }
 
-    const detail = {
-      id:sessionStorage.getItem("userId"),
-      fname: sessionStorage.getItem("userFname")
-    }
-    navigate("/dashboard", { state: { userDetail: detail } })
-  }
+  //   const detail = {
+  //     id:sessionStorage.getItem("userId"),
+  //     fname: sessionStorage.getItem("userFname")
+  //   }
+  //   navigate("/dashboard", { state: { userDetail: detail } })
+  // }
 
   return (
     <div className="body mainpage">
       <NavBar />
 
-    {isShowModal ? <Modal open={isShowModal} header={showModalHeader} message={showModalMessage} onClose={onCloseModal} /> : <FormsContainer onHeaderReceive={(msg) => setShowModalHeader(msg)} guardianEmail={guardianEmail} connectedTo={connectedTo} onMessageReceive={(msg) => setShowModalMessage(msg)} onResponseData={(obj) => setResponseData(obj)} isLoading={(e) => setIsLoading(e)} onShowModal={(val) => setIsShowModal(val)} />}
+     <FormsContainer onHeaderReceive={(msg) => setShowModalHeader(msg)} guardianEmail={guardianEmail} connectedTo={connectedTo} onMessageReceive={(msg) => setShowModalMessage(msg)} onResponseData={(obj) => setResponseData(obj)} isLoading={(e) => setIsLoading(e)} onShowModal={(val) => setIsShowModal(val)} />
 
 {/* <h4 style={{"color":"red"}}>Registration has been closed.</h4> */}
     </div>
