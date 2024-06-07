@@ -30,28 +30,28 @@ export default function GLogin() {
          fetchData()
         }, [])
 
-    const auth = async ()=>{
+    // const auth = async ()=>{
 
-        const AuthRes = await axios.get(CHECK_AUTHENTICATION_URL,{
-            withCredentials: true ,
-            crossdomain: true,
-            cookie: document.cookies
+    //     const AuthRes = await axios.get(CHECK_AUTHENTICATION_URL,{
+    //         withCredentials: true ,
+    //         crossdomain: true,
+    //         cookie: document.cookies
             
-          }).catch((e)=>{console.log('There is an auth api error')})
-          console.log(AuthRes);
-          console.log('we are now redirected to registration page');
+    //       }).catch((e)=>{console.log('There is an auth api error')})
+    //       console.log(AuthRes);
+    //       console.log('we are now redirected to registration page');
 
-        const detail = {
-            id: sessionStorage.getItem("userId"),
-            fname: sessionStorage.getItem("userFname")
-        }
-        if (sessionStorage.getItem("userEmail") != null)
-            navigate("/dashboard", { state: { userDetail: detail } })}
+    //     const detail = {
+    //         id: sessionStorage.getItem("userId"),
+    //         fname: sessionStorage.getItem("userFname")
+    //     }
+    //     if (sessionStorage.getItem("userEmail") != null)
+    //         navigate("/dashboard", { state: { userDetail: detail } })}
 
-    useEffect(() => {
+    // useEffect(() => {
 
-        auth();
-    }, [])
+    //     auth();
+    // }, [])
 
     const googleFail = (e) => {
         console.log("google fial", e);
