@@ -35,30 +35,26 @@ function RegistrationForm(props) {
     
   }, [])
 
-  // const onCloseModal = async () => {
-  //   setIsShowModal(false);
-
-  //   if (sessionStorage.getItem("userId") == null) {
-  //     const email = sessionStorage.getItem("userEmail")
-  //     const res = await axiosDoesUserExist(email)
-  //     const allMatchedEmails = res.data
-  //     const guardianUser = allMatchedEmails.filter((one) => one.connectedTo == "guru")
-  //     sessionStorage.setItem("userId", guardianUser[0].id)
-  //     sessionStorage.setItem("userFname", guardianUser[0].fname)
-  //   }
-
-  //   const detail = {
-  //     id:sessionStorage.getItem("userId"),
-  //     fname: sessionStorage.getItem("userFname")
-  //   }
-  //   navigate("/dashboard", { state: { userDetail: detail } })
-  // }
-
+  const onCloseModal = async () => {
+    setIsShowModal(false);
+    if (sessionStorage.getItem("userId") == null) {
+      const email = sessionStorage.getItem("userEmail")
+      const res = await axiosDoesUserExist()
+      const guardianUser = res.data;
+      sessionStorage.setItem("userId", guardianUser[0].id)
+      sessionStorage.setItem("userFname", guardianUser[0].fname)
+    }
+    const detail = {
+      id:sessionStorage.getItem("userId"),
+      fname: sessionStorage.getItem("userFname")
+    }
+    navigate("/dashboard", { state: { userDetail: detail } })
+  }
   return (
     <div className="body mainpage">
       <NavBar />
 
-     <FormsContainer onHeaderReceive={(msg) => setShowModalHeader(msg)} guardianEmail={guardianEmail} connectedTo={connectedTo} onMessageReceive={(msg) => setShowModalMessage(msg)} onResponseData={(obj) => setResponseData(obj)} isLoading={(e) => setIsLoading(e)} onShowModal={(val) => setIsShowModal(val)} />
+    {isShowModal ? <Modal open={isShowModal} header={showModalHeader} message={showModalMessage} onClose={onCloseModal} /> : <FormsContainer onHeaderReceive={(msg) => setShowModalHeader(msg)} guardianEmail={guardianEmail} connectedTo={connectedTo} onMessageReceive={(msg) => setShowModalMessage(msg)} onResponseData={(obj) => setResponseData(obj)} isLoading={(e) => setIsLoading(e)} onShowModal={(val) => setIsShowModal(val)} />}
 
 {/* <h4 style={{"color":"red"}}>Registration has been closed.</h4> */}
     </div>
