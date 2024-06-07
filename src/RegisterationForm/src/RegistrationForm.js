@@ -22,17 +22,17 @@ function RegistrationForm(props) {
   const { state } = useLocation()
   const { connectedTo, guardianEmail } = state ? state : ""
 
-  const auth = async ()=>{
-    const AuthRes = await axios.get(CHECK_AUTHENTICATION_URL).catch((e)=>{console.log('There is an auth api error')})
-    console.log(AuthRes);
-    console.log('we are now redirected to registration page');
-    // if (sessionStorage.getItem("userEmail") == null)
-    //   navigate("/login")
-    }
+  
+
+    
+    
+    
   useEffect(() => {
 
-
-    auth();
+     if (sessionStorage.getItem("userEmail") == null)
+      navigate("/login")
+    
+    
   }, [])
 
   // const onCloseModal = async () => {
