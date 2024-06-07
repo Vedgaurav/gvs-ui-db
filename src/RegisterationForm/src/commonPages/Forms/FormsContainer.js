@@ -1,6 +1,6 @@
 import PersonalInfoForm from "./PersonalInfoForm";
 import ContactInfoForm from "./ContactInfoForm";
-import { useState, useEffect,useContext } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import RegistrationProgressBar from "../RegProgBar/RegistrationProgressBar";
 import "./FormInput.css";
@@ -19,10 +19,9 @@ const FormsContainer = (props) => {
   useEffect(() => {
     dispatch({ type: "connectedTo", data: props.connectedTo, valid: true });
     dispatch({ type: "email", data: props.guardianEmail, valid: true });
-    if(props.connectedTo==="guru"){
+    if (props.connectedTo === "guru") {
       dispatch({ type: "priviledge", data: "GUARDIAN", valid: true });
-    }
-    else dispatch({ type: "priviledge", data: "USER", valid: true });
+    } else dispatch({ type: "priviledge", data: "USER", valid: true });
   }, []);
   const data = useSelector((state) => state);
   const [stage, setStage] = useState(1);
@@ -41,52 +40,50 @@ const FormsContainer = (props) => {
 
     delete saveData.validations;
     // console.log(JSON.stringify(saveData));
-    try{
-    const response = await axios.post(ADD_DEVOTEE_DATA, saveData).catch((e)=>{
-      props.onHeaderReceive("API ERROR");
-      props.onMessageReceive(
-        "There is error in submitting the response. Kindly try again later"
-      );
-    });
-    // console.log(response);
-    if (response.status === 200) {
-       //console.log(response);
+    try {
+      const response = await axios
+        .post(ADD_DEVOTEE_DATA, saveData)
+        .catch((e) => {
+          props.onHeaderReceive("API ERROR");
+          props.onMessageReceive(
+            "There is error in submitting the response. Kindly try again later"
+          );
+        });
+      console.log(response);
+      if (response.status === 200) {
+        //  console.log(response);
 
-      props.onHeaderReceive("Success");
-      props.onMessageReceive("Data Successfully Saved");
-      dispatch({type:"submitted"});
-      setError(response.status);
-    } else if (response.status === 408) {
-      console.log("SOMETHING WENT WRONG");
+        props.onHeaderReceive("Success");
+        props.onMessageReceive("Data Successfully Saved");
+        dispatch({ type: "submitted" });
+        setError(response.status);
+      } else if (response.status === 408) {
+        console.log("SOMETHING WENT WRONG");
+        props.onHeaderReceive("API ERROR");
+        props.onMessageReceive(
+          "There is error in submitting the response. Kindly try again later"
+        );
+        setError(response.status);
+      } else if (response.data.status === 400) {
+        console.log("SOMETHING WENT WRONG");
+        props.onHeaderReceive("API ERROR");
+        props.onMessageReceive(
+          "There is error in submitting the response. Kindly try again later"
+        );
+        setError(response.status);
+      } else {
+        props.onHeaderReceive("API ERROR");
+        props.onMessageReceive(
+          "There is error in submitting the response. Kindly try again later"
+        );
+      }
+      props.onResponseData(response.data ? [0] : []);
+    } catch (e) {
       props.onHeaderReceive("API ERROR");
       props.onMessageReceive(
         "There is error in submitting the response. Kindly try again later"
       );
-      setError(response.status);
-    } else if (response.data.status === 400) {
-      console.log("SOMETHING WENT WRONG");
-      props.onHeaderReceive("API ERROR");
-      props.onMessageReceive(
-        "There is error in submitting the response. Kindly try again later"
-      );
-      setError(response.status);
     }
-    else{
-      props.onHeaderReceive("API ERROR");
-      props.onMessageReceive(
-        "There is error in submitting the response. Kindly try again later"
-      );
-
-    }
-    props.onResponseData(response.data ? [0] : []);
-  }
-  catch(e){
-    
-    props.onHeaderReceive("API ERROR");
-    props.onMessageReceive(
-      "There is error in submitting the response. Kindly try again later"
-    );
-  }
     // console.log(error);
     // console.log(submitResponse);
     setIsLoadingSpinnerActive(false);
@@ -116,20 +113,16 @@ const FormsContainer = (props) => {
       case 4:
         setFormStage(forms.stage4);
         setStage(4);
-        
+
         break;
+
       case 5:
-        setFormStage(forms.stage5);
         setStage(5);
-        
-        break;
-      case 6:
-        setStage(6);
 
         setSubmit("Submit");
         break;
 
-      case 7:
+      case 6:
         submitHandler();
         break;
       default:
@@ -145,8 +138,8 @@ const FormsContainer = (props) => {
     stage1: <PersonalInfoForm />,
     stage2: <FamilyDetails />,
     stage3: <DevotionalInfoForm />,
-    stage4: <ProfessionalInfoForm />,
-    stage5: <ContactInfoForm />,
+    // stage4: <ProfessionalInfoForm />,
+    stage4: <ContactInfoForm />,
   };
   const [jsxFormStage, setFormStage] = useState(<PersonalInfoForm />);
 
@@ -158,11 +151,13 @@ const FormsContainer = (props) => {
             className="imgfix rounded float-left"
           />
           </div> */}
-     { isLoadingSpinnerActive ? <LoadingSpinner /> :
+      {isLoadingSpinnerActive ? (
+        <LoadingSpinner />
+      ) : (
         <>
           {" "}
           <RegistrationProgressBar stage={stage} />
-          { jsxFormStage}
+          {jsxFormStage}
           <button
             type="button"
             className="btn btn-success col-sm-3"
@@ -181,7 +176,7 @@ const FormsContainer = (props) => {
             {submit}
           </button>
         </>
-}
+      )}
     </>
   );
 };

@@ -1,65 +1,80 @@
-import { facilitators,introductionMedium } from "../../utilities/OptionalEntries";
-import { useSelector,useDispatch } from "react-redux";
+import {
+  facilitators,
+  introductionMedium,
+} from "../../utilities/OptionalEntries";
+import { useSelector, useDispatch } from "react-redux";
 import DatePicker, { CalendarContainer } from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { useState,useEffect } from "react";
-import { validateRounds,validateName } from "../../RegexExpsValidation/RegexExps";
+import { useState, useEffect } from "react";
+import {
+  validateRounds,
+  validateName,
+} from "../../RegexExpsValidation/RegexExps";
 const DevotionalInfoForm = () => {
-  const dispatch=useDispatch();
-  const { chantingRounds,yearChantingSince,yearChanting16Rounds,
-    introducedBy,placeIntroducedIn,
-    preferredServices, servicesRendered,facilitator,validations} = useSelector(
-    (state) => state
-  );
-  useEffect(()=>{
-
-  enableSaveAndProceed();
-  },[])
-  useEffect(()=>{
-
+  const dispatch = useDispatch();
+  const {
+    chantingRounds,
+    yearChantingSince,
+    yearChanting16Rounds,
+    introducedBy,
+    placeIntroducedIn,
+    preferredServices,
+    servicesRendered,
+    facilitator,
+    validations,
+  } = useSelector((state) => state);
+  useEffect(() => {
     enableSaveAndProceed();
-    },[chantingRounds,yearChantingSince,yearChanting16Rounds,validations.isValidChantingRounds,validations.isValidIntroducedBy,validations.isValidYearChantingSince,validations.isValidYearChanting16Rounds])
-  
+  }, []);
+  useEffect(() => {
+    enableSaveAndProceed();
+  }, [
+    chantingRounds,
+    yearChantingSince,
+    validations.isValidChantingRounds,
+    validations.isValidIntroducedBy,
+    validations.isValidYearChantingSince,
+  ]);
+
   const inputHandler = (e) => {
-    
-    const { value, id,name } = e.target;
+    const { value, id, name } = e.target;
     //console.log(id,name,value)
-    if (name==undefined || name==''){
-      dispatch({ type: id, data: value ,valid:true});
-    }
-    
-    else if(value.match(name) !==null) {
-      document.getElementById(id+'Error').innerText='';
-    dispatch({ type: id, data: value,valid:true });
-    }
-    else {
-      document.getElementById(id+'Error').innerText='invalid input';
-      dispatch({ type: id, data: value,valid:false });
+    if (name == undefined || name == "") {
+      dispatch({ type: id, data: value, valid: true });
+    } else if (value.match(name) !== null) {
+      document.getElementById(id + "Error").innerText = "";
+      dispatch({ type: id, data: value, valid: true });
+    } else {
+      document.getElementById(id + "Error").innerText = "invalid input";
+      dispatch({ type: id, data: value, valid: false });
     }
     enableSaveAndProceed();
-    
   };
 
-  const enableSaveAndProceed=()=>{
-    if(chantingRounds>0&&chantingRounds<16){
-      if(validations.isValidChantingRounds&&validations.isValidIntroducedBy&&validations.isValidYearChantingSince&&yearChantingSince.length>0){
-        dispatch({ type: 'submitDisable', data: "",valid:false });
-      }
-      else dispatch({ type: 'submitDisable', data: "",valid:true });
+  const enableSaveAndProceed = () => {
+    if (chantingRounds > 0 && chantingRounds < 16) {
+      if (
+        validations.isValidChantingRounds &&
+        validations.isValidYearChantingSince &&
+        yearChantingSince.length > 0
+      ) {
+        dispatch({ type: "submitDisable", data: "", valid: false });
+      } else dispatch({ type: "submitDisable", data: "", valid: true });
+    } else if (chantingRounds >= 16) {
+      if (
+        validations.isValidChantingRounds &&
+        validations.isValidYearChantingSince &&
+        // validations.isValidYearChanting16Rounds &&
+        yearChantingSince.length > 0
+      ) {
+        dispatch({ type: "submitDisable", data: "", valid: false });
+      } else dispatch({ type: "submitDisable", data: "", valid: true });
+    } else if (chantingRounds == 0 && validations.isValidChantingRounds) {
+      dispatch({ type: "submitDisable", data: "", valid: false });
+    } else {
+      dispatch({ type: "submitDisable", data: "", valid: true });
     }
-   else if(chantingRounds>=16){
-      if(validations.isValidChantingRounds&&validations.isValidIntroducedBy&&validations.isValidYearChantingSince&&
-        validations.isValidYearChanting16Rounds&&yearChantingSince.length>0&&yearChanting16Rounds.length>0){
-        dispatch({ type: 'submitDisable', data: "",valid:false });
-      }
-      else dispatch({ type: 'submitDisable', data: "",valid:true });
-    }
-   else if(chantingRounds==0&&validations.isValidChantingRounds&&validations.isValidIntroducedBy){
-      dispatch({ type: 'submitDisable', data: "",valid:false });
-    }
-    else {
-      dispatch({ type: 'submitDisable', data: "",valid:true });}
-  }
+  };
 
   return (
     <>
@@ -67,36 +82,72 @@ const DevotionalInfoForm = () => {
         <h2> Devotional Information</h2>
         <div className="form-group row">
           <div className="form-col col-md-3">
-            <label>Facilitator/counselor<a style={{color:'red'}}>*</a></label>
+            <label>
+              Facilitator/counselor<a style={{ color: "red" }}>*</a>
+            </label>
           </div>
-          <div className='form-col col-md-3'>
-            <select type="select" id='facilitator' value={facilitator} className="form-select"  onChange={inputHandler}onClick={inputHandler}>
-              {facilitators.map((e) =>
+          <div className="form-col col-md-3">
+            <select
+              type="select"
+              id="facilitator"
+              value={facilitator}
+              className="form-select"
+              onChange={inputHandler}
+              onClick={inputHandler}
+            >
+              {facilitators.map((e) => (
                 <option value={e} label={e} key={e} />
-              )}
+              ))}
             </select>
-            <p/>
+            <p />
           </div>
         </div>
         <div className="form-group row">
           <div className="form-col col-md-3">
-            <label>No. Of Rounds Chanting<a style={{color:'red'}}>*</a></label>
+            <label>
+              No. Of Rounds Chanting<a style={{ color: "red" }}>*</a>
+            </label>
           </div>
           <div className={`form-col col-md-3`}>
-            <input type="number" id='chantingRounds' name={validateRounds}value={chantingRounds}className="form-control" placeholder="0" onChange={inputHandler}/>
-            <p id="chantingRoundsError" style={{color:'red',fontSize:"10px"}}/>
+            <input
+              type="number"
+              id="chantingRounds"
+              name={validateRounds}
+              value={chantingRounds}
+              className="form-control"
+              placeholder="0"
+              onChange={inputHandler}
+            />
+            <p
+              id="chantingRoundsError"
+              style={{ color: "red", fontSize: "10px" }}
+            />
           </div>
-          
         </div>
-        
+
         <div className="form-group row">
-        {chantingRounds>0 ?  <><div className="form-col col-md-3">
-            <label>Chanting Since<a style={{color:'red'}}>*</a></label>
-          </div>
-         <div className={`form-col col-md-3`}>
-            <input type="month" id='yearChantingSince' value={yearChantingSince} className="form-control" onChange={inputHandler}/>
-          </div><p/></>:""}
-         {chantingRounds>=16 ? <><div className="form-col col-md-3">
+          {chantingRounds > 0 ? (
+            <>
+              <div className="form-col col-md-3">
+                <label>
+                  Chanting Since<a style={{ color: "red" }}>*</a>
+                </label>
+              </div>
+              <div className={`form-col col-md-3`}>
+                <input
+                  type="month"
+                  id="yearChantingSince"
+                  value={yearChantingSince}
+                  className="form-control"
+                  onChange={inputHandler}
+                />
+              </div>
+              <p />
+            </>
+          ) : (
+            ""
+          )}
+          {/* {chantingRounds>=16 ? <><div className="form-col col-md-3">
             <label>Chanting 16 & above Rounds Since<a style={{color:'red'}}>*</a></label>
           </div>
           <div className={`form-col col-md-3`}>
@@ -107,9 +158,9 @@ const DevotionalInfoForm = () => {
               id='yearChanting16Rounds'
               onChange={inputHandler}
             />
-          </div></>:""}
+          </div></>:""} */}
         </div>
-        <div className="form-group row">
+        {/* <div className="form-group row">
           <div className="form-col form-check col-md-3">
             <label>Introduced By<a style={{color:'red'}}>*</a></label>
           </div>
@@ -150,8 +201,7 @@ const DevotionalInfoForm = () => {
             <textarea className="form-control" id="preferredServices"onChange={inputHandler} value={preferredServices}placeholder={"1.\n2.\n3.\n4."} />
           </div>
           <p/>
-        </div>
-        
+        </div> */}
       </div>
     </>
   );
