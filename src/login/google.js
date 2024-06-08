@@ -152,7 +152,7 @@ export default function GLogin() {
 
 //    }
     const loginUrl1 = "https://api.gaurangavedic.org.in:8443/oauth2/authorization/google";
-    const loginUrl2 = "https://localhost:8443/oauth2/authorization/google"
+    //const loginUrl2 = "https://localhost:8443/oauth2/authorization/google"
 
     const template = <>
         <div className="row pt-5" style={{}}>
@@ -162,7 +162,7 @@ export default function GLogin() {
                     <div className="card-body login-card-body">
                         <h3>Welcome</h3>
                         <p className="mt-4">Login to your Account!!</p>
-                        <button type='button' text='Login'><a href={loginUrl2}>Login</a></button>
+                        <button type='button' text='Login'><a href={loginUrl1}>Login</a></button>
                     </div>
                 </div>
             </div>
