@@ -32,15 +32,15 @@ export default function GLogin() {
         
         if(data){
           let { userEmail,roles } = data;
-          console.log(roles.name)
+          console.log(roles[0].name)
 
           
-          if (roles.name!=null || roles.name.length!=0) {
+          if (roles[0].name!=null || roles[0].name.length!=0) {
             let guardianUser = null;
               setGWaitOn(true)
               const res = await axios.get(DOES_USER_EXIST,{
                 withCredentials:true
-              })
+              }).catch(e=>{setGWaitOn(false)})
             console.log("Does user exist ",res.data);
             guardianUser = res.data;
               setGWaitOn(false)
