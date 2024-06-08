@@ -8,6 +8,7 @@ import axiosCheckPermission from "../axios/axiosCheckPermission";
 import { PleaseWaitContext } from "../context/PleaseWaitContextProvider.js";
 import PleaseWait from "../pleaseWait/PleaseWait";
 import { CHECK_AUTHENTICATION_URL } from "../constants/apiConstant";
+import { DOES_USER_EXIST } from "../constants/apiConstant";
 
 export default function GLogin() {
     const navigate = useNavigate();
@@ -37,26 +38,24 @@ export default function GLogin() {
           if (roles!=null && roles.length!=0) {
             let guardianUser = null;
               setGWaitOn(true)
-              const res = axiosDoesUserExist()
-              console.log("Does user exist response",res);
-              res.then(response => {
-                if(response.ok){
-                    guardianUser = response.body
-                    console.log("guardian user",guardianUser)
-                }
+              const res = await axios.get(DOES_USER_EXIST,{
+                withCredentials:true
               })
+            console.log("Does user exist ",res.data);
+            guardianUser = res.data;
               setGWaitOn(false)
+              console.log("Guardian user ",guardianUser)
              
-              if (guardianUser===null ) {
+              if (guardianUser===null || !guardianUser) {
                 console.log("registration redirection");
                   // to reg
                   sessionStorage.setItem("userEmail", userEmail)
                   navigate("/registration", { state: { connectedTo: "guru", guardianEmail: userEmail } })
               }
               else {
-                console.log("dashboard redirection");
-                  sessionStorage.setItem("userId", guardianUser[0].id)
-                  sessionStorage.setItem("userFname", guardianUser[0].fname)
+                console.log("dashboard redirection",guardianUser);
+                  sessionStorage.setItem("userId", guardianUser.id)
+                  sessionStorage.setItem("userFname", guardianUser.fname)
                   sessionStorage.setItem("userEmail", userEmail)
                   // to dashboard of dependents
                   navigate("/dashboard", { state: { userDetail: guardianUser[0] } })
