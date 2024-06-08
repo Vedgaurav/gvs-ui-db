@@ -7,7 +7,7 @@ import PleaseWait from "../pleaseWait/PleaseWait"
 
 export default () => {
     const { state } = useLocation()
-    const { userId } = state ? state : ""
+    const { userDetail } = state ? state : ""
     const [dep, setDep] = useState([])
     const navigate = useNavigate()
     const { gWaitOn, setGWaitOn } = useContext(PleaseWaitContext)
@@ -16,7 +16,8 @@ export default () => {
     useEffect(() => {
         const fun = async (setDep) => {
             setGWaitOn(true)
-            const res = await axiosGetAllDependents(userId)
+            const res = await axiosGetAllDependents()
+            console.log(res);
             setDep(res.data);
             setGWaitOn(false)
         }
@@ -30,8 +31,8 @@ export default () => {
     }, [])
 
     const addDep = () => {
-        console.log("from dep", userId);
-        navigate("/registration", { state: { userId: userId, connectedTo: userId } })
+        console.log("from dep", sessionStorage.getItem("userId"));
+        navigate("/registration", { state: { userId: sessionStorage.getItem("userId"), connectedTo: sessionStorage.getItem("userId")} })
     }
 
     const template = <>
