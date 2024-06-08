@@ -7,20 +7,22 @@ import './googlelogin.css';
 import axiosCheckPermission from "../axios/axiosCheckPermission";
 import { PleaseWaitContext } from "../context/PleaseWaitContextProvider.js";
 import PleaseWait from "../pleaseWait/PleaseWait";
+import { CHECK_AUTHENTICATION_URL } from "../constants/apiConstant";
 
 export default function GLogin() {
     const navigate = useNavigate();
     const [message, setMessage] = useState("")
     const { gWaitOn, setGWaitOn } = useContext(PleaseWaitContext)
-
+    
     const fetchData = async()=>{
-        const url1 = 'https://api.gaurangavedic.org.in:8443/auth';
-        const url2 = 'https://localhost:8443/auth'
-        const response = await fetch(url1,{
+        const response = await fetch(CHECK_AUTHENTICATION_URL,{
           method: 'GET',
           credentials: 'include',
         });
+        
         const userData= await response.json();
+        console.log("Auth response to json data ")
+        console.log(userData)
         return userData;
     }
 
@@ -33,17 +35,26 @@ export default function GLogin() {
 
           
           if (roles!=null && roles.length!=0) {
-  
+            let guardianUser = null;
               setGWaitOn(true)
-              const res = await axiosDoesUserExist()
-              const guardianUser = res.data
-  
-              if (guardianUser.length == 0) {
+              const res = axiosDoesUserExist()
+              console.log("Does user exist response",res);
+              res.then(response => {
+                if(response.ok){
+                    guardianUser = response.body
+                    console.log("guardian user",guardianUser)
+                }
+              })
+              setGWaitOn(false)
+             
+              if (guardianUser===null ) {
+                console.log("registration redirection");
                   // to reg
                   sessionStorage.setItem("userEmail", userEmail)
                   navigate("/registration", { state: { connectedTo: "guru", guardianEmail: userEmail } })
               }
               else {
+                console.log("dashboard redirection");
                   sessionStorage.setItem("userId", guardianUser[0].id)
                   sessionStorage.setItem("userFname", guardianUser[0].fname)
                   sessionStorage.setItem("userEmail", userEmail)
@@ -69,7 +80,12 @@ export default function GLogin() {
         
        
         useEffect(() => {
-         fetchData().then(data=> loginRedirection(data)).catch((e)=> setMessage("Server is down"));
+                fetchData().then(data=> loginRedirection(data)).catch((e)=> {
+                    console.log("Auth error ",e)
+                    setMessage("Server is down")
+                
+                });
+            
         }, [])
 
     // const auth = async ()=>{
@@ -136,6 +152,8 @@ export default function GLogin() {
 
 
 //    }
+    const loginUrl1 = "https://api.gaurangavedic.org.in:8443/oauth2/authorization/google";
+    const loginUrl2 = "https://localhost:8443/oauth2/authorization/google"
 
     const template = <>
         <div className="row pt-5" style={{}}>
@@ -145,7 +163,7 @@ export default function GLogin() {
                     <div className="card-body login-card-body">
                         <h3>Welcome</h3>
                         <p className="mt-4">Login to your Account!!</p>
-                        <button type='button' text='Login'><a href="https://api.gaurangavedic.org.in:8443/oauth2/authorization/google">Login</a></button>
+                        <button type='button' text='Login'><a href={loginUrl2}>Login</a></button>
                     </div>
                 </div>
             </div>

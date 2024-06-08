@@ -34,7 +34,7 @@ export default function App() {
             }
           />
            <Route
-            path="/v1"
+            path="/registration"
             element={
               <RegistrationForm/>
             }
