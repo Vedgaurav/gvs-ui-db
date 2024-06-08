@@ -42,7 +42,9 @@ const FormsContainer = (props) => {
     // console.log(JSON.stringify(saveData));
     try {
       const response = await axios
-        .post(ADD_DEVOTEE_DATA, saveData)
+        .post(ADD_DEVOTEE_DATA,{
+          withCredentials: true
+        }, saveData)
         .catch((e) => {
           props.onHeaderReceive("API ERROR");
           props.onMessageReceive(
