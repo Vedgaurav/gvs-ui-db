@@ -33,7 +33,7 @@ export default function GLogin() {
         if(data){
           let { userEmail,roles } = data;
           console.log(userEmail)
-          console.log(roles[0][0].name)
+          console.log(roles[0].name)
 
           if (roles[0].name!=null || roles[0].name.length!=0) {
             let guardianUser = null;
