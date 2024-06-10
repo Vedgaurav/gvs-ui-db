@@ -3,7 +3,7 @@ import { DOES_USER_EXIST } from "../constants/apiConstant";
 
 export default async (email) => {
   console.log("Fetch does user exist")
-  return await axios.get(DOES_USER_EXIST, {
+  return await axios.get(DOES_USER_EXIST+"/"+email, {
     withCredentials:true
   });
   // return  await fetch(DOES_USER_EXIST,{
