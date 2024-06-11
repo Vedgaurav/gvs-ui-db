@@ -39,7 +39,7 @@ function RegistrationForm(props) {
     setIsShowModal(false);
     if (sessionStorage.getItem("userId") == null) {
       const email = sessionStorage.getItem("userEmail")
-      const res = await axiosDoesUserExist()
+      const res = await axiosDoesUserExist(email)
       const guardianUser = res.data;
       sessionStorage.setItem("userId", guardianUser[0].id)
       sessionStorage.setItem("userFname", guardianUser[0].fname)
