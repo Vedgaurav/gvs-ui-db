@@ -56,7 +56,7 @@ export default () => {
                     </tr>
                 </thead>
                 {dep ? dep.map((d, index) => (
-                    <tbody>
+                    <tbody key={d.id}>
                         <tr>
                             <th scope="row">{index + 1}</th>
                             <td>{d.id}</td>
