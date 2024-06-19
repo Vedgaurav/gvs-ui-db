@@ -39,10 +39,11 @@ function RegistrationForm(props) {
     setIsShowModal(false);
     if (sessionStorage.getItem("userId") == null) {
       const email = sessionStorage.getItem("userEmail")
-      const res = await axiosDoesUserExist(email)
+      const res = await axiosDoesUserExist()
       const guardianUser = res.data;
-      sessionStorage.setItem("userId", guardianUser[0].id)
-      sessionStorage.setItem("userFname", guardianUser[0].fname)
+      console.log("on close modal",res.data)
+      sessionStorage.setItem("userId", guardianUser.id)
+      sessionStorage.setItem("userFname", guardianUser.fname)
     }
     const detail = {
       id:sessionStorage.getItem("userId"),

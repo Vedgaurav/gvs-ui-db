@@ -7,7 +7,7 @@ export const requiredDataAllFields={
     gender: "",
     dateOfBirth: "",
     maritalStatus: "",
-    bloodGroup: "--Select--",
+    bloodGroup: "",
     language: "Hindi",
     profileImgUrl: "",
     primaryPhone: '',

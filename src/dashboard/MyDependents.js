@@ -16,7 +16,7 @@ export default () => {
     useEffect(() => {
         const fun = async (setDep) => {
             setGWaitOn(true)
-            const res = await axiosGetAllDependents(sessionStorage.userId)
+            const res = await axiosGetAllDependents()
             console.log(res);
             setDep(res.data);
             setGWaitOn(false)
@@ -56,7 +56,7 @@ export default () => {
                     </tr>
                 </thead>
                 {dep ? dep.map((d, index) => (
-                    <tbody>
+                    <tbody key={d.id}>
                         <tr>
                             <th scope="row">{index + 1}</th>
                             <td>{d.id}</td>

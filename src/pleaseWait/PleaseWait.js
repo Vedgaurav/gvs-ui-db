@@ -10,10 +10,10 @@ export default function PleaseWait({ active, children }) {
         <div
             style={{
                 display: "flex",
-                "margin-top": "50vh",
-                "justify-content": "center",
-                "flex-direction": "column",
-                "align-items": "center"
+                marginTop: "50vh",
+                justifyContent: "center",
+                flexDirection: "column",
+                alignItems: "center"
             }}
         >
             <div>
