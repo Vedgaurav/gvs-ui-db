@@ -38,7 +38,7 @@ export default function GLogin() {
           if (roles[0].name!=null || roles[0].name.length!=0) {
             let guardianUser = null;
               setGWaitOn(true)
-              const res = await axios.get(DOES_USER_EXIST+"/"+userEmail ,{
+              const res = await axios.get(DOES_USER_EXIST,{
                 withCredentials:true
               }).catch(e=>{setGWaitOn(false)})
             console.log("Does user exist ",res.data);
@@ -58,7 +58,7 @@ export default function GLogin() {
                   sessionStorage.setItem("userFname", guardianUser.fname)
                   sessionStorage.setItem("userEmail", userEmail)
                   // to dashboard of dependents
-                  navigate("/dashboard", { state: { userDetail: guardianUser[0] } })
+                  navigate("/dashboard", { state: { userDetail: guardianUser } })
               }
           }
           else {
@@ -79,79 +79,19 @@ export default function GLogin() {
         
        
         useEffect(() => {
+          sessionStorage.setItem("userEmail", "");
+          sessionStorage.setItem("userId", "");
                 fetchData().then(data=> loginRedirection(data)).catch((e)=> {
                     console.log("Auth error ",e)
-                    setMessage("Server is down")
+                    setMessage("")
                 
                 });
             
         }, [])
 
-    // const auth = async ()=>{
-
-    //     const AuthRes = await axios.get(CHECK_AUTHENTICATION_URL,{
-    //         withCredentials: true ,
-    //         crossdomain: true,
-    //         cookie: document.cookies
-            
-    //       }).catch((e)=>{console.log('There is an auth api error')})
-    //       console.log(AuthRes);
-    //       console.log('we are now redirected to registration page');
-
-    //     const detail = {
-    //         id: sessionStorage.getItem("userId"),
-    //         fname: sessionStorage.getItem("userFname")
-    //     }
-    //     if (sessionStorage.getItem("userEmail") != null)
-    //         navigate("/dashboard", { state: { userDetail: detail } })}
-
-    // useEffect(() => {
-
-    //     auth();
-    // }, [])
-
-    // const googleFail = (e) => {
-    //     console.log("google fial", e);
-    // };
-
     setTimeout(() => {
         setMessage("")
     }, 2000)
-
-//     const responseGoogle = async (response) => {
-//         let { email, name, googleId } = response.profileObj;
-
-//         const permissionRes = await axiosCheckPermission(email)
-//         const isPermitted = permissionRes.data
-//         if (isPermitted) {
-
-//             setGWaitOn(true)
-//             const res = await axiosDoesUserExist(email)
-//             const allMatchedEmails = res.data
-//             const guardianUser = allMatchedEmails.filter((one) => one.connectedTo == "guru")
-
-//             if (guardianUser.length == 0) {
-//                 // to reg
-//                 sessionStorage.setItem("userEmail", email)
-//                 navigate("/registration", { state: { connectedTo: "guru", guardianEmail: email } })
-//             }
-//             else {
-//                 sessionStorage.setItem("userId", guardianUser[0].id)
-//                 sessionStorage.setItem("userFname", guardianUser[0].fname)
-//                 sessionStorage.setItem("userEmail", email)
-//                 // to dashboard of dependents
-//                 navigate("/dashboard", { state: { userDetail: guardianUser[0] } })
-//             }
-//         }
-//         else {
-
-//             setMessage("Not Authorized. Please contact admin.")
-//         }
-//         setGWaitOn(false)
-
-
-//    }
-    
 
     const template = <>
         <div className="row pt-5" style={{}}>

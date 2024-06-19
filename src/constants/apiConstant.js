@@ -1,5 +1,5 @@
- //const BASE_URL = "https://localhost:8443"
- const BASE_URL = "https://api.gaurangavedic.org.in:8443"
+ const BASE_URL = "https://localhost:8443"
+ //const BASE_URL = "https://api.gaurangavedic.org.in:8443"
 
 export const DOES_USER_EXIST = BASE_URL+"/v1/hlzGlobalReg/doesUserExist"
 export const CHECK_PERMISSION = BASE_URL+"/v1/hlzGlobalReg/checkPermission"

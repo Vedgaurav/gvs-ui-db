@@ -16,7 +16,7 @@ export default () => {
     useEffect(() => {
         const fun = async (setDep) => {
             setGWaitOn(true)
-            const res = await axiosGetAllDependents(sessionStorage.userId)
+            const res = await axiosGetAllDependents()
             console.log(res);
             setDep(res.data);
             setGWaitOn(false)
