@@ -7,7 +7,7 @@ import './googlelogin.css';
 import axiosCheckPermission from "../axios/axiosCheckPermission";
 import { PleaseWaitContext } from "../context/PleaseWaitContextProvider.js";
 import PleaseWait from "../pleaseWait/PleaseWait";
-import { CHECK_AUTHENTICATION_URL,Login_URL } from "../constants/apiConstant";
+import { CHECK_AUTHENTICATION_URL,LOGIN_URL,LOGOUT } from "../constants/apiConstant";
 import { DOES_USER_EXIST } from "../constants/apiConstant";
 
 export default function GLogin() {
@@ -34,6 +34,7 @@ export default function GLogin() {
           let { userEmail,roles } = data;
           console.log(userEmail)
           console.log(roles[0].name)
+          sessionStorage.setItem("userRole", roles[0])
 
           if (roles[0].name!=null || roles[0].name.length!=0) {
             let guardianUser = null;
@@ -62,7 +63,7 @@ export default function GLogin() {
               }
           }
           else {
-            await fetch('https://api.gaurangavedic.org.in:8443/logout',{
+            await fetch(LOGOUT,{
                 method: 'POST',
                 credentials: 'include',
               });
@@ -101,7 +102,7 @@ export default function GLogin() {
                     <div className="card-body login-card-body">
                         <h3>Welcome</h3>
                         <p className="mt-4">Login to your Account!!</p>
-                        <button type='button' text='Login'><a href={Login_URL}>Login</a></button>
+                        <button type='button' text='Login'><a href={LOGIN_URL}>Login</a></button>
                     </div>
                 </div>
             </div>

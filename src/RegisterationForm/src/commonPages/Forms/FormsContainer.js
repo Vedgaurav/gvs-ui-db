@@ -59,6 +59,19 @@ const FormsContainer = (props) => {
         props.onMessageReceive("Data Successfully Saved");
         dispatch({ type: "submitted" });
         setError(response.status);
+
+
+        if(props.connectedTo==="guru"){
+        const response = await fetch(CHECK_AUTHENTICATION_URL,{
+          method: 'GET',
+          credentials: 'include',
+        }).catch(e=>console.log("There is an error in fetching the Auth response"));
+        
+        const userData= await response.json();
+        console.log("Auth response to json data ")
+        console.log(userData)
+      }
+    
       } else if (response.status === 408) {
         console.log("SOMETHING WENT WRONG");
         props.onHeaderReceive("API ERROR");
@@ -73,7 +86,14 @@ const FormsContainer = (props) => {
           "There is error in submitting the response. Kindly try again later"
         );
         setError(response.status);
-      } else {
+      }  else if (response.data.status === 500) {
+        console.log("SOMETHING WENT WRONG");
+        props.onHeaderReceive("API ERROR");
+        props.onMessageReceive(
+          "There is an Internal Server Error"
+        );
+        setError(response.status);
+      }else {
         props.onHeaderReceive("API ERROR");
         props.onMessageReceive(
           "There is error in submitting the response. Kindly try again later"
@@ -115,16 +135,10 @@ const FormsContainer = (props) => {
       case 4:
         setFormStage(forms.stage4);
         setStage(4);
-
-        break;
-
-      case 5:
-        setStage(5);
-
         setSubmit("Submit");
         break;
 
-      case 6:
+      case 5:
         submitHandler();
         break;
       default:

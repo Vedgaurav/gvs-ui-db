@@ -13,6 +13,7 @@ import Dashboard from "./dashboard";
 import MyDependents from "./dashboard/MyDependents";
 import RegistrationForm from "./RegisterationForm/src/RegistrationForm";
 import NavBar from "./nav/NavBar";
+import Admin from "./Admin/Admin";
 
 export default function App() {
   const template = () => (
@@ -55,6 +56,12 @@ export default function App() {
             path="/dependents"
             element={
               <MyDependents/>
+            }
+          />
+          <Route
+            path="/admin"
+            element={
+              <Admin/>
             }
           />
         </Routes>
