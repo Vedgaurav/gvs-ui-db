@@ -277,7 +277,7 @@ const PersonalInfoForm = (props) => {
               type="date"
               className="form-control"
               min="1900-01-01"
-              max="2023-12-31"
+              max="2024-08-31"
               onChange={inputHandler}
               value={dateOfBirth}
               data-toggle="tooltip"
