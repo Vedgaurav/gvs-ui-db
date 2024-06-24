@@ -2,10 +2,12 @@
 import { Link } from "react-router-dom";
 import React, { useEffect, useState } from 'react';
 import "./index.css";
+import { useNavigate } from "react-router-dom";
 import { LOGOUT } from "../constants/apiConstant";
 
 
 const NavBar = () => {
+  const navigate = useNavigate()
 
   useEffect(() => {
        
