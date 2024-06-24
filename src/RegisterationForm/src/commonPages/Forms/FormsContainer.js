@@ -46,7 +46,7 @@ const FormsContainer = (props) => {
           withCredentials: true
         })
         .catch((e) => {
-          props.onHeaderReceive("API ERROR");
+          props.onHeaderReceive("API ERROR")
           props.onMessageReceive(
             "There is error in submitting the response. Kindly try again later"
           );
@@ -58,19 +58,12 @@ const FormsContainer = (props) => {
         props.onHeaderReceive("Success");
         props.onMessageReceive("Data Successfully Saved");
         dispatch({ type: "submitted" });
-        setError(response.status);
+        setError(response.status)
 
-
-        if(props.connectedTo==="guru"){
-        const response = await fetch(CHECK_AUTHENTICATION_URL,{
-          method: 'GET',
-          credentials: 'include',
-        }).catch(e=>console.log("There is an error in fetching the Auth response"));
-        
-        const userData= await response.json();
-        console.log("Auth response to json data ")
-        console.log(userData)
-      }
+        if (props.connectedTo === "guru") {
+          sessionStorage.setItem("userId", response.data.id)
+      sessionStorage.setItem("userFname", response.data.fname)
+        } else {console.log("this person is not guru")};
     
       } else if (response.status === 408) {
         console.log("SOMETHING WENT WRONG");

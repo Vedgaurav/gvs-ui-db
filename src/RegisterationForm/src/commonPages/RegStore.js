@@ -404,7 +404,7 @@ const form1Reducer = (state = requiredDataAllFields, action) => {
           gender: "",
           dateOfBirth: "",
           maritalStatus: "",
-          bloodGroup: "--Select--",
+          bloodGroup: "",
           language: "Hindi",
           profileImgUrl: "",
           primaryPhone: '',
