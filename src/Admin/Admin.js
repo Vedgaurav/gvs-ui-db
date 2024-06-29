@@ -76,7 +76,7 @@ export default () => {
                 <td>{d.primaryPhone}</td>
                 <td>Krishna</td>
                 <td>{d.whatsappPhone}</td>
-                <td> <button className="btn btn-warning" disabled={true} type="button">Accept</button></td>
+                {/* <td> <button className="btn btn-warning" disabled={true} type="button">Accept</button></td> */}
                 
                 <td> <button className="btn"disabled={false} type="button" onClick={()=>whatsAppNotifier(d?.primaryPhone,d?.whatsappPhone,d?.id,d?.fname)}>
                     <img style={{ height: "2rem", width: "25px"}} src="../images/whatsapp_icon.png"/></button></td>
@@ -113,7 +113,7 @@ export default () => {
                         <th scope="col">Phone No.</th>
                         <th scope="col">Connected To</th>
                         <th scope="col">Connection's PhoneNo.</th>
-                        <th scope="col">Action</th>
+                        {/* <th scope="col">Action</th> */}
                         <th scope="col">Notify</th>
                     </tr>
                 </thead>
