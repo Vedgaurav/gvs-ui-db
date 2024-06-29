@@ -6,15 +6,17 @@ import { useNavigate } from "react-router-dom";
 import { LOGOUT } from "../constants/apiConstant";
 
 
-const NavBar = () => {
+const NavBar = (props) => {
   const navigate = useNavigate()
 
   useEffect(() => {
        
       
-    }, [sessionStorage.getItem("userRole")])
+    }, [props])
 
     const logoutHandler=async()=>{
+
+      props.onLogout();
 
       sessionStorage.clear();
 
@@ -39,7 +41,9 @@ const NavBar = () => {
               />
         </Link>
         
-        <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <button className="navbar-toggler" type="button" data-bs-toggle="collapse" 
+        data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" 
+        aria-expanded="false" aria-label="Toggle navigation">
           <span className="navbar-toggler-icon"></span>
         </button>
         <div className="collapse navbar-collapse" id="navbarSupportedContent" style={{marginLeft:'3.5rem'}}>
@@ -49,11 +53,11 @@ const NavBar = () => {
                <Link to='/'>Home</Link> 
                 </a>
             </li> */}
-            {sessionStorage.getItem("userRole")==="ROLE_ADMIN"?<li className="nav-item">
+            {props?.adminRole==="ROLE_ADMIN"?<li className="nav-item">
               <a className="nav-link" href="#"><Link to='/admin'>Admin</Link> </a>
             </li>:""}
             <li className="nav-item">
-              <button className="nav-link" onClick={logoutHandler}>Logout</button>
+            {props?.loginLogout==="logout" ?<button className="nav-link" onClick={logoutHandler}>{props.loginLogout}</button>:""}
             </li>
           </ul>
         </div>
