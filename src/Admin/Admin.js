@@ -5,7 +5,6 @@ import { GET_REGISTERED_USERS } from "../constants/apiConstant"
 import LoadingSpinner from "../RegisterationForm/src/utilities/loadingSpinner/LoadingSpinner";
 import "../RegisterationForm/src/commonPages/Forms/FormInput.css"
 import axios from "axios"
-import { FloatingWhatsApp } from 'react-floating-whatsapp'
 
 export default () => {
     const { state } = useLocation()
