@@ -5,6 +5,7 @@ import { GET_REGISTERED_USERS } from "../constants/apiConstant"
 import LoadingSpinner from "../RegisterationForm/src/utilities/loadingSpinner/LoadingSpinner";
 import "../RegisterationForm/src/commonPages/Forms/FormInput.css"
 import axios from "axios"
+import { FloatingWhatsApp } from 'react-floating-whatsapp'
 
 export default () => {
     const { state } = useLocation()
@@ -35,6 +36,20 @@ export default () => {
         setGWaitOn(false)
     }
 
+    const whatsAppNotifier =(primaryPhoneNo,whatsappPhone,id,fname)=>{
+
+        console.log(primaryPhoneNo);
+        console.log(whatsappPhone);
+        console.log(id);
+        console.log(fname);
+
+        if(whatsappPhone.length==0||whatsappPhone==null)
+        window.open(`https://wa.me/91${primaryPhoneNo}?text=Hare%20K%E1%B9%9B%E1%B9%A3%E1%B9%87a%21%0A%0AYour%20information%20has%20been%20successfully%20updated.%20Your%20membership%20id%20is%20%2A${id}%2A.%0APlease%20keep%20this%20ID%20saved.%20It%20would%20be%20needed%20at%20the%20time%20of%20Yatra%20registration%20and%20accommodation%20booking.%0A%0AIn%20your%20service%2C%0AGVS%20Dham%20Yatra%20Committee`)
+        else
+        window.open(`https://wa.me/91${whatsappPhone}?text=Hare%20K%E1%B9%9B%E1%B9%A3%E1%B9%87a%21%0A%0AYour%20information%20has%20been%20successfully%20updated.%20Your%20membership%20id%20is%20%2A${id}%2A.%0APlease%20keep%20this%20ID%20saved.%20It%20would%20be%20needed%20at%20the%20time%20of%20Yatra%20registration%20and%20accommodation%20booking.%0A%0AIn%20your%20service%2C%0AGVS%20Dham%20Yatra%20Committee`)
+
+    }
+
 
       
         
@@ -49,29 +64,36 @@ export default () => {
             navigate("/login")
     }, [])
 
-    const showData=<>{dep ? dep.map((d, index) => (
-        <tbody>
-            <tr>
+    const showData=<><tbody>{dep ? dep.map((d, index) => (
+        
+            <tr key={index}>
                 <th scope="row">{index + 1}</th>
-                <td>{d.id}</td>
-                <td>{d.fname}</td>
-                <td>{d.gender}</td>
-                <td>{d.primaryPhone}</td>
+                <td>{d?.id}</td>
+                <td>{d?.fname}</td>
+                <td>{d.age}</td>
+                <td>{d.currentAddress.city}</td>
+                <td>{d.chantingRounds}</td>
                 <td>{d.facilitator}</td>
+                <td>{d.primaryPhone}</td>
+                <td>Krishna</td>
+                <td>{d.whatsappPhone}</td>
                 <td> <button className="btn btn-warning" disabled={true} type="button">Accept</button></td>
-                <td> <button className="btn btn-danger" disabled={true} type="button">whats app</button></td>
+                
+                <td> <button className="btn"disabled={false} type="button" onClick={()=>whatsAppNotifier(d?.primaryPhone,d?.whatsappPhone,d?.id,d?.fname)}>
+                    <img style={{ height: "2rem", width: "25px"}} src="../images/whatsapp_icon.png"/></button></td>
             </tr>
-        </tbody>
-    )) : <tbody>
+        
+    )) : 
         <tr>
             <td colSpan="3">No members found.</td>
 
         </tr>
-    </tbody>}</>
+}
+    </tbody></>
 
 
     const template = <>
-        <h1 className="display-1">Manage Registered Members</h1>
+        <h8 className="display-5">Manage Registered Members</h8>
 
         <div className="form-group row container-md">
             <div className="d-grid gap-2 d-md-flex justify-content-md-end">
@@ -85,9 +107,13 @@ export default () => {
                         <th scope="col">#</th>
                         <th scope="col">ID</th>
                         <th scope="col">Name</th>
-                        <th scope="col">Gender</th>
-                        <th scope="col">PhoneNo.</th>
+                        <th scope="col">Age</th>
+                        <th scope="col">City</th>
+                        <th scope="col">Rounds</th>
                         <th scope="col">Facilitator</th>
+                        <th scope="col">Phone No.</th>
+                        <th scope="col">Connected To</th>
+                        <th scope="col">Connection's PhoneNo.</th>
                         <th scope="col">Action</th>
                         <th scope="col">Notify</th>
                     </tr>

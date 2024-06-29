@@ -10,7 +10,7 @@ import PleaseWait from "../pleaseWait/PleaseWait";
 import { CHECK_AUTHENTICATION_URL,LOGIN_URL,LOGOUT } from "../constants/apiConstant";
 import { DOES_USER_EXIST } from "../constants/apiConstant";
 
-export default function GLogin() {
+export default function GLogin(props) {
     const navigate = useNavigate();
     const [message, setMessage] = useState("")
     const { gWaitOn, setGWaitOn } = useContext(PleaseWaitContext)
@@ -33,8 +33,10 @@ export default function GLogin() {
         if(data){
           let { userEmail,roles } = data;
           console.log(userEmail)
-          console.log(roles[0].name)
-          sessionStorage.setItem("userRole", roles[0])
+          console.log(roles)
+          sessionStorage.setItem("userRole", roles)
+          console.log((roles?.filter((e)=>e.name==='ROLE_ADMIN'))[0].name)
+          
 
           if (roles[0].name!=null || roles[0].name.length!=0) {
             let guardianUser = null;
@@ -46,8 +48,9 @@ export default function GLogin() {
             guardianUser = res.data;
               setGWaitOn(false)
               console.log("Guardian user ",guardianUser)
-             
+              
               if (guardianUser===null || !guardianUser) {
+                props.onSetNavBarProps((roles.filter((e)=>e.name==='ROLE_ADMIN'))[0].name,"logout");
                 console.log("registration redirection");
                   // to reg
                   sessionStorage.setItem("userEmail", userEmail)
@@ -58,6 +61,7 @@ export default function GLogin() {
                   sessionStorage.setItem("userId", guardianUser.id)
                   sessionStorage.setItem("userFname", guardianUser.fname)
                   sessionStorage.setItem("userEmail", userEmail)
+                  props.onSetNavBarProps((roles.filter((e)=>e.name==='ROLE_ADMIN'))[0].name,"logout");
                   // to dashboard of dependents
                   navigate("/dashboard", { state: { userDetail: guardianUser } })
               }

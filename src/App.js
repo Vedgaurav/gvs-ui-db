@@ -1,6 +1,6 @@
 import "./app.css"
 import HomePage from "./home";
-import React from "react";
+import React, { useState } from "react";
 import {
   BrowserRouter,
   Route,
@@ -16,11 +16,19 @@ import NavBar from "./nav/NavBar";
 import Admin from "./Admin/Admin";
 
 export default function App() {
+
+  const [loginLogout,setLoginlogout]=useState("");
+  const [adminRole,setAdminRole]=useState("");
+
+  const setNavBarProps=(admin,logout)=>{
+
+    setAdminRole(admin);
+    setLoginlogout(logout);
+  }
   const template = () => (
     <>
-    <meta httpEquiv="Access-Control-Allow-Origin" content="*" />
       <BrowserRouter>
-      <NavBar/>
+      <NavBar adminRole={adminRole} loginLogout={loginLogout} onLogout={()=>setNavBarProps("","")}/>
         <Routes>
           <Route
             index
@@ -31,7 +39,7 @@ export default function App() {
           <Route
             path="/login"
             element={
-              <GLogin />
+              <GLogin onSetNavBarProps={(adminRole,logout)=>setNavBarProps(adminRole,logout)}/>
             }
           />
            <Route
