@@ -69,7 +69,7 @@ export default function App() {
           <Route
             path="/admin"
             element={
-              <Admin/>
+              <Admin admin={adminRole}/>
             }
           />
         </Routes>
