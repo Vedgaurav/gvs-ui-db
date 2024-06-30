@@ -43,7 +43,7 @@ export default function GLogin(props) {
         if(data){
           let { userEmail,roles } = data;          
 
-          if (roles[0]?.name!=null || roles[0]?.name.length!=0) {
+          if (roles && roles[0]?.name.length!=0) {
             let guardianUser = null;
               setGWaitOn(true)
               const res = await axios.get(DOES_USER_EXIST,{
@@ -72,7 +72,7 @@ export default function GLogin(props) {
               }
           }
           else {
-            logout
+            logout();
               setMessage("Not Authorized. Please contact admin.")
           }  
   
@@ -86,7 +86,7 @@ export default function GLogin(props) {
           sessionStorage.setItem("userEmail", "");
           sessionStorage.setItem("userId", "");
                 fetchData().then(data=> loginRedirection(data)).catch(async(e)=> {
-                  logout                
+                  //logout();                
                 });
             
         }, [])
