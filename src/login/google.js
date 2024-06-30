@@ -22,9 +22,19 @@ export default function GLogin(props) {
         });
         
         const userData= await response.json();
-        console.log("Auth response to json data ")
-        console.log(userData)
+        console.log("Auth response to json data ",userData)
         return userData;
+    }
+
+    const logout=async()=>{
+
+      sessionStorage.clear();
+
+       await axios.post(LOGOUT,{
+        withCredentials:true
+      })
+
+
     }
 
     const loginRedirection=async(data)=>{
@@ -62,15 +72,9 @@ export default function GLogin(props) {
               }
           }
           else {
-            await fetch(LOGOUT,{
-                method: 'POST',
-                credentials: 'include',
-              });
-  
+            logout
               setMessage("Not Authorized. Please contact admin.")
-          }
-          setGWaitOn(false)
-  
+          }  
   
      }
           
@@ -81,10 +85,8 @@ export default function GLogin(props) {
         useEffect(() => {
           sessionStorage.setItem("userEmail", "");
           sessionStorage.setItem("userId", "");
-                fetchData().then(data=> loginRedirection(data)).catch((e)=> {
-                    console.log("Auth error ",e)
-                    setMessage("")
-                
+                fetchData().then(data=> loginRedirection(data)).catch(async(e)=> {
+                  logout                
                 });
             
         }, [])
@@ -101,7 +103,7 @@ export default function GLogin(props) {
                     <div className="card-body login-card-body">
                         <h3>Welcome</h3>
                         <p className="mt-4">Login to your Account!!</p>
-                        <button type='button' text='Login'><a href={LOGIN_URL}>Login</a></button>
+                        <button className="google-login-button" type='button' text='Login'><a style={{color:"white"}}href={LOGIN_URL}>Login with Google</a></button>
                     </div>
                 </div>
             </div>

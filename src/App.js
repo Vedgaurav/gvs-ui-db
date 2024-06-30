@@ -69,7 +69,7 @@ export default function App() {
           <Route
             path="/admin"
             element={
-              <Admin admin={adminRole}/>
+              <Admin admin={adminRole} onClick={()=>setLoginlogout("logout")}/>
             }
           />
         </Routes>

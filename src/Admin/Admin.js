@@ -29,6 +29,7 @@ export default (props) => {
             navigate("/login");
     }
     else if(props?.admin!=='ADMIN_ROLE'){
+        props.onClick();
         navigate("/dashboard",{ state: { userDetail: {id:sessionStorage.getItem("userId"),fname:sessionStorage.getItem("userFname")} } });
     }
     else{
