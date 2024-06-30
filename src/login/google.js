@@ -31,14 +31,9 @@ export default function GLogin(props) {
         
         
         if(data){
-          let { userEmail,roles } = data;
-          console.log(userEmail)
-          console.log(roles)
-          sessionStorage.setItem("userRole", roles)
-          console.log((roles?.filter((e)=>e.name==='ROLE_ADMIN'))[0].name)
-          
+          let { userEmail,roles } = data;          
 
-          if (roles[0].name!=null || roles[0].name.length!=0) {
+          if (roles[0]?.name!=null || roles[0]?.name.length!=0) {
             let guardianUser = null;
               setGWaitOn(true)
               const res = await axios.get(DOES_USER_EXIST,{
@@ -50,7 +45,7 @@ export default function GLogin(props) {
               console.log("Guardian user ",guardianUser)
               
               if (guardianUser===null || !guardianUser) {
-                props.onSetNavBarProps((roles.filter((e)=>e.name==='ROLE_ADMIN'))[0].name,"logout");
+                props.onSetNavBarProps((roles.filter((e)=>e.name==='ROLE_ADMIN'))[0]?.name,"logout");
                 console.log("registration redirection");
                   // to reg
                   sessionStorage.setItem("userEmail", userEmail)
@@ -61,7 +56,7 @@ export default function GLogin(props) {
                   sessionStorage.setItem("userId", guardianUser.id)
                   sessionStorage.setItem("userFname", guardianUser.fname)
                   sessionStorage.setItem("userEmail", userEmail)
-                  props.onSetNavBarProps((roles.filter((e)=>e.name==='ROLE_ADMIN'))[0].name,"logout");
+                  props.onSetNavBarProps((roles.filter((e)=>e.name==='ROLE_ADMIN'))[0]?.name,"logout");
                   // to dashboard of dependents
                   navigate("/dashboard", { state: { userDetail: guardianUser } })
               }

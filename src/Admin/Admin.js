@@ -6,7 +6,7 @@ import LoadingSpinner from "../RegisterationForm/src/utilities/loadingSpinner/Lo
 import "../RegisterationForm/src/commonPages/Forms/FormInput.css"
 import axios from "axios"
 
-export default () => {
+export default (props) => {
     const { state } = useLocation()
     const { userDetail } = state ? state : ""
     const [dep, setDep] = useState([])
@@ -22,6 +22,20 @@ export default () => {
         console.log(startDate);
         console.log(endDate)
     },[startDate,endDate])
+
+    useEffect(()=>{
+
+    if (sessionStorage.getItem("userEmail") == null){
+            navigate("/login");
+    }
+    else if(props?.admin!=='ADMIN_ROLE'){
+        navigate("/dashboard",{ state: { userDetail: {id:sessionStorage.getItem("userId"),fname:sessionStorage.getItem("userFname")} } });
+    }
+    else{
+        console.debug("welcome to Admin Pannel")
+    }
+
+    },[])
 
 
     const getRegisteredMembers = async () => {
