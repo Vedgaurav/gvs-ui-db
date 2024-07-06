@@ -5,8 +5,12 @@ import { GET_REGISTERED_USERS } from "../constants/apiConstant"
 import LoadingSpinner from "../RegisterationForm/src/utilities/loadingSpinner/LoadingSpinner";
 import "../RegisterationForm/src/commonPages/Forms/FormInput.css"
 import axios from "axios"
+import { TablePagination } from "@mui/material";
+import { useSelector,useDispatch } from "react-redux";
 
 export default (props) => {
+    const dispatch = useDispatch();
+    const {admin}=useSelector((states)=>states)
     const { state } = useLocation()
     const { userDetail } = state ? state : ""
     const [dep, setDep] = useState([])
@@ -28,12 +32,14 @@ export default (props) => {
     if (sessionStorage.getItem("userEmail") == null){
             navigate("/login");
     }
-    else if(props?.admin!=='ROLE_ADMIN'){
-        props.onClick();
-        navigate("/dashboard",{ state: { userDetail: {id:sessionStorage.getItem("userId"),fname:sessionStorage.getItem("userFname")} } });
+    else if(admin.length!==0 && admin ==='admin'){
+
+        console.log("welcome to admin pannel")
+        
     }
     else{
-        console.debug("welcome to Admin Pannel")
+        dispatch({ type: "logout", data: "logout"});
+        navigate("/dashboard",{ state: { userDetail: {id:sessionStorage.getItem("userId"),fname:sessionStorage.getItem("userFname")} } });
     }
 
     },[])

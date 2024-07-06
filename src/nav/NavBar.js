@@ -4,26 +4,48 @@ import React, { useEffect, useState } from 'react';
 import "./index.css";
 import { useNavigate } from "react-router-dom";
 import { LOGOUT } from "../constants/apiConstant";
+import { useSelector,useDispatch  } from "react-redux";
 
 
-const NavBar = (props) => {
+const NavBar = () => {
+
+  const dispatch = useDispatch();
+
+  const {admin,logout}=useSelector((states)=> states)
   const navigate = useNavigate()
+
+  useEffect(() => {
+    if(sessionStorage.getItem("logout")==="logout"){
+      dispatch({ type: "logout", data: "logout"});
+      
+
+    }
+    if(sessionStorage.getItem("admin")==="admin"){
+
+      dispatch({ type: "admin", data: "admin"});
+      
+
+    }
+       
+      
+    }, [])
 
   useEffect(() => {
        
       
-    }, [props])
+    }, [admin,logout])
 
     const logoutHandler=async()=>{
 
-      props.onLogout();
+
 
       sessionStorage.clear();
 
       await fetch(LOGOUT,{
         method: 'POST',
         credentials: 'include',
-      });
+      }).then(()=>{ dispatch({ type: "logout", data: ""});
+      dispatch({ type: "admin", data: ""});});
       navigate("/login")
 
   }
@@ -53,11 +75,11 @@ const NavBar = (props) => {
                <Link to='/'>Home</Link> 
                 </a>
             </li> */}
-            {props?.adminRole==="ROLE_ADMIN"?<li className="nav-item">
+            {admin && admin ==="admin"?<li className="nav-item">
               <a className="nav-link" href="#"><Link to='/admin'>Admin</Link> </a>
             </li>:""}
             <li className="nav-item">
-            {props?.loginLogout==="logout" ?<button className="nav-link" onClick={logoutHandler}>{props.loginLogout}</button>:""}
+            {logout && logout ==="logout" ?<button className="nav-link" onClick={logoutHandler}>{logout}</button>:""}
             </li>
           </ul>
         </div>

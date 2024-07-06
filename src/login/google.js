@@ -9,8 +9,10 @@ import { PleaseWaitContext } from "../context/PleaseWaitContextProvider.js";
 import PleaseWait from "../pleaseWait/PleaseWait";
 import { CHECK_AUTHENTICATION_URL,LOGIN_URL,LOGOUT } from "../constants/apiConstant";
 import { DOES_USER_EXIST } from "../constants/apiConstant";
+import { useDispatch } from "react-redux";
 
-export default function GLogin(props) {
+export default function GLogin() {
+    const dispatch = useDispatch();
     const navigate = useNavigate();
     const [message, setMessage] = useState("")
     const { gWaitOn, setGWaitOn } = useContext(PleaseWaitContext)
@@ -32,7 +34,8 @@ export default function GLogin(props) {
 
        await axios.post(LOGOUT,{
         withCredentials:true
-      })
+      }).then(()=>{ dispatch({ type: "logout", data: ""});
+      dispatch({ type: "admin", data: ""});});
 
 
     }
@@ -55,7 +58,13 @@ export default function GLogin(props) {
               console.log("Guardian user ",guardianUser)
               
               if (guardianUser===null || !guardianUser) {
-                props.onSetNavBarProps((roles.filter((e)=>e.name==='ROLE_ADMIN'))[0]?.name,"logout");
+                if((roles.filter((e)=>e.name==='ROLE_ADMIN'))[0]?.length!==0)
+                {
+                dispatch({ type: "admin", data: "admin"});
+                sessionStorage.setItem("admin", "admin");
+                }
+                dispatch({ type: "logout", data: "logout"});
+                sessionStorage.setItem("logout", "logout");
                 console.log("registration redirection");
                   // to reg
                   sessionStorage.setItem("userEmail", userEmail)
@@ -66,7 +75,11 @@ export default function GLogin(props) {
                   sessionStorage.setItem("userId", guardianUser.id)
                   sessionStorage.setItem("userFname", guardianUser.fname)
                   sessionStorage.setItem("userEmail", userEmail)
-                  props.onSetNavBarProps((roles.filter((e)=>e.name==='ROLE_ADMIN'))[0]?.name,"logout");
+                  sessionStorage.setItem("logout", "logout");
+                  dispatch({ type: "logout", data: "logout"});
+      dispatch({ type: "admin", data: (roles.filter((e)=>e.name==='ROLE_ADMIN'))[0]?.name});
+      sessionStorage.setItem("admin", (roles.filter((e)=>e.name==='ROLE_ADMIN'))[0]?.name);
+
                   // to dashboard of dependents
                   navigate("/dashboard", { state: { userDetail: guardianUser } })
               }
