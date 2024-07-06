@@ -17,18 +17,10 @@ import Admin from "./Admin/Admin";
 
 export default function App() {
 
-  const [loginLogout,setLoginlogout]=useState("");
-  const [adminRole,setAdminRole]=useState("");
-
-  const setNavBarProps=(admin,logout)=>{
-
-    setAdminRole(admin);
-    setLoginlogout(logout);
-  }
   const template = () => (
     <>
       <BrowserRouter>
-      <NavBar adminRole={adminRole} loginLogout={loginLogout} onLogout={()=>setNavBarProps("","")}/>
+      <NavBar />
         <Routes>
           <Route
             index
@@ -39,7 +31,7 @@ export default function App() {
           <Route
             path="/login"
             element={
-              <GLogin onSetNavBarProps={(adminRole,logout)=>setNavBarProps(adminRole,logout)}/>
+              <GLogin />
             }
           />
            <Route
@@ -69,7 +61,7 @@ export default function App() {
           <Route
             path="/admin"
             element={
-              <Admin admin={adminRole} onClick={()=>setLoginlogout("logout")}/>
+              <Admin />
             }
           />
         </Routes>
