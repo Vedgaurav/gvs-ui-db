@@ -11,7 +11,7 @@ const NavBar = () => {
 
   const dispatch = useDispatch();
 
-  const {admin,logout}=useSelector((states)=> states)
+  const {admin,logout}=useSelector((state)=> state)
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -20,9 +20,9 @@ const NavBar = () => {
       
 
     }
-    if(sessionStorage.getItem("admin")==="admin"){
+    if(sessionStorage.getItem("admin")==="ROLE_ADMIN"){
 
-      dispatch({ type: "admin", data: "admin"});
+      dispatch({ type: "admin", data: "ROLE_ADMIN"});
       
 
     }
@@ -75,7 +75,7 @@ const NavBar = () => {
                <Link to='/'>Home</Link> 
                 </a>
             </li> */}
-            {admin && admin ==="admin"?<li className="nav-item">
+            {admin && admin ==="ROLE_ADMIN"?<li className="nav-item">
               <a className="nav-link" href="#"><Link to='/admin'>Admin</Link> </a>
             </li>:""}
             <li className="nav-item">

@@ -10,7 +10,7 @@ import { useSelector,useDispatch } from "react-redux";
 
 export default (props) => {
     const dispatch = useDispatch();
-    const {admin}=useSelector((states)=>states)
+    const {admin}=useSelector((state)=>state)
     const { state } = useLocation()
     const { userDetail } = state ? state : ""
     const [dep, setDep] = useState([])
@@ -32,7 +32,7 @@ export default (props) => {
     if (sessionStorage.getItem("userEmail") == null){
             navigate("/login");
     }
-    else if(admin.length!==0 && admin ==='admin'){
+    else if(admin.length!==0 && admin ==='ROLE_ADMIN'){
 
         console.log("welcome to admin pannel")
         

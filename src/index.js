@@ -10,7 +10,7 @@ const rootElement = ReactDOM.createRoot(document.getElementById('root'));
 rootElement.render(
   <StrictMode>
     <PleaseWaitContextProvider>
-      <Provider store={store}><Provider store={store2}><App /></Provider></Provider>
+      <Provider store={store}><App /></Provider>
     </PleaseWaitContextProvider>
   </StrictMode>
 );
