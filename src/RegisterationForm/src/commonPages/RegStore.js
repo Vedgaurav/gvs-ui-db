@@ -395,8 +395,22 @@ const form1Reducer = (state = requiredDataAllFields, action) => {
           ...state.validations,
           isSubmitDisabled:action.valid,}
       }
+      case "admin":
+ //       console.log(action.type,action.data)
+        return {
+          ...state,
+          admin: action.data,
+          };
+
+        case "logout":
+  //           console.log(action.type,action.data)
+             return {
+               ...state,
+               logout: action.data,
+               };
        case "submitted":
          return {
+          ...state,
           fname: "",
           mname: "",
           lname: "",

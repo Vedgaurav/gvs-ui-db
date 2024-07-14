@@ -32,7 +32,7 @@ export default () => {
 
     const addDep = () => {
         console.log("from dep", sessionStorage.getItem("userId"));
-        navigate("/registration", { state: { userId: sessionStorage.getItem("userId"), connectedTo: sessionStorage.getItem("userId")} })
+        navigate("/registration", { state: { userId: sessionStorage.getItem("userId"), connectedTo: sessionStorage.getItem("userId") } })
     }
 
     const template = <>
@@ -55,20 +55,43 @@ export default () => {
                         <th scope="col"></th>
                     </tr>
                 </thead>
-                {dep ? dep.map((d, index) => (
-                    <tbody key={d.id}>
-                        <tr>
-                            <th scope="row">{index + 1}</th>
-                            <td>{d.id}</td>
-                            <td>{d.fname}</td>
-                            <td>{d.gender}</td>
-                            <td>{d.primaryPhone}</td>
-                            <td>{d.facilitator}</td>
-                            <td> <button className="btn btn-warning" disabled={true} type="button">Edit</button></td>
-                            <td> <button className="btn btn-danger" disabled={true} type="button">Delete</button></td>
-                        </tr>
-                    </tbody>
-                )) : <tbody>
+                {dep ? dep.map((d, index) => {
+                    if (d.id.charAt(0).toUpperCase() === "T")
+                       { return (
+                        
+                            <tbody key={d.id}>
+                                
+                                <tr>
+                                
+                                    <th scope="row"><strike>{index + 1}</strike></th>
+                                    <td><strike>{d.id}</strike></td>
+                                    <td><strike>{d.fname}</strike></td>
+                                    <td><strike>{d.gender}</strike></td>
+                                    <td><strike>{d.primaryPhone}</strike></td>
+                                    <td><strike>{d.facilitator}</strike></td>
+                                    <td> <button className="btn btn-warning" disabled={true} type="button">Edit</button></td>
+                                    <td> <button className="btn btn-danger" disabled={true} type="button">Delete</button></td>
+                                </tr>
+                            </tbody>
+                        )
+                        }
+                    else 
+                    {return (
+                        <tbody key={d.id}>
+                            <tr>
+                                <th scope="row">{index + 1}</th>
+                                <td>{d.id}</td>
+                                <td>{d.fname}</td>
+                                <td>{d.gender}</td>
+                                <td>{d.primaryPhone}</td>
+                                <td>{d.facilitator}</td>
+                                <td> <button className="btn btn-warning" disabled={true} type="button">Edit</button></td>
+                                <td> <button className="btn btn-danger" disabled={true} type="button">Delete</button></td>
+                            </tr>
+                        </tbody>
+                    )
+                    }
+                }) : <tbody>
                     <tr>
                         <td colSpan="3">No members found.</td>
 
@@ -78,6 +101,6 @@ export default () => {
         </div>
     </>
     return <>
-            {gWaitOn?<PleaseWait/>:template}
+        {gWaitOn ? <PleaseWait /> : template}
     </>
 }

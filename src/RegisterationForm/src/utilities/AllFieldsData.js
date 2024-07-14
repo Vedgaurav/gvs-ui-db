@@ -83,8 +83,10 @@ export const requiredDataAllFields={
     isValidCurrentCompany:false,
     isSameAddress:false,
     isShowPreviewOn:false,
-    imageSource:"",
-  }
+    imageSource:""
+  },
+    admin:"",
+    logout:""
   }
 
 //language: send an array
