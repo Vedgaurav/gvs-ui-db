@@ -408,6 +408,17 @@ const form1Reducer = (state = requiredDataAllFields, action) => {
                ...state,
                logout: action.data,
                };
+        case "menus":
+           return {
+              ...state,
+             menus: action.data,
+              };
+              case "profile":
+                console.log("profile dispatched",action.data)
+           return {
+              ...state,
+             profile: action.data,
+              };
        case "submitted":
          return {
           ...state,

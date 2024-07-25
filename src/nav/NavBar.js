@@ -1,36 +1,40 @@
-// import React, { useState } from 'react';
 import { Link } from "react-router-dom";
 import React, { useEffect, useState } from 'react';
 import "./index.css";
 import { useNavigate } from "react-router-dom";
 import { LOGOUT } from "../constants/apiConstant";
 import { useSelector,useDispatch  } from "react-redux";
-
+import CustomizedMenus from "./CustomizedMenus";
 
 const NavBar = () => {
-
   const dispatch = useDispatch();
 
-  const {admin,logout}=useSelector((state)=> state)
+  const {admin,logout,menus}=useSelector((state)=> state)
   const navigate = useNavigate()
 
   useEffect(() => {
-    if(sessionStorage.getItem("logout")==="logout"){
-      dispatch({ type: "logout", data: "logout"});
-      
-
-    }
     if(sessionStorage.getItem("admin")==="ROLE_ADMIN"){
 
       dispatch({ type: "admin", data: "ROLE_ADMIN"});
-      
-
+      dispatch({type:"menus",data:["Profile","Dashboard","MyDependents","Admin","logout"]});
+      dispatch({ type: "logout", data: "logout"});
     }
+    else if(sessionStorage.getItem("logout")==="logout"){
+      dispatch({type:"menus",data:["Profile","Dashboard","MyDependents","logout"]});
+      dispatch({ type: "logout", data: "logout"});
+    }
+    
        
       
     }, [])
 
-  useEffect(() => {
+  useEffect(() => {if(sessionStorage.getItem("admin")==="ROLE_ADMIN"){
+
+    dispatch({type:"menus",data:["Profile","Dashboard","MyDependents","Admin","logout"]});
+  }
+  else if(sessionStorage.getItem("logout")==="logout"){
+    dispatch({type:"menus",data:["Profile","Dashboard","MyDependents","logout"]});
+  }
        
       
     }, [admin,logout])
@@ -62,27 +66,9 @@ const NavBar = () => {
                 src="../images/HaldiaT4.png"
               />
         </Link>
+
+       {logout && <CustomizedMenus menuItems={menus}/>}
         
-        <button className="navbar-toggler" type="button" data-bs-toggle="collapse" 
-        data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" 
-        aria-expanded="false" aria-label="Toggle navigation">
-          <span className="navbar-toggler-icon"></span>
-        </button>
-        <div className="collapse navbar-collapse" id="navbarSupportedContent" style={{marginLeft:'3.5rem'}}>
-          <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
-            {/* <li className="nav-item">
-           <a className="nav-link active" aria-current="page" href="#" >
-               <Link to='/'>Home</Link> 
-                </a>
-            </li> */}
-            {admin && admin ==="ROLE_ADMIN"?<li className="nav-item">
-              <a className="nav-link" href="#"><Link to='/admin'>Admin</Link> </a>
-            </li>:""}
-            <li className="nav-item">
-            {logout && logout ==="logout" ?<button className="nav-link" onClick={logoutHandler}>{logout}</button>:""}
-            </li>
-          </ul>
-        </div>
       </div>
     </nav>
 </>
