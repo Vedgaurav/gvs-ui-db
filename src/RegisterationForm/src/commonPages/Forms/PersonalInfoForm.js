@@ -7,6 +7,7 @@ import { bloodGroups, Gender } from "../../utilities/OptionalEntries";
 import { validateName } from "../../RegexExpsValidation/RegexExps";
 import { FcCamera } from "react-icons/fc";
 import { BsFillCheckCircleFill } from "react-icons/bs";
+import { TextField } from "@mui/material";
 
 const PersonalInfoForm = (props) => {
   const dispatch = useDispatch();
@@ -140,6 +141,7 @@ const PersonalInfoForm = (props) => {
             <p id="fnameError" style={{ color: "red", fontSize: "10px" }}></p>
           </div>
           <div className="form-col col-md-3">
+         
             <input
               id="mname"
               type="text"

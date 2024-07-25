@@ -5,8 +5,10 @@ import { GET_REGISTERED_USERS } from "../constants/apiConstant"
 import LoadingSpinner from "../RegisterationForm/src/utilities/loadingSpinner/LoadingSpinner";
 import "../RegisterationForm/src/commonPages/Forms/FormInput.css"
 import axios from "axios"
-import { TablePagination } from "@mui/material";
 import { useSelector,useDispatch } from "react-redux";
+import StickyHeadTable from "../reusableComponents/table/StickyHeadTable.js";
+import Divider from '@mui/material/Divider';
+
 
 export default (props) => {
     const dispatch = useDispatch();
@@ -33,13 +35,11 @@ export default (props) => {
             navigate("/login");
     }
     else if(admin.length!==0 && admin ==='ROLE_ADMIN'){
-
         console.log("welcome to admin pannel")
         
     }
     else{
-        dispatch({ type: "logout", data: "logout"});
-        navigate("/dashboard",{ state: { userDetail: {id:sessionStorage.getItem("userId"),fname:sessionStorage.getItem("userFname")} } });
+        navigate("/dashboard");
     }
 
     },[])
@@ -84,36 +84,9 @@ export default (props) => {
             navigate("/login")
     }, [])
 
-    const showData=<><tbody>{dep ? dep.map((d, index) => (
-        
-            <tr key={index}>
-                <th scope="row">{index + 1}</th>
-                <td>{d?.id}</td>
-                <td>{d?.fname}</td>
-                <td>{d.age}</td>
-                <td>{d.currentAddress.city}</td>
-                <td>{d.chantingRounds}</td>
-                <td>{d.facilitator}</td>
-                <td>{d.primaryPhone}</td>
-                <td>Krishna</td>
-                <td>{d.whatsappPhone}</td>
-                {/* <td> <button className="btn btn-warning" disabled={true} type="button">Accept</button></td> */}
-                
-                <td> <button className="btn"disabled={false} type="button" onClick={()=>whatsAppNotifier(d?.primaryPhone,d?.whatsappPhone,d?.id,d?.fname)}>
-                    <img style={{ height: "2rem", width: "25px"}} src="../images/whatsapp_icon.png"/></button></td>
-            </tr>
-        
-    )) : 
-        <tr>
-            <td colSpan="3">No members found.</td>
 
-        </tr>
-}
-    </tbody></>
-
-
-    const template = <>
-        <h8 className="display-5">Manage Registered Members</h8>
+    const template = <div style={{width:"100%"}}>
+        <h4 className="display-5">Manage Registered Members</h4>
 
         <div className="form-group row container-md">
             <div className="d-grid gap-2 d-md-flex justify-content-md-end">
@@ -121,28 +94,17 @@ export default (props) => {
            <div> <label htmlFor="endDate">End Date:</label><input type="date" id="endDate" className="form-control me-md-2" onChange={(e)=>{setEndDate(e.target.value)}}/> </div>
                <div> <button onClick={getRegisteredMembers} className="form-col btn btn-success me-md-2" type="button">Get Registered Members</button></div>
             </div><br />
-            <table className="table table-striped">
-                <thead>
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">ID</th>
-                        <th scope="col">Name</th>
-                        <th scope="col">Age</th>
-                        <th scope="col">City</th>
-                        <th scope="col">Rounds</th>
-                        <th scope="col">Facilitator</th>
-                        <th scope="col">Phone No.</th>
-                        <th scope="col">Connected To</th>
-                        <th scope="col">Connection's PhoneNo.</th>
-                        {/* <th scope="col">Action</th> */}
-                        <th scope="col">Notify</th>
-                    </tr>
-                </thead>
-               {gWaitOn?<LoadingSpinner/>:showData}
 
-            </table>
+            <Divider sx={{width:"100%" , margintop:5}}/>
+            
+            
+                {dep.length>0 ? <StickyHeadTable rows={dep}/>:""}
+
+              {gWaitOn?<LoadingSpinner/>:""}
+
+            
         </div>
-    </>
+    </div>
     return <>
             {template}
     </>

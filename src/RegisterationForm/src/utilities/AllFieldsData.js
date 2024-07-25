@@ -86,7 +86,9 @@ export const requiredDataAllFields={
     imageSource:""
   },
     admin:"",
-    logout:""
+    logout:"",
+    menus:[],
+    profile:{}
   }
 
 //language: send an array

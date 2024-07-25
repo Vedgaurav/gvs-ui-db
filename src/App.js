@@ -14,6 +14,7 @@ import MyDependents from "./dashboard/MyDependents";
 import RegistrationForm from "./RegisterationForm/src/RegistrationForm";
 import NavBar from "./nav/NavBar";
 import Admin from "./Admin/Admin";
+import Profile from "./profile/UserProfile.js";
 
 export default function App() {
 
@@ -62,6 +63,12 @@ export default function App() {
             path="/admin"
             element={
               <Admin />
+            }
+          />
+          <Route
+            path="/profile"
+            element={
+              <Profile />
             }
           />
         </Routes>

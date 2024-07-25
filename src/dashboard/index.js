@@ -4,10 +4,7 @@ import { useLocation, useNavigate } from "react-router-dom"
 
 export default function Dashboard() {
     const navigate = useNavigate()
-    const { state } = useLocation()
-    const { userDetail } = state?state:""
-    const {id,fname} = userDetail?userDetail:{} 
-    const userId = id
+
 
     useEffect(()=>{
         if(sessionStorage.getItem("userEmail")==null)
@@ -24,7 +21,7 @@ export default function Dashboard() {
         <div>
             <h1 className="display-1">Dashboard </h1>
             <div className="container">
-                <h5>{userId} - {fname}</h5>
+                <h5>{sessionStorage.getItem("userId")} - {sessionStorage.getItem("userFname")}</h5>
                 <div className="row">
                     <div className="col">
                         <div className="card" style={{ width: "18rem" }}>
