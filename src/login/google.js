@@ -111,6 +111,13 @@ export default function GLogin() {
     setTimeout(() => {
         setMessage("")
     }, 2000)
+    const handleClick = () => {
+      Cookies.set("loginButton", "db", {
+        expires: 1,
+        domain: PARENT_DOMAIN,
+        path: "/",
+      });
+    };
 
     const template = <>
         <div className="row pt-5" style={{}}>
@@ -120,11 +127,11 @@ export default function GLogin() {
                     <div className="card-body login-card-body">
                         <h3>Welcome</h3>
                         <p className="mt-4">Login to your Account!!</p>
-                        <button className="google-login-button" type='button' text='Login'><a style={{color:"white"}}href={LOGIN_URL}>Login with Google</a></button>
+                        <button className="google-login-button" type='button' text='Login' onClick={handleClick}><a style={{color:"white"}}href={LOGIN_URL}>Login with Google</a></button>
                     </div>
                 </div>
             </div>
-        </div>
+        </div> 
     </>
   
   return <>{gWaitOn ? <PleaseWait /> : template}</>;
