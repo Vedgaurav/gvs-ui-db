@@ -25,7 +25,6 @@ export default function App() {
         <Routes>
           <Route
           index
-            path="/login"
             element={
               <GLogin />
             }
