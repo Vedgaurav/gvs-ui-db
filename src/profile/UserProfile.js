@@ -5,6 +5,8 @@ import AccordionDetails from '@mui/material/AccordionDetails';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import Typography from '@mui/material/Typography';
 import { CiEdit } from "react-icons/ci";
+import Paper from '@mui/material/Paper'
+import Grid from '@mui/material/Grid';
 // import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 const Profile=()=>{
@@ -32,15 +34,33 @@ const Profile=()=>{
               aria-controls="panel1bh-content"
               id="panel1bh-header"
             >
-              <Typography sx={{ width: '33%', flexShrink: 0 }}>
+              <Typography sx={{ width: '33%', flexShrink: 0 , fontWeight:"bold" ,background:"darkblue",color:"white", borderRadius:"2rem"}}>
                 Personal Info.
               </Typography>
-              <Typography sx={{ color: 'text.secondary' }}>I am an accordion</Typography>
+              <Typography sx={{ color: 'text.secondary' }}>Read/Edit Personal Information</Typography>
             </AccordionSummary>
             <AccordionDetails>
               <Typography>
-                Nulla facilisi. Phasellus sollicitudin nulla et quam mattis feugiat.
-                Aliquam eget maximus est, id dignissim quam.
+                <Grid container spacing={2}>
+                <Grid item xs={3}>
+               <Paper style={{fontWeight:"bold",background:"darkblue",color:"white"}}>First Name</Paper><Paper elevation={1}>{profile.fname}</Paper>
+               </Grid>
+               {profile.mname && <Grid item xs={3}>
+               <Paper style={{fontWeight:"bold",background:"darkblue",color:"white"}}>Middle Name</Paper><Paper elevation={1}>{profile.mname}</Paper>
+               </Grid>}
+               {profile.lname && <Grid item xs={3}>
+               <Paper style={{fontWeight:"bold",background:"darkblue",color:"white"}}>Last Name</Paper><Paper elevation={1}>{profile.lname}</Paper>
+               </Grid>}
+               {profile.initiatedName && <Grid item xs={3}>
+               <Paper style={{fontWeight:"bold",background:"darkblue",color:"white"}}>Initiated Name</Paper><Paper elevation={1}>{profile.initiatedName}</Paper>
+               </Grid>}
+               {profile.gender && <Grid item xs={3}>
+               <Paper style={{fontWeight:"bold",background:"darkblue",color:"white"}}>Gender</Paper><Paper elevation={1}>{profile.gender}</Paper>
+               </Grid>}
+               {profile.dateOfBirth && <Grid item xs={3}>
+               <Paper style={{fontWeight:"bold",background:"darkblue",color:"white"}}>Date of Birth</Paper><Paper elevation={1}>{profile.dateOfBirth}</Paper>
+               </Grid>}
+               </Grid>
               </Typography>
             </AccordionDetails>
           </Accordion>

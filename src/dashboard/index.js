@@ -14,7 +14,7 @@ export default function Dashboard() {
     const goToMyDep = () => {
         // to my dep page
         // console.log(userId);
-        navigate("/dependents", { state: { userId: userId } })
+        navigate("/dependents" )
     }
 
     return (
