@@ -27,7 +27,7 @@ export default () => {
 
     useEffect(() => {
         if (sessionStorage.getItem("userEmail") == null)
-            navigate("/login")
+            navigate("/")
     }, [])
 
     const addDep = () => {

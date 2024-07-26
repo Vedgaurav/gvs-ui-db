@@ -57,7 +57,7 @@ const NavBar = () => {
           style={{ height: "3rem", width: "70px", marginTop:"5px", marginBottom:"5px"}}
           href={PARENT_DOMAIN}
           />
-          {logout && <Box sx={{ flexGrow: 0 }} style={{marginTop: "1rem", marginRight: "2px", position:"absolute",   top:0, right:0}}>
+          {logout && sessionStorage.getItem("userFname")?.length!==0 && sessionStorage.getItem("userFname")!==null && <Box sx={{ flexGrow: 0 }} style={{marginTop: "1rem", marginRight: "2px", position:"absolute",   top:0, right:0}}>
             
             <CustomizedMenus  menuItems={menus} />
             

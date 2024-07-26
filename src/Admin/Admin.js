@@ -32,7 +32,7 @@ export default (props) => {
     useEffect(()=>{
 
     if (sessionStorage.getItem("userEmail") == null){
-            navigate("/login");
+            navigate("/");
     }
     else if(admin.length!==0 && admin ==='ROLE_ADMIN'){
         console.log("welcome to admin pannel")
