@@ -8,7 +8,7 @@ export default function Dashboard() {
 
     useEffect(()=>{
         if(sessionStorage.getItem("userEmail")==null)
-            navigate("/login")
+            navigate("/")
     },[])
 
     const goToMyDep = () => {

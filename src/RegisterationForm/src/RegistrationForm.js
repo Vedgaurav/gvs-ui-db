@@ -30,7 +30,7 @@ function RegistrationForm(props) {
   useEffect(() => {
 
      if (sessionStorage.getItem("userEmail") == null)
-      navigate("/login")
+      navigate("/")
     
     
   }, [])
