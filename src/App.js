@@ -24,12 +24,7 @@ export default function App() {
       <NavBar />
         <Routes>
           <Route
-            index
-            element={
-              <HomePage />
-            }
-          />
-          <Route
+          index
             path="/login"
             element={
               <GLogin />

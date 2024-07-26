@@ -5,12 +5,19 @@ import { useNavigate } from "react-router-dom";
 import { LOGOUT } from "../constants/apiConstant";
 import { useSelector,useDispatch  } from "react-redux";
 import CustomizedMenus from "./CustomizedMenus";
+import AppBar from '@mui/material/AppBar';
+import Box from '@mui/material/Box';
+import Toolbar from '@mui/material/Toolbar';
+import Container from '@mui/material/Container';
+import Tooltip from '@mui/material/Tooltip';
+import { PARENT_DOMAIN } from "../constants/apiConstant";
 
 const NavBar = () => {
   const dispatch = useDispatch();
 
   const {admin,logout,menus}=useSelector((state)=> state)
   const navigate = useNavigate()
+
 
   useEffect(() => {
     if(sessionStorage.getItem("admin")==="ROLE_ADMIN"){
@@ -39,38 +46,26 @@ const NavBar = () => {
       
     }, [admin,logout])
 
-    const logoutHandler=async()=>{
-
-
-
-      sessionStorage.clear();
-
-      await fetch(LOGOUT,{
-        method: 'POST',
-        credentials: 'include',
-      }).then(()=>{ dispatch({ type: "logout", data: ""});
-      dispatch({ type: "admin", data: ""});});
-      navigate("/login")
-
-  }
     
-  
-  // <a className="navbar-brand" href="#"></a>
-
   return (<>
-    <nav className="navbar navbar-dark bg-dark navbar-expand-lg">
-      <div className="container-fluid ">
-        <Link to="/">
-        <img
-                style={{ height: "4rem", width: "80px", marginLeft:"2rem"}}
-                src="../images/HaldiaT4.png"
-              />
-        </Link>
-
-       {logout && <CustomizedMenus menuItems={menus}/>}
-        
-      </div>
-    </nav>
+  <AppBar  style={{background:' -webkit-linear-gradient(180deg,#eee, #090979)'}}position="static">
+      <Container maxWidth="xl">
+        <Toolbar disableGutters>
+          <Box
+          component="img"
+          src="../images/HaldiaT4.png"
+          style={{ height: "3rem", width: "70px", marginTop:"5px", marginBottom:"5px"}}
+          href={PARENT_DOMAIN}
+          />
+          {logout && <Box sx={{ flexGrow: 0 }} style={{marginTop: "1rem", marginRight: "2px", position:"absolute",   top:0, right:0}}>
+            
+            <CustomizedMenus  menuItems={menus} />
+            
+            
+          </Box>}
+        </Toolbar>
+      </Container>
+    </AppBar>
 </>
   );
 };

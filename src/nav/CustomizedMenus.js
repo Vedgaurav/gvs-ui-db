@@ -7,7 +7,38 @@ import Divider from '@mui/material/Divider';
 import { useSelector,useDispatch  } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { LOGOUT } from '../constants/apiConstant';
-import { FcReadingEbook } from "react-icons/fc";
+import Avatar from '@mui/material/Avatar'
+
+function stringToColor(string) {
+  let hash = 0;
+  let i;
+
+  /* eslint-disable no-bitwise */
+  for (i = 0; i < string.length; i += 1) {
+    hash = string.charCodeAt(i) + ((hash << 5) - hash);
+  }
+
+  let color = '#';
+
+  for (i = 0; i < 3; i += 1) {
+    const value = (hash >> (i * 8)) & 0xff;
+    color += `00${value.toString(16)}`.slice(-2);
+  }
+  /* eslint-enable no-bitwise */
+
+  return color;
+}
+
+function stringAvatar(name) {
+  return {
+    sx: {
+      bgcolor: stringToColor(name),
+      borderWidth:"2px"
+    },
+    children: `${name.charAt(0)}${name.charAt(1)}`,
+  };
+}
+
 
 
 const StyledMenu = styled((props) => (
@@ -118,11 +149,11 @@ export default function CustomizedMenus(properties) {
         aria-haspopup="true"
         aria-expanded={open ? 'true' : undefined}
         variant="contained"
-        disableElevation
         onClick={handleClick}
         
       >
-       <FcReadingEbook/> {sessionStorage.getItem("userFname")}
+        <Avatar {...stringAvatar(sessionStorage.getItem("userFname"))} sx={{boxShadow: 2,fontSize:16,marginRight:1,background:stringToColor(sessionStorage.getItem("userFname"))}}/>
+       {sessionStorage.getItem("userFname")}
       </Button>
       <StyledMenu
         id="demo-customized-menu"

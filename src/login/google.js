@@ -83,7 +83,7 @@ export default function GLogin() {
                   dispatch({ type: "logout", data: "logout"});
       dispatch({ type: "admin", data: (roles.filter((e)=>e.name==='ROLE_ADMIN'))[0]?.name});
       sessionStorage.setItem("admin", (roles.filter((e)=>e.name==='ROLE_ADMIN'))[0]?.name);
-
+      dispatch({ type: "profile", data: guardianUser});
                   // to dashboard of dependents
                   navigate("/dashboard", { state: { userDetail: guardianUser } })
               }
