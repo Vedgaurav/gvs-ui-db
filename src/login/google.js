@@ -23,7 +23,10 @@ export default function GLogin() {
   const { gWaitOn, setGWaitOn } = useContext(PleaseWaitContext);
 
   const fetchData = async () => {
-    Cookies.remove("loginButton");
+    Cookies.remove("loginButton", {
+      path: "/",
+      domain: "gaurangavedic.org.in",
+    });
     const response = await fetch(CHECK_AUTHENTICATION_URL, {
       method: "GET",
       credentials: "include",
@@ -36,7 +39,10 @@ export default function GLogin() {
 
   const logout = async () => {
     sessionStorage.clear();
-    Cookies.remove("loginButton");
+    Cookies.remove("loginButton", {
+      path: "/",
+      domain: "gaurangavedic.org.in",
+    });
     await axios
       .post(LOGOUT, {
         withCredentials: true,
