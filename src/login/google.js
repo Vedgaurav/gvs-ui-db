@@ -33,7 +33,7 @@ export default function GLogin() {
     });
 
     const userData = await response.json();
-    console.log("Auth response to json data ", userData);
+    // console.log("Auth response to json data ", userData);
     return userData;
   };
 
@@ -67,10 +67,10 @@ export default function GLogin() {
           .catch((e) => {
             setGWaitOn(false);
           });
-        console.log("Does user exist ", res.data);
+        // console.log("Does user exist ", res.data);
         guardianUser = res.data;
         setGWaitOn(false);
-        console.log("Guardian user ", guardianUser);
+        // console.log("Guardian user ", guardianUser);
 
         if (guardianUser === null || !guardianUser) {
           if (roles.filter((e) => e.name === "ROLE_ADMIN")[0]?.length !== 0) {
@@ -79,14 +79,14 @@ export default function GLogin() {
           }
           dispatch({ type: "logout", data: "logout" });
           sessionStorage.setItem("logout", "logout");
-          console.log("registration redirection");
+          // console.log("registration redirection");
           // to reg
           sessionStorage.setItem("userEmail", userEmail);
           navigate("/registration", {
             state: { connectedTo: "guru", guardianEmail: userEmail },
           });
         } else {
-          console.log("dashboard redirection", guardianUser);
+          // console.log("dashboard redirection", guardianUser);
           sessionStorage.setItem("userId", guardianUser.id);
           sessionStorage.setItem("userFname", guardianUser.fname);
           sessionStorage.setItem("userEmail", userEmail);

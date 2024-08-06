@@ -25,8 +25,8 @@ export default (props) => {
 
     useEffect(()=>{
 
-        console.log(startDate);
-        console.log(endDate)
+        // console.log(startDate);
+        // console.log(endDate)
     },[startDate,endDate])
 
     useEffect(()=>{
@@ -35,7 +35,7 @@ export default (props) => {
             navigate("/");
     }
     else if(admin.length!==0 && admin ==='ROLE_ADMIN'){
-        console.log("welcome to admin pannel")
+        // console.log("welcome to admin pannel")
         
     }
     else{
@@ -51,17 +51,17 @@ export default (props) => {
             withCredentials: true,
             
           });
-        console.log(response);
+        // console.log(response);
         setDep(response.data);
         setGWaitOn(false)
     }
 
     const whatsAppNotifier =(primaryPhoneNo,whatsappPhone,id,fname)=>{
 
-        console.log(primaryPhoneNo);
-        console.log(whatsappPhone);
-        console.log(id);
-        console.log(fname);
+        // console.log(primaryPhoneNo);
+        // console.log(whatsappPhone);
+        // console.log(id);
+        // console.log(fname);
 
         if(whatsappPhone.length==0||whatsappPhone==null)
         window.open(`https://wa.me/91${primaryPhoneNo}?text=Hare%20K%E1%B9%9B%E1%B9%A3%E1%B9%87a%21%0A%0AYour%20information%20has%20been%20successfully%20updated.%20Your%20membership%20id%20is%20%2A${id}%2A.%0APlease%20keep%20this%20ID%20saved.%20It%20would%20be%20needed%20at%20the%20time%20of%20Yatra%20registration%20and%20accommodation%20booking.%0A%0AIn%20your%20service%2C%0AGVS%20Dham%20Yatra%20Committee`)

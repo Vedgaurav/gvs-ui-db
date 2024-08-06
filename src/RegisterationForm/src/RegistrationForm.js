@@ -41,7 +41,7 @@ function RegistrationForm(props) {
       const email = sessionStorage.getItem("userEmail")
       const res = await axiosDoesUserExist()
       const guardianUser = res.data;
-      console.log("on close modal",res.data)
+      // console.log("on close modal",res.data)
       sessionStorage.setItem("userId", guardianUser.id)
       sessionStorage.setItem("userFname", guardianUser.fname)
     }

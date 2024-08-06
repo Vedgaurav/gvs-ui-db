@@ -2,7 +2,7 @@ import axios from "axios";
 import { DOES_USER_EXIST } from "../constants/apiConstant";
 
 export default async () => {
-  console.log("Fetch does user exist")
+  // console.log("Fetch does user exist")
   return await axios.get(DOES_USER_EXIST, {
     withCredentials:true
   });
