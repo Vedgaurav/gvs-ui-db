@@ -135,7 +135,7 @@ export default function CustomizedMenus(properties) {
       }
       break;
       default:{
-        console.log("There is some error");
+        console.error("There is some error");
       }
 
     }

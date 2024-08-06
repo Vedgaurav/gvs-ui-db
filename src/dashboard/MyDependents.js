@@ -17,12 +17,12 @@ export default () => {
         const fun = async (setDep) => {
             setGWaitOn(true)
             const res = await axiosGetAllDependents()
-            console.log(res);
+            // console.log(res);
             setDep(res.data);
             setGWaitOn(false)
         }
         fun(setDep)
-        console.log("useEffect ran");
+        // console.log("useEffect ran");
     }, [])
 
     useEffect(() => {
@@ -31,7 +31,7 @@ export default () => {
     }, [])
 
     const addDep = () => {
-        console.log("from dep", sessionStorage.getItem("userId"));
+        // console.log("from dep", sessionStorage.getItem("userId"));
         navigate("/registration", { state: { userId: sessionStorage.getItem("userId"), connectedTo: sessionStorage.getItem("userId") } })
     }
 

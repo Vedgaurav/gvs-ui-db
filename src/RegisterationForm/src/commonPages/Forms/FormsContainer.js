@@ -66,21 +66,21 @@ const FormsContainer = (props) => {
         } else {console.log("this person is not guru")};
     
       } else if (response.status === 408) {
-        console.log("SOMETHING WENT WRONG");
+        // console.log("SOMETHING WENT WRONG");
         props.onHeaderReceive("API ERROR");
         props.onMessageReceive(
           "There is error in submitting the response. Kindly try again later"
         );
         setError(response.status);
       } else if (response.data.status === 400) {
-        console.log("SOMETHING WENT WRONG");
+        // console.log("SOMETHING WENT WRONG");
         props.onHeaderReceive("API ERROR");
         props.onMessageReceive(
           "There is error in submitting the response. Kindly try again later"
         );
         setError(response.status);
       }  else if (response.data.status === 500) {
-        console.log("SOMETHING WENT WRONG");
+        // console.log("SOMETHING WENT WRONG");
         props.onHeaderReceive("API ERROR");
         props.onMessageReceive(
           "There is an Internal Server Error"

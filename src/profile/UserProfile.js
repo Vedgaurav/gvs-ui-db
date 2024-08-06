@@ -12,7 +12,7 @@ import Grid from '@mui/material/Grid';
 const Profile=()=>{
 
     const profile=useSelector((state)=>state.profile)
-    console.log(profile);
+    // console.log(profile);
 
     useEffect(()=>{
 
