@@ -5,79 +5,79 @@ import { GET_REGISTERED_USERS } from "../constants/apiConstant"
 import LoadingSpinner from "../RegisterationForm/src/utilities/loadingSpinner/LoadingSpinner";
 import "../RegisterationForm/src/commonPages/Forms/FormInput.css"
 import axios from "axios"
-import { useSelector,useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import StickyHeadTable from "../reusableComponents/table/StickyHeadTable.js";
-import Divider from '@mui/material/Divider';
+import { Divider, Grid } from '@mui/material';
+import Grid2 from "@mui/material/Unstable_Grid2/Grid2.js";
 
 
 export default (props) => {
     const dispatch = useDispatch();
-    const {admin}=useSelector((state)=>state)
+    const [error, setError] = useState("");
+    const admin  = useSelector((state) => state.admin)
     const { state } = useLocation()
     const { userDetail } = state ? state : ""
     const [dep, setDep] = useState([])
-    const [startDate,setStartDate]=useState();
-    const [endDate,setEndDate]=useState();
+    const [startDate, setStartDate] = useState("2024-07-15");
+    const [endDate, setEndDate] = useState(setTodaysDate());
     const navigate = useNavigate()
     const { gWaitOn, setGWaitOn } = useContext(PleaseWaitContext)
-    
+    function setTodaysDate() {
+
+        const today = new Date();
+        
+        // Format the date to YYYY-MM-DD
+        const year = today.getFullYear();
+        const month = String(today.getMonth() + 1).padStart(2, '0'); // Months are zero-based, so add 1
+        const day = String(today.getDate()).padStart(2, '0');
+        
+        // Construct the date string
+        const formattedDate = `${year}-${month}-${day}`;
+        
+        // Set the value of the input to today's date
+        return formattedDate;
+    }
 
 
-    useEffect(()=>{
+
+    useEffect(() => {
 
         // console.log(startDate);
         // console.log(endDate)
-    },[startDate,endDate])
+    }, [startDate, endDate])
 
-    useEffect(()=>{
+    useEffect(() => {
 
-    if (sessionStorage.getItem("userEmail") == null){
+        if (sessionStorage.getItem("userEmail") == null) {
             navigate("/");
-    }
-    else if(admin.length!==0 && admin ==='ROLE_ADMIN'){
-        // console.log("welcome to admin pannel")
-        
-    }
-    else{
-        navigate("/dashboard");
-    }
+        }
+        else if (admin.length !== 0 && admin === 'ROLE_ADMIN') {
+            // console.log("welcome to admin pannel")
 
-    },[])
+        }
+        else {
+            navigate("/dashboard");
+        }
+
+    }, [])
 
 
     const getRegisteredMembers = async () => {
+        setError("");
         setGWaitOn(true)
-        const response = await axios.get(GET_REGISTERED_USERS+`?startDate=${startDate}&endDate=${endDate}`,{
+        let b=false;
+        const response = await axios.get(GET_REGISTERED_USERS + `?startDate=${startDate}&endDate=${endDate}`, {
             withCredentials: true,
-            
-          });
+
+        }).catch((e) => {b=true;setError("OOps!! There is some error in fetching the data please try again!!!");setGWaitOn(false)});
         // console.log(response);
-        setDep(response.data);
+        let filteredData;
+        
+         !b?  filteredData=response.data.filter(o=>o[0].charAt(0)==='T'):""
+        
+        setDep(b ? []:[...response.data.filter(o=>o[0].charAt(0)!=='T').sort((a, b) => b[0].localeCompare(a[0])),...filteredData]);
         setGWaitOn(false)
     }
-
-    const whatsAppNotifier =(primaryPhoneNo,whatsappPhone,id,fname)=>{
-
-        // console.log(primaryPhoneNo);
-        // console.log(whatsappPhone);
-        // console.log(id);
-        // console.log(fname);
-
-        if(whatsappPhone.length==0||whatsappPhone==null)
-        window.open(`https://wa.me/91${primaryPhoneNo}?text=Hare%20K%E1%B9%9B%E1%B9%A3%E1%B9%87a%21%0A%0AYour%20information%20has%20been%20successfully%20updated.%20Your%20membership%20id%20is%20%2A${id}%2A.%0APlease%20keep%20this%20ID%20saved.%20It%20would%20be%20needed%20at%20the%20time%20of%20Yatra%20registration%20and%20accommodation%20booking.%0A%0AIn%20your%20service%2C%0AGVS%20Dham%20Yatra%20Committee`)
-        else
-        window.open(`https://wa.me/91${whatsappPhone}?text=Hare%20K%E1%B9%9B%E1%B9%A3%E1%B9%87a%21%0A%0AYour%20information%20has%20been%20successfully%20updated.%20Your%20membership%20id%20is%20%2A${id}%2A.%0APlease%20keep%20this%20ID%20saved.%20It%20would%20be%20needed%20at%20the%20time%20of%20Yatra%20registration%20and%20accommodation%20booking.%0A%0AIn%20your%20service%2C%0AGVS%20Dham%20Yatra%20Committee`)
-
-    }
-
-
-      
-        
-    // useEffect(() => {
-       
-    //     fun(setDep)
-    //     console.log("useEffect ran");
-    // }, [])
 
     useEffect(() => {
         if (sessionStorage.getItem("userEmail") == null)
@@ -85,27 +85,25 @@ export default (props) => {
     }, [])
 
 
-    const template = <div style={{width:"100%"}}>
+    const template = <div>
         <h4 className="display-5">Manage Registered Members</h4>
 
-        <div className="form-group row container-md">
-            <div className="d-grid gap-2 d-md-flex justify-content-md-end">
-            <div className="form-col col-md-3"><label htmlFor="SatrtDate">Start Date:</label> <input type="date" id="StartDate" className="form-control me-md-2" name="Start Date" onChange={(e)=>setStartDate(e.target.value)}/> </div>
-           <div> <label htmlFor="endDate">End Date:</label><input type="date" id="endDate" className="form-control me-md-2" onChange={(e)=>{setEndDate(e.target.value)}}/> </div>
-               <div> <button onClick={getRegisteredMembers} className="form-col btn btn-success me-md-2" type="button">Get Registered Members</button></div>
-            </div><br />
+    <Grid2 container spacing={2} margin={1}>
+        <Grid2 xs={4}><label className="form-control" style={{ margin: "1rem" }} htmlFor="SatrtDate">Start Date:<input type="date" id="StartDate" defaultValue={startDate}className="form-control me-md-2" name="Start Date" onChange={(e) => setStartDate(e.target.value)} /> </label></Grid2>
+        <Grid2 xs={4}><label className="form-control" style={{ margin: "1rem" }} htmlFor="endDate">End Date:<input type="date" id="endDate" className="form-control me-md-2" defaultValue={endDate} onChange={(e) => { setEndDate(e.target.value) }} /></label></Grid2>
+        <Grid2 xs={4}><button onClick={getRegisteredMembers} className="form-col btn btn-success me-md-2" style={{ margin: "2rem" }} type="button">Get Registered Members</button></Grid2>
 
-            <Divider sx={{width:"100%" , margintop:5}}/>
-            
-            
-                {dep.length>0 ? <StickyHeadTable rows={dep}/>:""}
+        <Divider sx={{ width: "100%", margintop: 5 }} />
 
-              {gWaitOn?<LoadingSpinner/>:""}
 
-            
-        </div>
+        {dep.length > 0 ? <StickyHeadTable rows={dep} /> : ""}
+
+        {gWaitOn ? <LoadingSpinner /> : <i style={{color:'red',margin:'1rem'}}>{error}</i>}
+
+
+    </Grid2>
     </div>
     return <>
-            {template}
+        {template}
     </>
 }
