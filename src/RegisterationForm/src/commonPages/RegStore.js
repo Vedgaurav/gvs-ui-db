@@ -414,7 +414,6 @@ const form1Reducer = (state = requiredDataAllFields, action) => {
              menus: action.data,
               };
               case "profile":
-                console.log("profile dispatched",action.data)
            return {
               ...state,
              profile: action.data,

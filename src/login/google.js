@@ -1,12 +1,11 @@
 import axios, { all } from "axios";
 import { useContext, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import axiosDoesUserExist from "../axios/axiosDoesUserExist";
-import axiosIsParent from "../axios/axiosDoesUserExist";
 import "./googlelogin.css";
 import axiosCheckPermission from "../axios/axiosCheckPermission";
 import { PleaseWaitContext } from "../context/PleaseWaitContextProvider.js";
 import PleaseWait from "../pleaseWait/PleaseWait";
+import CircularProgress from '@mui/material/CircularProgress';
 import {
   CHECK_AUTHENTICATION_URL,
   LOGIN_URL,
@@ -16,13 +15,25 @@ import {
 import { DOES_USER_EXIST } from "../constants/apiConstant";
 import { useDispatch } from "react-redux";
 import Cookies from "js-cookie";
+import { FcGoogle } from "react-icons/fc";
+import { Box,Fab } from "@mui/material";
+const buttonSx = {
+  ...({
+    bgcolor: "white",
+    '&:hover': {
+      bgcolor: "white",
+    },
+  }),
+};
 export default function GLogin() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [message, setMessage] = useState("");
   const { gWaitOn, setGWaitOn } = useContext(PleaseWaitContext);
+  const [loading,setLoading] = useState(false);
 
   const fetchData = async () => {
+    setLoading(true);
     Cookies.remove("loginButton", {
       path: "/",
       domain: "gaurangavedic.org.in",
@@ -117,7 +128,7 @@ export default function GLogin() {
     fetchData()
       .then((data) => loginRedirection(data))
       .catch(async (e) => {
-        //logout();
+        setLoading(false);
       });
   }, []);
 
@@ -140,16 +151,35 @@ export default function GLogin() {
             <h5 style={{ color: "red" }}>{message}</h5>
             <div className="card-body login-card-body">
               <h3>Welcome</h3>
-              <p className="mt-4">Login to your Account!!</p>
+              <p className="mt-4">Login with your <FcGoogle/> Account!!</p>
               <button
                 className="google-login-button"
                 type="button"
                 text="Login"
                 onClick={handleClick}
               >
-                <a style={{ color: "white" }} href={LOGIN_URL}>
-                  Login with Google
-                </a>
+               {loading ? <Box sx={{ m: 1, position: 'relative' }}>
+        <Fab
+          aria-label="save"
+          color="primary"
+          sx={buttonSx}
+        >
+           <FcGoogle />
+        </Fab>
+
+          <CircularProgress
+            size={68}
+            sx={{
+              color: "white",
+              position: 'absolute',
+              top: -6,
+              left: -6,
+              zIndex: 1,
+            }}
+          />
+      </Box>:<a style={{ color: "white",textDecoration:"none",fontWeight:"bold" }} onClick={()=>setLoading(true)}href={LOGIN_URL}>
+                  <FcGoogle enableBackground={true} size={25}/> Login
+                </a>}
               </button>
             </div>
           </div>

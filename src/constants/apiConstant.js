@@ -2,6 +2,8 @@
 // export const PARENT_DOMAIN = "localhost";
 export const PARENT_DOMAIN = "gaurangavedic.org.in";
 const BASE_URL = "https://api.gaurangavedic.org.in:8443";
+export const NAVIGATE_TO_PARENT_DOMAIN = "https://gaurangavedic.org.in";
+export const NAVIGATE_TO_YATRA_REGISTRATION_DOMAIN ="https://yatra.gaurangavedic.org.in/";
 
 export const DOES_USER_EXIST = BASE_URL + "/v1/hlzGlobalReg/doesUserExist";
 export const CHECK_PERMISSION = BASE_URL + "/v1/hlzGlobalReg/checkPermission";
